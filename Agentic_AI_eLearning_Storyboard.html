@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hiring Agent — eLearning Storyboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #1B3A6B;
+    --teal:    #0E7490;
+    --teal-l:  #E0F2FE;
+    --purple:  #4C1D95;
+    --purp-l:  #EDE9FE;
+    --amber:   #92400E;
+    --amb-l:   #FEF3C7;
+    --green:   #065F46;
+    --grn-l:   #D1FAE5;
+    --gray:    #374151;
+    --lgray:   #F3F4F6;
+    --mgray:   #6B7280;
+    --slate:   #475569;
+    --white:   #FFFFFF;
+    --red:     #991B1B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11pt;
+    color: var(--gray);
+    background: #f0f2f5;
+    line-height: 1.5;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; font-size: 9pt; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+    @page { size: A4 landscape; margin: 14mm 14mm 14mm 14mm; }
+    .no-print { display: none; }
+    .slide-block { page-break-inside: avoid; }
+  }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    background: white;
+    width: 277mm;
+    margin: 20px auto;
+    padding: 14mm 14mm 18mm 14mm;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  /* ── HEADER / FOOTER ── */
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 6px;
+    border-bottom: 2.5px solid var(--teal);
+    margin-bottom: 20px;
+    font-size: 8.5pt;
+    color: var(--teal);
+  }
+  .doc-header .right { color: var(--mgray); }
+
+  .doc-footer {
+    border-top: 1.5px solid var(--teal);
+    margin-top: 18px;
+    padding-top: 5px;
+    font-size: 7.5pt;
+    color: var(--mgray);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ── COVER ── */
+  .cover-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8pt;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .cover-title {
+    font-family: 'Fraunces', serif;
+    font-size: 38pt;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+
+  .cover-sub {
+    font-size: 12pt;
+    color: var(--gray);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .cover-hr {
+    border: none;
+    border-top: 2px solid var(--teal);
+    margin: 14px 0;
+  }
+
+  /* ── META TABLE ── */
+  .meta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 9.5pt;
+  }
+  .meta-table td {
+    padding: 7px 10px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  .meta-table .label {
+    background: var(--navy);
+    color: white;
+    font-weight: 600;
+    width: 11%;
+    white-space: nowrap;
+  }
+  .meta-table .value { background: white; width: 22%; }
+  .meta-table tr:nth-child(even) .value { background: var(--lgray); }
+
+  /* ── SECTION BANNER ── */
+  .section-banner {
+    font-family: 'DM Mono', monospace;
+    font-size: 8pt;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: white;
+    padding: 7px 12px;
+    margin: 22px 0 12px 0;
+    border-radius: 3px;
+  }
+
+  /* ── HOW TO READ ── */
+  .how-to-read h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  /* ── LEGEND ── */
+  .legend-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 10px;
+    font-size: 8.5pt;
+    font-weight: 600;
+  }
+  .legend-row div {
+    padding: 7px 10px;
+    color: white;
+    text-align: center;
+  }
+
+  /* ── NAV MAP TABLE ── */
+  .nav-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin-top: 8px;
+  }
+  .nav-table th {
+    background: var(--slate);
+    color: white;
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 8pt;
+    letter-spacing: 0.05em;
+  }
+  .nav-table td {
+    padding: 5px 10px;
+    border: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  .nav-table tr:nth-child(even) td { background: var(--lgray); }
+  .nav-table tr:nth-child(odd) td { background: white; }
+
+  /* ── SLIDE BLOCK ── */
+  .slide-block {
+    margin-bottom: 18px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+
+  .slide-header {
+    display: grid;
+    grid-template-columns: 80px 1fr 140px;
+    font-size: 9pt;
+    font-weight: 600;
+    color: white;
+  }
+  .slide-header div {
+    padding: 7px 10px;
+  }
+  .slide-header .slide-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5pt;
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .slide-header .slide-type {
+    font-size: 7.5pt;
+    text-align: right;
+    font-weight: 500;
+    font-style: italic;
+    border-left: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .slide-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 8.5pt;
+  }
+
+  .col-subhead {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--slate);
+  }
+  .col-subhead div {
+    padding: 5px 10px;
+    color: white;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .col-subhead div:last-child { border-right: none; }
+
+  .slide-cell {
+    padding: 10px 11px;
+    border-right: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .slide-cell:last-child { border-right: none; }
+  .slide-cell:nth-child(odd) { background: var(--lgray); }
+  .slide-cell:nth-child(even) { background: white; }
+
+  /* ── CELL CONTENT HELPERS ── */
+  .cell-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 7pt;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+  }
+  .cell-b { font-weight: 600; color: #1f2937; display: block; margin-top: 5px; }
+  .cell-i { font-style: italic; color: var(--mgray); }
+  .cell-s { font-size: 8pt; color: var(--mgray); display: block; margin-top: 3px; }
+  p.ct { margin: 3px 0; }
+
+  /* ── CALLOUT / FEEDBACK ── */
+  .callout {
+    border-radius: 3px;
+    padding: 7px 10px;
+    margin: 5px 0;
+    font-size: 8.5pt;
+  }
+  .callout .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  /* ── CHOICE TABLE ── */
+  .choice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 8pt;
+  }
+  .choice-table th {
+    background: var(--teal);
+    color: white;
+    padding: 5px 8px;
+    font-weight: 600;
+    text-align: left;
+  }
+  .choice-table td {
+    background: var(--teal-l);
+    padding: 6px 8px;
+    border: 1px solid #bae6fd;
+    vertical-align: top;
+  }
+  .choice-dest {
+    font-family: 'DM Mono', monospace;
+    font-size: 7pt;
+    color: var(--teal);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── APPENDIX TABLES ── */
+  .app-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin: 8px 0 16px 0;
+  }
+  .app-table th {
+    background: var(--navy);
+    color: white;
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 8pt;
+  }
+  .app-table td {
+    padding: 6px 10px;
+    border: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  .app-table tr:nth-child(even) td { background: var(--lgray); }
+  .app-table tr:nth-child(odd) td { background: white; }
+  .app-table .mono { font-family: 'DM Mono', monospace; font-size: 7.5pt; color: var(--teal); font-weight: 500; }
+  .app-table .total td { background: var(--teal-l); font-weight: 700; color: var(--navy); }
+
+  /* ── UTILITY ── */
+  h2.section-h {
+    font-family: 'Fraunces', serif;
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--teal);
+    margin: 16px 0 8px 0;
+  }
+  h3.sub-h {
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 12px 0 5px 0;
+  }
+  ul.doc-list { padding-left: 18px; margin: 4px 0; }
+  ul.doc-list li { margin: 3px 0; font-size: 9pt; }
+
+  .print-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11pt;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(14,116,144,0.35);
+    z-index: 100;
+    transition: background 0.2s;
+  }
+  .print-btn:hover { background: var(--navy); }
+
+  /* sequence colors */
+  .seq-navy   { background: var(--navy); }
+  .seq-purple { background: var(--purple); }
+  .seq-teal   { background: var(--teal); }
+  .seq-green  { background: var(--green); }
+  .seq-amber  { background: var(--amber); }
+  .seq-slate  { background: var(--slate); }
+  .seq-gray   { background: #4b5563; }
+
+  .bg-grn-l  { background: var(--grn-l) !important; }
+  .bg-amb-l  { background: var(--amb-l) !important; }
+  .bg-purp-l { background: var(--purp-l) !important; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Export to PDF</button>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 1 — COVER & HOW TO READ
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="cover-label">eLearning Storyboard</div>
+  <div class="cover-title">The Hiring Agent</div>
+  <div class="cover-sub">Agentic AI: Policy &amp; Governance — Branching Scenario Storyboard</div>
+  <hr class="cover-hr">
+
+  <table class="meta-table">
+    <tr>
+      <td class="label">Module</td><td class="value">Agentic AI: Policy &amp; Governance</td>
+      <td class="label">Scenario</td><td class="value">The Hiring Agent — Branching Scenario</td>
+    </tr>
+    <tr>
+      <td class="label">Audience</td><td class="value">Undergraduate students</td>
+      <td class="label">Duration</td><td class="value">~12–18 minutes (scenario segment)</td>
+    </tr>
+    <tr>
+      <td class="label">Format</td><td class="value">Tool-agnostic / Blended eLearning</td>
+      <td class="label">Slides</td><td class="value">23 slides across 5 sequences</td>
+    </tr>
+    <tr>
+      <td class="label">Branching</td><td class="value">3 decision points × 2 paths each, all paths converge</td>
+      <td class="label">Version</td><td class="value">1.0 — 2026</td>
+    </tr>
+  </table>
+
+  <hr class="cover-hr" style="border-color: var(--purple);">
+  <div class="how-to-read">
+    <h3>How to Read This Storyboard</h3>
+    <div class="slide-block">
+      <div class="col-subhead">
+        <div>Visual / Layout</div>
+        <div>Audio / Narration</div>
+        <div>Text &amp; Interaction</div>
+        <div>Dev Notes</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-cell">Describes the on-screen layout, background, characters, images, and animation cues.</div>
+        <div class="slide-cell">Full narrator script. <span class="cell-i">Italics = tone direction.</span> Read exactly as written unless noted.</div>
+        <div class="slide-cell">On-screen text, button labels, and learner interaction instructions.</div>
+        <div class="slide-cell">Technical specs, trigger logic, layer notes, and accessibility requirements for the developer.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend-row">
+    <div style="background:var(--navy)">Color Legend</div>
+    <div style="background:var(--purple)">Decision Point</div>
+    <div style="background:var(--amber)">Consequence Slide</div>
+    <div style="background:var(--green)">Reinforcement Slide</div>
+    <div style="background:var(--teal)">Convergence / Continue</div>
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Column Key: Visual / Audio / Text+Interaction / Dev Notes</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 2 — NAVIGATION MAP
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-navy">Navigation &amp; Branching Map</div>
+  <p style="font-size:9pt; color:var(--gray); margin-bottom:10px;">Three sequential decision points. Each has two paths — governance-aware (A) and governance-blind (B). All paths converge before the next decision, ensuring every learner faces all three decisions.</p>
+
+  <table class="nav-table">
+    <thead><tr><th style="width:18%">From</th><th style="width:18%">To</th><th>Condition / Trigger</th></tr></thead>
+    <tbody>
+      <tr><td>S-00 &nbsp;Title</td><td>S-01 &nbsp;Intro</td><td>Auto-advance after 3-second hold</td></tr>
+      <tr><td>S-01 &nbsp;Intro</td><td>S-02 &nbsp;Meet Danielle</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-02 &nbsp;Meet Danielle</td><td>S-03 &nbsp;The Complaint</td><td>Auto-advance</td></tr>
+      <tr><td>S-03 &nbsp;The Complaint</td><td>S-04 &nbsp;Decision Point 1</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-04 &nbsp;DP1 — Disclosure</td><td>S-05A &nbsp;Path A</td><td>Learner selects Option A — Require Disclosure</td></tr>
+      <tr><td>S-04 &nbsp;DP1 — Disclosure</td><td>S-05B &nbsp;Path B</td><td>Learner selects Option B — Decline Disclosure</td></tr>
+      <tr><td>S-05A &nbsp;Reinforce A</td><td>S-06 &nbsp;Converge 1</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-05B &nbsp;Consequence B</td><td>S-06 &nbsp;Converge 1</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-06 &nbsp;Converge 1</td><td>S-07 &nbsp;Decision Point 2</td><td>Auto-advance (4s) or Continue</td></tr>
+      <tr><td>S-07 &nbsp;DP2 — Liability</td><td>S-08A &nbsp;Path A</td><td>Learner selects Option A — Shared Accountability</td></tr>
+      <tr><td>S-07 &nbsp;DP2 — Liability</td><td>S-08B &nbsp;Path B</td><td>Learner selects Option B — Vendor Only</td></tr>
+      <tr><td>S-08A &nbsp;Reinforce A</td><td>S-09 &nbsp;Converge 2</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-08B &nbsp;Consequence B</td><td>S-09 &nbsp;Converge 2</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-09 &nbsp;Converge 2</td><td>S-10 &nbsp;Decision Point 3</td><td>Auto-advance (4s) or Continue</td></tr>
+      <tr><td>S-10 &nbsp;DP3 — Audit</td><td>S-11A &nbsp;Path A</td><td>Learner selects Option A — Suspend for Audit</td></tr>
+      <tr><td>S-10 &nbsp;DP3 — Audit</td><td>S-11B &nbsp;Path B</td><td>Learner selects Option B — Continue Operation</td></tr>
+      <tr><td>S-11A &nbsp;Reinforce A</td><td>S-12 &nbsp;Converge 3</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-11B &nbsp;Consequence B</td><td>S-12 &nbsp;Converge 3</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-12 &nbsp;Converge 3</td><td>S-13 &nbsp;Summary</td><td>Auto-advance (5s) or Continue</td></tr>
+      <tr><td>S-13 &nbsp;Summary</td><td>S-14 &nbsp;KC Q1</td><td>Learner clicks Continue</td></tr>
+      <tr><td>S-14 &nbsp;KC Q1</td><td>S-15 &nbsp;KC Q2</td><td>Correct answer submitted</td></tr>
+      <tr><td>S-15 &nbsp;KC Q2</td><td>S-16 &nbsp;KC Q3</td><td>Correct answer submitted</td></tr>
+      <tr><td>S-16 &nbsp;KC Q3</td><td>S-17 &nbsp;Complete</td><td>Correct answer submitted</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Column Key: Visual / Audio / Text+Interaction / Dev Notes</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 3 — SEQUENCE A: SETUP
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-navy">Sequence A — Setup &nbsp;(S-00 to S-03)</div>
+
+  <!-- S-00 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-00</div>
+      <div>Title Screen</div>
+      <div class="slide-type">Title / Branding</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-slate">Background</span><br>Full-bleed dark navy gradient. Center-aligned layout. Institution mark top-left. No other imagery.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">No Audio</span><br><span class="cell-i">Silent. Optional ambient tone (3-second loop).</span></div>
+      <div class="slide-cell"><span class="cell-b">THE HIRING AGENT</span> An Agentic AI Governance Scenario<br><span class="cell-s">Auto-advances after 3 seconds.</span></div>
+      <div class="slide-cell"><span class="cell-s">Slide duration: 3s. Disable learner nav. No back button.</span></div>
+    </div>
+  </div>
+
+  <!-- S-01 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-01</div>
+      <div>Scenario Introduction</div>
+      <div class="slide-type">Context / Scene-Setting</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-slate">Background</span><br>Split screen: left = Arbor Capital corporate lobby. Right = minimalist AI interface (clean, clinical). Subtle animation: data flowing through AI panel.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (warm, measured)</span><br>
+        <p class="ct">"You are a compliance officer at Arbor Capital — a mid-sized financial services firm."</p>
+        <p class="ct">"Six months ago, your firm deployed ArcHire: an agentic AI system that autonomously screens, interviews, and advances candidates through the first two rounds of hiring. No human reviews a candidate until the final interview stage."</p>
+        <p class="ct"><span class="cell-i">(pause) "Today, that system is about to become your problem."</span></p>
+      </div>
+      <div class="slide-cell"><span class="cell-b">Your Role:</span> Compliance Officer, Arbor Capital<br><span class="cell-b">Your Task:</span> Navigate three governance decisions that will determine Arbor Capital's response to an AI complaint.<br><br><span class="cell-s">Click Continue to begin.</span></div>
+      <div class="slide-cell"><span class="cell-s">Continue appears after audio ends. Back button disabled.</span><br><span class="cell-s">Accessibility: closed captions + full transcript PDF.</span></div>
+    </div>
+  </div>
+
+  <!-- S-02 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-02</div>
+      <div>Meet Danielle Torres</div>
+      <div class="slide-type">Character Introduction</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-slate">Character</span><br>Illustrated character: Danielle Torres — professional, neutral expression. ArcHire score card visible alongside:<br><br>Technical: 97th percentile<br>Cultural Alignment: 41/100<br>Status: <strong>REJECTED</strong></div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator</span><br>
+        <p class="ct">"Meet Danielle Torres. She applied for a senior analyst role at Arbor Capital."</p>
+        <p class="ct">"Her technical assessment score placed her in the 97th percentile — exceptional by any measure."</p>
+        <p class="ct">"But ArcHire rejected her. The reason logged: Cultural alignment score — 41 out of 100."</p>
+        <p class="ct"><span class="cell-i">"No explanation. No definition. No human ever reviewed her application."</span></p>
+      </div>
+      <div class="slide-cell"><span class="cell-b">Danielle Torres</span> Applied: Senior Analyst Role<br><br><span class="cell-b">ArcHire Score Card</span><br>Technical Assessment: 97th percentile<br>Cultural Alignment: 41 / 100<br>Status: REJECTED<br><br><span class="cell-s">No human reviewer. Automated decision only.</span></div>
+      <div class="slide-cell"><span class="cell-s">Score card animates in after character intro (0.5s delay). Pulse animation on 'REJECTED' badge.</span><br><br><span class="cell-s">'Cultural Alignment' deliberately undefined — the ambiguity is instructional.</span></div>
+    </div>
+  </div>
+
+  <!-- S-03 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-03</div>
+      <div>The Complaint</div>
+      <div class="slide-type">Narrative Escalation</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-slate">Background</span><br>Formal complaint letter on screen. Arbor Capital letterhead. 'COMPLAINT RECEIVED' stamp animates in (drop effect).</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (serious)</span><br>
+        <p class="ct">"Danielle has filed a formal complaint with the Equal Employment Opportunity Commission."</p>
+        <p class="ct">"She alleges the 'cultural alignment' score may be a proxy for protected characteristics — and that she was never told an AI, not a human, decided her fate."</p>
+        <p class="ct">"Arbor Capital's legal team cannot explain what cultural alignment measures or how ArcHire calculates it."</p>
+        <p class="ct"><span class="cell-i">"You have three decisions to make. Choose carefully — each one reflects a governance principle."</span></p>
+      </div>
+      <div class="slide-cell"><span class="cell-b">The Situation:</span><br>EEOC complaint filed: AI-made rejection, opaque scoring, no disclosure<br><br><span class="cell-b">What is at stake:</span><br>Arbor Capital's legal exposure<br>Danielle's right to a fair process<br>The future of ArcHire at your firm<br><br><span class="cell-s">Click Continue to face Decision 1.</span></div>
+      <div class="slide-cell"><span class="cell-s">Stamp uses drop-in animation (0.3s). Continue appears after audio.</span><br><br><span class="cell-s">LO connection: establishes all three governance gaps before DP1.</span></div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Sequence A — Setup</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 4 — SEQUENCE B: DECISION POINT 1
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-purple">Sequence B — Decision Point 1: Transparency &amp; Disclosure &nbsp;(S-04 to S-06)</div>
+
+  <!-- S-04 -->
+  <div class="slide-block">
+    <div class="slide-header seq-purple">
+      <div class="slide-id">S-04</div>
+      <div>Decision Point 1 — Should Arbor Require AI Disclosure?</div>
+      <div class="slide-type">Decision / Branch</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-purple">Background</span><br>Decision screen. Progress indicator top-right: 1 of 3 (filled dot, two empty).<br><br>Left: compliance officer desk. Right: two distinct choice areas.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator</span><br>
+        <p class="ct">"Your first decision: Danielle says she had no idea an AI rejected her. She was never told."</p>
+        <p class="ct">"Should Arbor Capital require ArcHire to disclose to all future candidates that an AI — not a human — will make the initial screening decision?"</p>
+        <p class="ct"><span class="cell-i">"Think about the governance principle at stake before you choose."</span></p>
+      </div>
+      <div class="slide-cell">
+        <span class="cell-b">Decision 1 of 3: Transparency</span>
+        <p class="ct">Should Arbor Capital require AI disclosure to all future candidates?</p>
+        <table class="choice-table">
+          <thead><tr><th>Option A</th><th>Option B</th></tr></thead>
+          <tbody><tr>
+            <td>Yes — require ArcHire to notify all candidates that an AI system will screen their application.<span class="choice-dest">→ S-05A</span></td>
+            <td>No — disclosure is not legally required and could create unnecessary applicant anxiety.<span class="choice-dest">→ S-05B</span></td>
+          </tr></tbody>
+        </table>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Store choice in variable DP1_Choice ('A' or 'B').</span><br><span class="cell-s">Disable Continue until selection made. No back nav.</span><br><span class="cell-s">Branch: A → S-05A, B → S-05B.</span></div>
+    </div>
+  </div>
+
+  <!-- S-05A -->
+  <div class="slide-block">
+    <div class="slide-header seq-green">
+      <div class="slide-id">S-05A</div>
+      <div>Path A — Require Disclosure (Governance-Aware)</div>
+      <div class="slide-type">Feedback / Reinforcement</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell bg-grn-l"><span class="cell-tag seq-green">Visual</span><br>Green-tinted panel. Animated checkmark. Background: notification sent to a candidate — 'You will be screened by an AI system' on a phone screen.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (affirming)</span><br>
+        <p class="ct">"Strong choice. Requiring disclosure is the cornerstone of AI transparency."</p>
+        <p class="ct">"Candidates have a right to know when a consequential decision about their future is being made by a machine — not a human who can exercise judgment and empathy."</p>
+        <p class="ct">"This aligns with the EU AI Act's requirements for high-risk AI systems and the OECD principle of transparency."</p>
+        <p class="ct"><span class="cell-i">"Arbor Capital has taken its first step toward accountable AI governance."</span></p>
+      </div>
+      <div class="slide-cell bg-grn-l">
+        <div class="callout" style="background:var(--grn-l); border-left: 3px solid var(--green);">
+          <div class="callout-label" style="color:var(--green)">Reinforcement</div>
+          <strong>Governance Principle: TRANSPARENCY</strong><br>Candidates must be informed when AI makes decisions that affect them. Disclosure is the foundation of informed consent in AI-mediated hiring.<br><br>
+          <strong>Policy Connection:</strong> EU AI Act, Article 52: transparency obligations for AI systems making consequential decisions about people.
+        </div>
+        <span class="cell-s">Click Continue.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Green accent palette. Checkmark animates on entry.</span><br><span class="cell-s">Continue → S-06.</span></div>
+    </div>
+  </div>
+
+  <!-- S-05B -->
+  <div class="slide-block">
+    <div class="slide-header seq-amber">
+      <div class="slide-id">S-05B</div>
+      <div>Path B — Decline Disclosure (Consequence)</div>
+      <div class="slide-type">Feedback / Consequence</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell bg-amb-l"><span class="cell-tag seq-amber">Visual</span><br>Amber-tinted panel. Warning icon. Background: crowd of applicants unaware they are being evaluated by an algorithm.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (measured, not punitive)</span><br>
+        <p class="ct">"That is a defensible position legally — for now. But consider the consequences."</p>
+        <p class="ct">"If candidates don't know an AI is deciding their future, they cannot challenge an error. They cannot ask why. They have no recourse."</p>
+        <p class="ct">"What is not legally required today may become mandatory tomorrow. Firms that haven't built disclosure habits will face a steeper transition."</p>
+        <p class="ct"><span class="cell-i">"Governance isn't only about compliance. It's about trust."</span></p>
+      </div>
+      <div class="slide-cell bg-amb-l">
+        <div class="callout" style="background:var(--amb-l); border-left: 3px solid var(--amber);">
+          <div class="callout-label" style="color:var(--amber)">Consequence</div>
+          <strong>Governance Gap Exposed: TRANSPARENCY</strong><br>Without disclosure, candidates are subject to AI decisions they cannot question or appeal. This erodes trust and concentrates power in opaque systems.<br><br>
+          <strong>Consider:</strong> The EU AI Act and emerging US state laws are moving toward mandatory disclosure for AI hiring tools.
+        </div>
+        <span class="cell-s">Click Continue. You can revisit this in the debrief.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Amber accent palette. Tone: reflective, not shaming.</span><br><span class="cell-s">Continue → S-06.</span></div>
+    </div>
+  </div>
+
+  <!-- S-06 -->
+  <div class="slide-block">
+    <div class="slide-header seq-teal">
+      <div class="slide-id">S-06</div>
+      <div>Convergence 1 — Decision Recorded</div>
+      <div class="slide-type">Convergence / Bridge</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-teal">Visual</span><br>Progress tracker updates: Decision 1 complete (filled). Decision 2 pulsing. Decision 3 pending.<br>Governance clipboard: first item checked.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (neutral)</span><br>
+        <p class="ct">"Your decision on transparency has been recorded."</p>
+        <p class="ct">"But Danielle's complaint raises a second question — one that cuts to the heart of who is responsible when AI causes harm."</p>
+        <p class="ct"><span class="cell-i">"Your next decision: accountability."</span></p>
+      </div>
+      <div class="slide-cell">Decision 1: Complete — Transparency<br><br>Next: Decision 2 — Accountability<br><br><span class="cell-s">Auto-advances to S-07 in 4 seconds, or click Continue.</span></div>
+      <div class="slide-cell"><span class="cell-s">Auto-advance: 4s. Allow manual override.</span><br><span class="cell-s">Progress tracker: persistent 3-circle UI, updates each convergence slide.</span><br><span class="cell-s">→ S-07</span></div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Sequence B — Decision Point 1: Transparency</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 5 — SEQUENCE C: DECISION POINT 2
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-purple">Sequence C — Decision Point 2: Accountability &amp; Liability &nbsp;(S-07 to S-09)</div>
+
+  <!-- S-07 -->
+  <div class="slide-block">
+    <div class="slide-header seq-purple">
+      <div class="slide-id">S-07</div>
+      <div>Decision Point 2 — Who Is Accountable?</div>
+      <div class="slide-type">Decision / Branch</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-purple">Background</span><br>Decision screen. Progress: 2 of 3. Two figures: Arbor Capital exec (desk), ArcHire vendor (tech logo). Question mark between them.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator</span><br>
+        <p class="ct">"Danielle's complaint has exposed a critical question: who is accountable for ArcHire's decision?"</p>
+        <p class="ct">"Arbor Capital procured and deployed the system. The ArcHire vendor designed and trained the algorithm. Neither party fully understands how 'cultural alignment' is calculated."</p>
+        <p class="ct"><span class="cell-i">"When AI causes harm across a supply chain — who pays?"</span></p>
+      </div>
+      <div class="slide-cell">
+        <span class="cell-b">Decision 2 of 3: Accountability</span>
+        <p class="ct">Who should bear responsibility for ArcHire's potentially discriminatory scoring?</p>
+        <table class="choice-table">
+          <thead><tr><th>Option A</th><th>Option B</th></tr></thead>
+          <tbody><tr>
+            <td>Both Arbor Capital AND the ArcHire vendor share joint accountability — each is responsible within their sphere of control.<span class="choice-dest">→ S-08A</span></td>
+            <td>The ArcHire vendor alone is accountable — Arbor Capital simply used the tool as designed.<span class="choice-dest">→ S-08B</span></td>
+          </tr></tbody>
+        </table>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Store choice in DP2_Choice.</span><br><span class="cell-s">Branch: A → S-08A, B → S-08B.</span><br><span class="cell-s">Disable Continue until selection made.</span></div>
+    </div>
+  </div>
+
+  <!-- S-08A -->
+  <div class="slide-block">
+    <div class="slide-header seq-green">
+      <div class="slide-id">S-08A</div>
+      <div>Path A — Shared Accountability (Governance-Aware)</div>
+      <div class="slide-type">Feedback / Reinforcement</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell bg-grn-l"><span class="cell-tag seq-green">Visual</span><br>Green-tinted panel. Animated checkmark. Venn diagram: two overlapping circles — 'Arbor Capital' and 'ArcHire Vendor' — shared responsibility in the overlap zone.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (affirming)</span><br>
+        <p class="ct">"Exactly right. Accountability in AI supply chains is shared — and deliberately so."</p>
+        <p class="ct">"Arbor Capital chose to deploy a system whose decision logic it couldn't explain. The vendor built a system that produced opaque, potentially discriminatory scores. Both are responsible."</p>
+        <p class="ct">"The EU AI Act places obligations on both deployers and providers. NIST's AI RMF calls for accountability at every point in the AI lifecycle."</p>
+        <p class="ct"><span class="cell-i">"Shared accountability is not about blame. It's about ensuring no part of the chain can escape scrutiny."</span></p>
+      </div>
+      <div class="slide-cell bg-grn-l">
+        <div class="callout" style="background:var(--grn-l); border-left: 3px solid var(--green);">
+          <div class="callout-label" style="color:var(--green)">Reinforcement</div>
+          <strong>Governance Principle: ACCOUNTABILITY</strong><br>Organizations that deploy AI systems are accountable for the outcomes those systems produce — even when they don't fully understand the system.<br><br>
+          <strong>Policy Connection:</strong> NIST AI RMF: Organizations must govern AI throughout procurement, deployment, and operation.
+        </div>
+        <span class="cell-s">Click Continue.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Venn diagram: static graphic asset.</span><br><span class="cell-s">Continue → S-09.</span></div>
+    </div>
+  </div>
+
+  <!-- S-08B -->
+  <div class="slide-block">
+    <div class="slide-header seq-amber">
+      <div class="slide-id">S-08B</div>
+      <div>Path B — Vendor-Only Accountability (Consequence)</div>
+      <div class="slide-type">Feedback / Consequence</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell bg-amb-l"><span class="cell-tag seq-amber">Visual</span><br>Amber-tinted panel. Arrow pointing only to vendor logo. Arbor Capital figure faded to 30% opacity. Warning icon.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (measured)</span><br>
+        <p class="ct">"This argument is tempting — and it's the one many organizations make. But courts, regulators, and victims rarely accept it."</p>
+        <p class="ct">"When Arbor Capital chose to use ArcHire, it took on responsibility for what the system does. 'We didn't build it' is not a governance strategy."</p>
+        <p class="ct">"Diffused accountability — where everyone points at someone else — is how AI harms go unaddressed."</p>
+        <p class="ct"><span class="cell-i">"The organization that deploys an AI system in a consequential context owns a share of the outcome."</span></p>
+      </div>
+      <div class="slide-cell bg-amb-l">
+        <div class="callout" style="background:var(--amb-l); border-left: 3px solid var(--amber);">
+          <div class="callout-label" style="color:var(--amber)">Consequence</div>
+          <strong>Governance Gap Exposed: ACCOUNTABILITY</strong><br>Assuming the vendor bears all responsibility creates a governance vacuum. Deploying organizations must answer for the AI systems they choose to use.<br><br>
+          <strong>Consider:</strong> Several US state laws hold employers — not AI vendors — responsible for discriminatory automated hiring decisions.
+        </div>
+        <span class="cell-s">Click Continue.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Fade Arbor Capital figure to 30% opacity. Amber accent.</span><br><span class="cell-s">Continue → S-09.</span></div>
+    </div>
+  </div>
+
+  <!-- S-09 -->
+  <div class="slide-block">
+    <div class="slide-header seq-teal">
+      <div class="slide-id">S-09</div>
+      <div>Convergence 2 — Decision Recorded</div>
+      <div class="slide-type">Convergence / Bridge</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-teal">Visual</span><br>Progress tracker: two complete, third pulsing. Clipboard: two items checked.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator</span><br>
+        <p class="ct">"Two decisions made. One remains."</p>
+        <p class="ct">"Transparency and accountability are addressed — but there is a third governance gap that goes to the very heart of trustworthy AI: auditability."</p>
+        <p class="ct"><span class="cell-i">"Can Arbor Capital actually examine what ArcHire did — and prove it was fair?"</span></p>
+      </div>
+      <div class="slide-cell">Decision 2: Complete — Accountability<br><br>Next: Decision 3 — Auditability<br><br><span class="cell-s">Auto-advances in 4s or click Continue.</span></div>
+      <div class="slide-cell"><span class="cell-s">Auto-advance 4s. → S-10.</span></div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Sequence C — Decision Point 2: Accountability</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 6 — SEQUENCE D: DECISION POINT 3
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-purple">Sequence D — Decision Point 3: Auditability &amp; Oversight &nbsp;(S-10 to S-12)</div>
+
+  <!-- S-10 -->
+  <div class="slide-block">
+    <div class="slide-header seq-purple">
+      <div class="slide-id">S-10</div>
+      <div>Decision Point 3 — Suspend ArcHire or Continue?</div>
+      <div class="slide-type">Decision / Branch</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-purple">Background</span><br>Decision screen. Progress: 3 of 3. ArcHire interface showing 'system running.' Pause icon on one side, green 'continue' indicator on the other.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator</span><br>
+        <p class="ct">"Your legal team confirms: Arbor Capital has no legal obligation to suspend ArcHire while the complaint is investigated."</p>
+        <p class="ct">"But no one at Arbor Capital can fully explain how ArcHire produces its 'cultural alignment' score. There are no audit logs detailed enough to reconstruct the decision."</p>
+        <p class="ct">"ArcHire is still screening hundreds of candidates this week."</p>
+        <p class="ct"><span class="cell-i">"Your final decision: what do you do?"</span></p>
+      </div>
+      <div class="slide-cell">
+        <span class="cell-b">Decision 3 of 3: Auditability</span>
+        <p class="ct">Should Arbor Capital suspend ArcHire pending an independent audit — even without a legal obligation to do so?</p>
+        <table class="choice-table">
+          <thead><tr><th>Option A</th><th>Option B</th></tr></thead>
+          <tbody><tr>
+            <td>Yes — suspend ArcHire immediately and commission an independent algorithmic audit before resuming.<span class="choice-dest">→ S-11A</span></td>
+            <td>No — continue using ArcHire. No legal requirement to stop, and business continuity is a priority.<span class="choice-dest">→ S-11B</span></td>
+          </tr></tbody>
+        </table>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Store choice in DP3_Choice.</span><br><span class="cell-s">Branch: A → S-11A, B → S-11B.</span><br><br><span class="cell-s">Note: Both choices are defensible — feedback reflects genuine nuance.</span></div>
+    </div>
+  </div>
+
+  <!-- S-11A -->
+  <div class="slide-block">
+    <div class="slide-header seq-green">
+      <div class="slide-id">S-11A</div>
+      <div>Path A — Suspend for Audit (Governance-Aware)</div>
+      <div class="slide-type">Feedback / Reinforcement</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell bg-grn-l"><span class="cell-tag seq-green">Visual</span><br>Green-tinted panel. ArcHire interface shows 'PAUSED — UNDER REVIEW' badge (animated). Magnifying glass icon overlaid on data streams.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (affirming)</span><br>
+        <p class="ct">"A principled choice — and a proactive one."</p>
+        <p class="ct">"Auditability means being able to examine what an AI system did, why it did it, and whether it was fair. Without that ability, you are deploying a decision-maker you cannot hold to account."</p>
+        <p class="ct">"Suspending ArcHire is not about admitting guilt. It's about responsible governance: you don't continue operating a system you can't explain when real people's livelihoods are at stake."</p>
+        <p class="ct"><span class="cell-i">"This is the hardest governance decision — it has a real business cost. But governance often does."</span></p>
+      </div>
+      <div class="slide-cell bg-grn-l">
+        <div class="callout" style="background:var(--grn-l); border-left: 3px solid var(--green);">
+          <div class="callout-label" style="color:var(--green)">Reinforcement</div>
+          <strong>Governance Principle: AUDITABILITY</strong><br>Trustworthy AI systems must produce decision logs sufficient for independent review. If you cannot audit a system's decisions, you cannot govern it.<br><br>
+          <strong>Policy Connection:</strong> NIST AI RMF: 'Accountable' AI requires documentation and traceability. EU AI Act requires conformity assessments for high-risk systems.
+        </div>
+        <span class="cell-s">Click Continue.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">'PAUSED — UNDER REVIEW' badge animates on ArcHire UI graphic.</span><br><span class="cell-s">Acknowledge business cost — don't sanitize.</span><br><span class="cell-s">Continue → S-12.</span></div>
+    </div>
+  </div>
+
+  <!-- S-11B -->
+  <div class="slide-block">
+    <div class="slide-header seq-amber">
+      <div class="slide-id">S-11B</div>
+      <div>Path B — Continue Operation (Consequence)</div>
+      <div class="slide-type">Feedback / Consequence</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell bg-amb-l"><span class="cell-tag seq-amber">Visual</span><br>Amber-tinted panel. ArcHire continues running — scores ticking. New candidates processed. Warning icon: 'Potentially discriminatory decisions accumulating.'</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (serious, measured)</span><br>
+        <p class="ct">"Legal compliance and good governance are not the same thing."</p>
+        <p class="ct">"Every candidate ArcHire processes this week may be subject to the same flawed scoring. The harm compounds — and the audit trail grows harder to reconstruct."</p>
+        <p class="ct">"When regulators or courts examine this case, the fact that Arbor Capital continued operating a system it could not explain will be difficult to defend."</p>
+        <p class="ct"><span class="cell-i">"'We didn't have to stop' is not the same as 'we were right not to.'"</span></p>
+      </div>
+      <div class="slide-cell bg-amb-l">
+        <div class="callout" style="background:var(--amb-l); border-left: 3px solid var(--amber);">
+          <div class="callout-label" style="color:var(--amber)">Consequence</div>
+          <strong>Governance Gap Exposed: AUDITABILITY</strong><br>Operating a consequential AI system without the ability to audit its decisions is a governance failure — regardless of legal status. Harm that cannot be traced cannot be remedied.<br><br>
+          <strong>Consider:</strong> NYC Local Law 144 requires bias audits for automated hiring tools. Other jurisdictions are following.
+        </div>
+        <span class="cell-s">Click Continue.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Warning icon pulses as ArcHire continues running.</span><br><span class="cell-s">Tone: deliberately uncomfortable — appropriate.</span><br><span class="cell-s">Continue → S-12.</span></div>
+    </div>
+  </div>
+
+  <!-- S-12 -->
+  <div class="slide-block">
+    <div class="slide-header seq-teal">
+      <div class="slide-id">S-12</div>
+      <div>Convergence 3 — All Decisions Complete</div>
+      <div class="slide-type">Convergence / Transition</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-teal">Visual</span><br>All three progress circles filled. Clipboard: three items checked. Warm transition to summary begins.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (reflective)</span><br>
+        <p class="ct">"Three decisions. Three governance principles."</p>
+        <p class="ct">"Transparency — so candidates know who is deciding their future."</p>
+        <p class="ct">"Accountability — so no organization can hide behind its AI vendor."</p>
+        <p class="ct"><span class="cell-i">"And auditability — so we can actually examine whether AI-made decisions were fair."</span></p>
+        <p class="ct">"Let's look at what the governance landscape requires — and where the gaps still are."</p>
+      </div>
+      <div class="slide-cell">All three decisions recorded.<br><br>Governance Principles Covered:<br>1. Transparency<br>2. Accountability<br>3. Auditability<br><br><span class="cell-s">Advancing to Governance Summary...</span></div>
+      <div class="slide-cell"><span class="cell-s">Auto-advance 5s. Allow Continue override.</span><br><span class="cell-s">Optional: display learner's DP1/DP2/DP3 choices if LMS supports variable display.</span></div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Sequence D — Decision Point 3: Auditability</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 7 — SEQUENCE E: SUMMARY & KNOWLEDGE CHECK
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-teal">Sequence E — Governance Summary &amp; Knowledge Check &nbsp;(S-13 to S-17)</div>
+
+  <!-- S-13 -->
+  <div class="slide-block">
+    <div class="slide-header seq-teal">
+      <div class="slide-id">S-13</div>
+      <div>Governance Summary</div>
+      <div class="slide-type">Summary / Synthesis</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-teal">Visual</span><br>Three governance principle tiles — Transparency (blue), Accountability (purple), Auditability (teal). Each tile: one-line definition + policy icon.<br><br>Framework references: EU AI Act, NIST AI RMF, OECD AI Principles.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator</span><br>
+        <p class="ct">"Agentic AI systems — systems that take autonomous sequential actions to achieve goals — introduce governance challenges that traditional compliance frameworks weren't designed for."</p>
+        <p class="ct">"Three principles guide responsible governance: transparency, accountability, and auditability."</p>
+        <p class="ct">"Two frameworks are already addressing these gaps: the EU AI Act, which sets binding requirements for high-risk AI systems including hiring tools — and the NIST AI Risk Management Framework."</p>
+        <p class="ct"><span class="cell-i">"Governance isn't the enemy of innovation. It's what makes innovation trustworthy."</span></p>
+      </div>
+      <div class="slide-cell"><span class="cell-b">Transparency</span> Affected parties must know when and how AI is deciding their futures.<br><br><span class="cell-b">Accountability</span> Responsibility cannot be diffused. Deployers own a share of every outcome.<br><br><span class="cell-b">Auditability</span> AI systems must produce records sufficient for independent examination.<br><br><span class="cell-b">Key Frameworks:</span> EU AI Act &nbsp;|&nbsp; NIST AI RMF &nbsp;|&nbsp; OECD AI Principles<br><br><span class="cell-s">Click Continue for Knowledge Check.</span></div>
+      <div class="slide-cell"><span class="cell-s">Three tiles animate sequentially (0.4s apart). No auto-advance — allow learner to review.</span><br><span class="cell-s">LO connections: LO1, LO2, LO3, LO4.</span></div>
+    </div>
+  </div>
+
+  <!-- S-14 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-14</div>
+      <div>Knowledge Check — Question 1 of 3</div>
+      <div class="slide-type">Graded Interaction</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell">Clean white quiz layout. Question at top. Four clickable answer choices. Correct/incorrect feedback inline after selection.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">No Audio</span><br><span class="cell-i">Knowledge check slides are silent.</span></div>
+      <div class="slide-cell">
+        <span class="cell-b">Q1 of 3:</span> ArcHire autonomously screens, interviews, and advances candidates without human review at each step. Which characteristic makes this an <em>agentic</em> AI system?<br><br>
+        A) It uses a large language model<br>
+        <strong>B) It takes sequential autonomous actions toward a goal without requiring human approval at each step</strong><br>
+        C) It stores candidate data on a cloud server<br>
+        D) It was built by a third-party vendor<br><br>
+        <span class="cell-b">Correct: B</span><br>
+        <span class="cell-s">Feedback (correct): Exactly. Agentic AI is defined by autonomous, sequential goal-directed action.</span><br>
+        <span class="cell-s">Feedback (incorrect): The key characteristic is autonomy: ArcHire acts across multiple steps without human approval at each step.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Single-select. Inline feedback. Retry: unlimited, no penalty.</span><br><span class="cell-s">Maps to: LO1, LO2.</span><br><span class="cell-s">Continue unlocks on correct answer.</span></div>
+    </div>
+  </div>
+
+  <!-- S-15 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-15</div>
+      <div>Knowledge Check — Question 2 of 3</div>
+      <div class="slide-type">Graded Interaction</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell">Same quiz layout as S-14.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">No Audio</span><br><span class="cell-i">Silent.</span></div>
+      <div class="slide-cell">
+        <span class="cell-b">Q2 of 3:</span> Arbor Capital's legal team cannot explain how ArcHire's 'cultural alignment' score is produced, and no audit log exists. Which governance gap does this represent?<br><br>
+        A) Accountability<br>
+        B) Scalability<br>
+        <strong>C) Auditability</strong><br>
+        D) Interoperability<br><br>
+        <span class="cell-b">Correct: C</span><br>
+        <span class="cell-s">Feedback (correct): Right. Auditability means being able to examine what a system did and why. Without it, you can't remedy harm you can't trace.</span><br>
+        <span class="cell-s">Feedback (incorrect): Think about which principle concerns the ability to examine and reconstruct AI decisions.</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Maps to: LO3. Retry permitted.</span><br><span class="cell-s">Continue unlocks on correct answer.</span></div>
+    </div>
+  </div>
+
+  <!-- S-16 -->
+  <div class="slide-block">
+    <div class="slide-header seq-navy">
+      <div class="slide-id">S-16</div>
+      <div>Knowledge Check — Question 3 of 3</div>
+      <div class="slide-type">Graded Interaction</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell">Same quiz layout.</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">No Audio</span><br><span class="cell-i">Silent.</span></div>
+      <div class="slide-cell">
+        <span class="cell-b">Q3 of 3:</span> You are evaluating a new agentic AI tool for customer service. Which best demonstrates applying a governance lens?<br><br>
+        A) Running a performance benchmark to measure response speed<br>
+        B) Confirming the vendor has a SOC 2 certification<br>
+        <strong>C) Asking: 'Who is responsible if this system causes harm — and how would we know it happened?'</strong><br>
+        D) Checking whether the tool integrates with your existing CRM<br><br>
+        <span class="cell-b">Correct: C</span><br>
+        <span class="cell-s">Feedback (correct): Exactly. A governance lens asks about accountability, traceability, and harm — not just performance or integration.</span><br>
+        <span class="cell-s">Feedback (incorrect): Those considerations matter — but governance asks: who is accountable, what could go wrong, and how would we know?</span>
+      </div>
+      <div class="slide-cell"><span class="cell-s">Maps to: LO4, LO5.</span><br><span class="cell-s">Final KC. Continue → S-17 on correct answer.</span></div>
+    </div>
+  </div>
+
+  <!-- S-17 -->
+  <div class="slide-block">
+    <div class="slide-header seq-teal">
+      <div class="slide-id">S-17</div>
+      <div>Module Complete</div>
+      <div class="slide-type">Completion / Close</div>
+    </div>
+    <div class="col-subhead"><div>Visual / Layout</div><div>Audio / Narration</div><div>Text &amp; Interaction</div><div>Dev Notes</div></div>
+    <div class="slide-body">
+      <div class="slide-cell"><span class="cell-tag seq-teal">Visual</span><br>Full-bleed teal/navy gradient. Completion badge centered. Subtle professional particle effect.<br><br>Optional: learner name from LMS. Optional: display DP1/DP2/DP3 choices as 'Your Governance Record.'</div>
+      <div class="slide-cell"><span class="cell-tag seq-slate">Narrator (warm close)</span><br>
+        <p class="ct">"Well done. You have navigated three of the hardest governance decisions in the agentic AI space — and you've done it with rigor."</p>
+        <p class="ct">"The questions you asked here — about transparency, accountability, and auditability — are the same questions that regulators, policymakers, and ethicists are asking right now."</p>
+        <p class="ct">"In your next class session, you will debate these decisions with your peers and draft a real policy recommendation."</p>
+        <p class="ct"><span class="cell-i">"The governance conversation about AI is just beginning — and you're now part of it."</span></p>
+      </div>
+      <div class="slide-cell"><span class="cell-b">Module Complete!</span><br>The Hiring Agent: Agentic AI Governance Scenario<br><br><span class="cell-b">What You Covered:</span><br>Transparency — disclosure and the right to know<br>Accountability — shared responsibility across the AI supply chain<br>Auditability — the foundation of trustworthy AI governance<br><br><span class="cell-b">What's Next:</span> Join your instructor for the live debrief and Policy Memo Sprint.<br><br><span class="cell-s">Exit module or return to course menu.</span></div>
+      <div class="slide-cell"><span class="cell-s">LMS completion trigger fires on this slide.</span><br><span class="cell-s">No back navigation from completion screen.</span><br><span class="cell-s">Exit button → course menu.</span></div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Sequence E — Summary &amp; Knowledge Check</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 8 — APPENDIX
+═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="doc-header">
+    <span>eLearning Storyboard &nbsp;|&nbsp; The Hiring Agent: Agentic AI Branching Scenario</span>
+    <span class="right">Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; v1.0 &nbsp;|&nbsp; 2026</span>
+  </div>
+
+  <div class="section-banner seq-gray">Appendix — Production Notes, Asset List &amp; Accessibility</div>
+
+  <h2 class="section-h">A. Slide Count &amp; Timing Summary</h2>
+  <table class="app-table">
+    <thead><tr><th>Sequence</th><th>Slides</th><th>Type</th><th>Estimated Time</th></tr></thead>
+    <tbody>
+      <tr><td>A — Setup</td><td>S-00 to S-03</td><td>Context / scene-setting</td><td>3–4 min</td></tr>
+      <tr><td>B — Decision 1</td><td>S-04 to S-06</td><td>Branch: Transparency</td><td>2–3 min</td></tr>
+      <tr><td>C — Decision 2</td><td>S-07 to S-09</td><td>Branch: Accountability</td><td>2–3 min</td></tr>
+      <tr><td>D — Decision 3</td><td>S-10 to S-12</td><td>Branch: Auditability</td><td>2–3 min</td></tr>
+      <tr><td>E — Summary &amp; KC</td><td>S-13 to S-17</td><td>Summary + 3 knowledge checks</td><td>3–5 min</td></tr>
+      <tr class="total"><td><strong>TOTAL</strong></td><td><strong>23 slides</strong></td><td><strong>3 decisions × 2 paths + converge</strong></td><td><strong>12–18 min</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-h">B. Asset List</h2>
+  <table class="app-table">
+    <thead><tr><th style="width:8%">Asset ID</th><th style="width:28%">Description</th><th style="width:28%">Used In</th><th>Notes for Developer</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">IMG-01</td><td>Danielle Torres — character illustration</td><td>S-02, S-03</td><td>Professional, neutral; illustrated (not photo)</td></tr>
+      <tr><td class="mono">IMG-02</td><td>ArcHire score card mockup</td><td>S-02, S-03, S-10, S-11A, S-11B</td><td>Tech: 97th, Cultural: 41/100, Status: REJECTED</td></tr>
+      <tr><td class="mono">IMG-03</td><td>Arbor Capital lobby / office background</td><td>S-01, S-03</td><td>Generic corporate; no real brand logos</td></tr>
+      <tr><td class="mono">IMG-04</td><td>EEOC complaint letter + stamp graphic</td><td>S-03</td><td>'COMPLAINT RECEIVED' stamp with drop-in animation</td></tr>
+      <tr><td class="mono">IMG-05</td><td>Progress tracker UI (3 circles)</td><td>S-04, S-06 – S-10, S-12</td><td>Persistent element; updates at each convergence</td></tr>
+      <tr><td class="mono">IMG-06</td><td>Venn diagram — shared accountability</td><td>S-08A</td><td>Two overlapping circles; static graphic</td></tr>
+      <tr><td class="mono">IMG-07</td><td>Governance summary tiles (×3)</td><td>S-13</td><td>Transparency / Accountability / Auditability</td></tr>
+      <tr><td class="mono">AUD-01</td><td>Narrator audio — full script</td><td>S-01 to S-13</td><td>Warm, professional; not robotic. See scripts in storyboard.</td></tr>
+      <tr><td class="mono">VAR-01</td><td>DP1_Choice</td><td>S-04 → S-05A/B</td><td>String variable: 'A' or 'B'</td></tr>
+      <tr><td class="mono">VAR-02</td><td>DP2_Choice</td><td>S-07 → S-08A/B</td><td>String variable: 'A' or 'B'</td></tr>
+      <tr><td class="mono">VAR-03</td><td>DP3_Choice</td><td>S-10 → S-11A/B</td><td>String variable: 'A' or 'B'</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-h">C. Accessibility Requirements</h2>
+  <ul class="doc-list">
+    <li>All audio narration must have synchronized closed captions (WCAG 2.1 AA minimum)</li>
+    <li>All images must include descriptive alt text (supplied separately by instructional designer)</li>
+    <li>Keyboard navigation must be enabled on all interactive elements: choice buttons, Continue, Exit</li>
+    <li>Minimum contrast ratio: 4.5:1 for all on-screen text (WCAG AA)</li>
+    <li>Do not use color alone to convey feedback — pair correct/incorrect with icons (checkmark / warning)</li>
+    <li>Full narrator transcript available as downloadable PDF from any narrated slide</li>
+  </ul>
+
+  <h2 class="section-h">D. LMS &amp; SCORM Requirements</h2>
+  <ul class="doc-list">
+    <li>SCORM 1.2 or xAPI (Tin Can) compatible output required</li>
+    <li>Completion trigger: learner reaches S-17 (Module Complete slide)</li>
+    <li>Score tracking: 3-question knowledge check — pass threshold 2/3 correct (67%)</li>
+    <li>Suspend/resume: progress saved at each convergence slide (S-06, S-09, S-12)</li>
+    <li>xAPI reporting: capture DP1_Choice, DP2_Choice, DP3_Choice variables for debrief data</li>
+  </ul>
+
+  <div style="border-top: 2px solid var(--teal); margin-top: 28px; padding-top: 10px; text-align:center; font-style:italic; font-size:8.5pt; color:var(--mgray);">
+    Storyboard prepared for Curriculum Development &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance &nbsp;|&nbsp; 2026
+  </div>
+
+  <div class="doc-footer">
+    <span>Confidential — Curriculum Development Draft</span>
+    <span>Appendix</span>
+  </div>
+</div>
+
+</body>
+</html>
