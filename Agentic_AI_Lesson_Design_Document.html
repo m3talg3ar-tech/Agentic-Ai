@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson Design Document — Agentic AI: Policy &amp; Governance</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #1B3A6B;
+    --teal:   #0E7490;
+    --teal-l: #EFF6FF;
+    --purple: #4C1D95;
+    --purp-l: #EDE9FE;
+    --amber:  #92400E;
+    --amb-l:  #FEF3C7;
+    --green:  #065F46;
+    --grn-l:  #D1FAE5;
+    --gray:   #374151;
+    --lgray:  #F3F4F6;
+    --mgray:  #6B7280;
+    --slate:  #475569;
+    --white:  #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; font-size: 11pt; color: var(--gray); background: #eef1f5; line-height: 1.6; }
+
+  @media print {
+    body { background: white; font-size: 9.5pt; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+    @page { size: A4 portrait; margin: 16mm 16mm 16mm 16mm; }
+    .no-print { display: none; }
+    .avoid-break { page-break-inside: avoid; }
+  }
+
+  .page { background: white; width: 210mm; margin: 24px auto; padding: 16mm 16mm 20mm 16mm; box-shadow: 0 4px 32px rgba(0,0,0,0.11); border-radius: 4px; }
+
+  .doc-header { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 6px; border-bottom: 2.5px solid var(--teal); margin-bottom: 22px; font-size: 8pt; color: var(--teal); }
+  .doc-header .right { color: var(--mgray); }
+  .doc-footer { border-top: 1.5px solid var(--teal); margin-top: 22px; padding-top: 6px; font-size: 7.5pt; color: var(--mgray); display: flex; justify-content: space-between; }
+
+  .cover-label { font-family: 'DM Mono', monospace; font-size: 8pt; font-weight: 500; letter-spacing: 0.14em; color: var(--teal); text-transform: uppercase; margin-bottom: 10px; }
+  .cover-title { font-family: 'Fraunces', serif; font-size: 34pt; font-weight: 900; color: var(--navy); line-height: 1.05; margin-bottom: 8px; }
+  .cover-sub { font-size: 12pt; color: var(--gray); font-style: italic; margin-bottom: 20px; }
+  .cover-hr { border: none; border-top: 2px solid var(--teal); margin: 14px 0; }
+
+  .section-banner { font-family: 'DM Mono', monospace; font-size: 8pt; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: white; padding: 8px 14px; margin: 24px 0 14px 0; border-radius: 3px; }
+
+  h2 { font-family: 'Fraunces', serif; font-size: 17pt; font-weight: 700; color: var(--teal); margin: 18px 0 8px 0; line-height: 1.2; }
+  h3 { font-size: 11pt; font-weight: 600; color: var(--navy); margin: 14px 0 6px 0; }
+  p.body-text { font-size: 10pt; color: var(--gray); margin: 4px 0 8px 0; line-height: 1.65; }
+
+  ul.doc-list { padding-left: 20px; margin: 6px 0 10px 0; }
+  ul.doc-list li { font-size: 10pt; margin: 4px 0; line-height: 1.55; }
+  ul.doc-list li ul { padding-left: 18px; margin-top: 3px; }
+  ul.doc-list li ul li { font-size: 9.5pt; color: var(--mgray); list-style-type: circle; }
+
+  .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 9.5pt; }
+  .meta-table td { padding: 7px 11px; border: 1px solid #ddd; vertical-align: top; }
+  .meta-table .lbl { background: var(--navy); color: white; font-weight: 600; width: 18%; white-space: nowrap; }
+  .meta-table .val { background: white; }
+  .meta-table tr:nth-child(even) .val { background: var(--lgray); }
+
+  .callout { display: flex; border-radius: 3px; overflow: hidden; margin: 8px 0; }
+  .callout-label { font-family: 'DM Mono', monospace; font-size: 7.5pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: white; padding: 10px 12px; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); white-space: nowrap; display: flex; align-items: center; min-width: 28px; }
+  .callout-body { padding: 10px 14px; font-size: 9.5pt; line-height: 1.6; flex: 1; }
+
+  .doc-table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 8px 0 14px 0; }
+  .doc-table th { padding: 7px 11px; text-align: left; font-weight: 600; font-size: 8.5pt; color: white; letter-spacing: 0.04em; }
+  .doc-table td { padding: 7px 11px; border: 1px solid #e5e7eb; vertical-align: top; line-height: 1.55; }
+  .doc-table tr:nth-child(odd) td { background: white; }
+  .doc-table tr:nth-child(even) td { background: var(--lgray); }
+  .doc-table .mono { font-family: 'DM Mono', monospace; font-size: 8pt; color: var(--teal); font-weight: 500; }
+
+  .phase-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 7.5pt; font-weight: 600; color: white; padding: 2px 7px; border-radius: 2px; letter-spacing: 0.05em; }
+
+  .kc-box { border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden; margin: 8px 0; font-size: 9pt; }
+  .kc-box-header { font-family: 'DM Mono', monospace; font-size: 7.5pt; font-weight: 600; letter-spacing: 0.08em; color: white; padding: 5px 12px; background: var(--slate); }
+  .kc-box-body { padding: 10px 14px; background: var(--lgray); line-height: 1.6; }
+  .kc-box-body strong { color: var(--navy); }
+
+  .memo-table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 8px 0; }
+  .memo-table td { padding: 8px 12px; border: 1px solid #e5e7eb; vertical-align: top; }
+  .memo-table .memo-label { background: var(--teal); color: white; font-weight: 600; width: 22%; white-space: nowrap; }
+  .memo-table tr:nth-child(even) .memo-label { background: #0a6680; }
+  .memo-table tr:nth-child(even) td:last-child { background: var(--lgray); }
+
+  .rationale-box { border-left: 4px solid var(--slate); background: var(--lgray); padding: 10px 14px; margin: 8px 0; border-radius: 0 3px 3px 0; font-size: 9.5pt; line-height: 1.6; }
+  .rationale-box .rat-label { font-family: 'DM Mono', monospace; font-size: 7.5pt; font-weight: 600; color: var(--slate); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+
+  .print-btn { position: fixed; bottom: 28px; right: 28px; background: var(--teal); color: white; border: none; padding: 12px 22px; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 11pt; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px rgba(14,116,144,0.35); z-index: 100; transition: background 0.2s; }
+  .print-btn:hover { background: var(--navy); }
+
+  .bg-navy   { background: var(--navy); }
+  .bg-teal   { background: var(--teal); }
+  .bg-purple { background: var(--purple); }
+  .bg-amber  { background: var(--amber); }
+  .bg-green  { background: var(--green); }
+  .bg-slate  { background: var(--slate); }
+  .bg-gray   { background: #4b5563; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Export to PDF</button>
+
+<!-- PAGE 1 — COVER -->
+<div class="page">
+  <div class="doc-header">
+    <span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span>
+    <span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span>
+  </div>
+  <div class="cover-label">Lesson Design Document</div>
+  <div class="cover-title">Agentic AI:<br>Navigating Policy &amp; Governance</div>
+  <div class="cover-sub">A Kirkpatrick-Aligned Short Lesson for Undergraduate Cybersecurity Students</div>
+  <hr class="cover-hr">
+  <table class="meta-table">
+    <tr><td class="lbl">Audience</td><td class="val" colspan="3">Undergraduate students — cybersecurity or adjacent fields</td></tr>
+    <tr><td class="lbl">Format</td><td class="val">eLearning + Instructor-led (blended)</td><td class="lbl" style="width:14%">Duration</td><td class="val" style="width:18%">15–30 minutes</td></tr>
+    <tr><td class="lbl">Primary Goal</td><td class="val">Policy &amp; Governance Thinking</td><td class="lbl">Framework</td><td class="val">Kirkpatrick Model</td></tr>
+    <tr><td class="lbl">Version</td><td class="val" colspan="3">1.0 — 2026</td></tr>
+  </table>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Agentic AI: Policy &amp; Governance</span></div>
+</div>
+
+<!-- PAGE 2 — KIRKPATRICK BLUEPRINT -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-navy">Section 1 — Kirkpatrick Blueprint</div>
+  <h2>Designed Backwards: From Results to Reaction</h2>
+  <p class="body-text">The Kirkpatrick Model is applied in reverse order during design — starting with the organizational outcome we want to support, then working back to the learner experience. This ensures every instructional decision is anchored to real impact.</p>
+
+  <h3>Level 4 — Results (Organizational / Societal Outcome)</h3>
+  <div class="callout avoid-break">
+    <div class="callout-label bg-navy">Goal</div>
+    <div class="callout-body" style="background:var(--teal-l)">Students become informed citizens and emerging professionals who can critically engage with AI governance questions — reducing the risk of ungoverned AI deployment in their future workplaces and contributing to stronger public policy discourse.</div>
+  </div>
+
+  <h3>Level 3 — Behavior (Transfer to Real-World Actions)</h3>
+  <p class="body-text">After completing this lesson, students will demonstrate the following behaviors in academic and professional contexts:</p>
+  <ul class="doc-list">
+    <li>Critically evaluate agentic AI tools before adoption, asking governance questions about accountability, transparency, and scope</li>
+    <li>Apply a policy lens when discussing or writing about AI in coursework, capstone projects, and internship settings</li>
+    <li>Raise governance considerations proactively in team discussions or civic conversations involving AI systems</li>
+  </ul>
+
+  <h3>Level 2 — Learning (Knowledge, Skills &amp; Attitudes)</h3>
+  <table class="doc-table avoid-break">
+    <thead><tr><th class="bg-teal" style="width:20%">Learning Type</th><th class="bg-teal">Outcome</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Knowledge</strong></td><td>Define agentic AI and distinguish it from traditional AI and automation</td></tr>
+      <tr><td><strong>Knowledge</strong></td><td>Identify the core governance gaps: accountability, transparency, and auditability</td></tr>
+      <tr><td><strong>Knowledge</strong></td><td>Name at least two real-world policy frameworks relevant to AI (e.g., EU AI Act, NIST AI RMF)</td></tr>
+      <tr><td><strong>Skill</strong></td><td>Analyze a given AI system scenario using a governance checklist lens</td></tr>
+      <tr><td><strong>Skill</strong></td><td>Formulate a policy recommendation supported by a reasoned argument</td></tr>
+      <tr><td><strong>Attitude</strong></td><td>Appreciate the urgency of AI oversight before capabilities outpace regulation</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Level 1 — Reaction (Engagement &amp; Relevance)</h3>
+  <p class="body-text">The lesson is designed to feel urgent and personally relevant — not abstract. Engagement strategies include:</p>
+  <ul class="doc-list">
+    <li>Opening with a real-world agentic AI incident as the hook (creates immediate relevance)</li>
+    <li>A structured debate moment that gives students a voice and surfaces prior beliefs</li>
+    <li>Explicit connection to career paths: security analyst, policy advisor, compliance officer, AI auditor</li>
+    <li>eLearning interactivity (scenario branching) that makes the stakes feel real</li>
+  </ul>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 1 — Kirkpatrick Blueprint</span></div>
+</div>
+
+<!-- PAGE 3 — LEARNING OBJECTIVES -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-teal">Section 2 — Learning Objectives (Bloom's Taxonomy)</div>
+  <h2>By the End of This Lesson, Students Will Be Able To...</h2>
+  <p class="body-text">All objectives are written to Bloom's Taxonomy and mapped to the Kirkpatrick level they primarily support.</p>
+  <table class="doc-table">
+    <thead><tr><th class="bg-teal" style="width:6%">#</th><th class="bg-teal" style="width:50%">Objective</th><th class="bg-teal" style="width:22%">Bloom's Level</th><th class="bg-teal">Kirkpatrick</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">LO 1</td><td>Define agentic AI and explain how it differs from traditional AI systems and rule-based automation.</td><td>Remember / Understand</td><td>Level 2 — Knowledge</td></tr>
+      <tr><td class="mono">LO 2</td><td>Describe the key characteristics of agentic AI that create governance challenges: autonomy, goal-seeking behavior, and tool use.</td><td>Understand</td><td>Level 2 — Knowledge</td></tr>
+      <tr><td class="mono">LO 3</td><td>Identify at least two governance gaps present in a given agentic AI deployment scenario.</td><td>Analyze</td><td>Level 2 — Skill</td></tr>
+      <tr><td class="mono">LO 4</td><td>Evaluate a real-world AI system scenario using a structured governance framework.</td><td>Evaluate</td><td>Level 2 — Skill / Level 3</td></tr>
+      <tr><td class="mono">LO 5</td><td>Construct a brief policy recommendation that addresses an identified governance gap.</td><td>Create</td><td>Level 3 — Behavior</td></tr>
+    </tbody>
+  </table>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 2 — Learning Objectives</span></div>
+</div>
+
+<!-- PAGE 4 — LESSON OUTLINE -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-purple">Section 3 — Lesson Outline &amp; Instructional Flow</div>
+  <h2>15–30 Minute Blended Lesson Structure</h2>
+  <p class="body-text">The lesson is split across two modalities. eLearning delivers foundational content and scenario interaction; the instructor-led segment drives discussion, application, and reflection. Facilitators may expand any phase for the 30-minute version.</p>
+  <table class="doc-table" style="font-size:8.5pt;">
+    <thead><tr><th class="bg-purple" style="width:9%">Phase</th><th class="bg-purple" style="width:10%">Time</th><th class="bg-purple" style="width:15%">Modality</th><th class="bg-purple" style="width:52%">Activity</th><th class="bg-purple">K-Level</th></tr></thead>
+    <tbody>
+      <tr><td><span class="phase-tag bg-purple">Hook</span></td><td>0–3 min</td><td>eLearning</td><td>Learner watches a 60-second real incident clip: an autonomous AI agent approving financial transactions without human review. Prompt: 'Who is responsible when this goes wrong?'</td><td style="color:var(--purple);font-weight:600">L1 — Reaction</td></tr>
+      <tr><td><span class="phase-tag bg-navy">Concept</span></td><td>3–10 min</td><td>eLearning</td><td>Interactive slides define agentic AI, contrast it with traditional AI, and introduce the three governance gaps: accountability, transparency, and auditability. Includes a 3-question knowledge check.</td><td style="color:var(--navy);font-weight:600">L2 — Knowledge</td></tr>
+      <tr><td><span class="phase-tag bg-purple">Scenario</span></td><td>10–16 min</td><td>eLearning</td><td>Branching scenario: 'The Hiring Agent.' Students play a compliance officer who must decide whether to approve an agentic AI hiring tool. Three decision points, each with governance consequences revealed.</td><td style="color:var(--purple);font-weight:600">L2 — Skill</td></tr>
+      <tr><td><span class="phase-tag bg-teal">Debrief</span></td><td>16–22 min</td><td>Instructor-led</td><td>Instructor facilitates a structured discussion using the Governance Lens Protocol (see Section 5). Small groups defend their scenario decisions. Dissenting views are surfaced and examined.</td><td style="color:var(--teal);font-weight:600">L2–L3</td></tr>
+      <tr><td><span class="phase-tag bg-green">Apply</span></td><td>22–28 min</td><td>Instructor-led</td><td>Pairs complete the 'Policy Memo Sprint': a 5-minute structured template asking students to identify one governance gap and propose one policy lever to address it.</td><td style="color:var(--green);font-weight:600">L3 — Behavior</td></tr>
+      <tr><td><span class="phase-tag bg-slate">Close</span></td><td>28–30 min</td><td>Instructor-led</td><td>Instructor connects lesson to career paths and emerging frameworks (EU AI Act, NIST AI RMF). Students share one 'governance question they'll carry forward.'</td><td style="color:var(--slate);font-weight:600">L4 — Results</td></tr>
+    </tbody>
+  </table>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 3 — Lesson Outline</span></div>
+</div>
+
+<!-- PAGE 5 — CASE STUDY -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-amber">Section 4 — Core Case Study: The Hiring Agent</div>
+  <h2>Scenario Overview</h2>
+  <p class="body-text">This scenario is the instructional centerpiece of the lesson. It is designed to be morally ambiguous — reasonable people can disagree — which drives productive governance debate.</p>
+  <div class="callout avoid-break">
+    <div class="callout-label bg-amber">Setting</div>
+    <div class="callout-body" style="background:var(--amb-l)"><strong>Year: 2027.</strong> A mid-sized financial services firm, Arbor Capital, has deployed 'ArcHire' — a third-party agentic AI system that autonomously screens, interviews (via chat), scores, and advances candidates through the first two rounds of hiring with no human review until the final interview stage.</div>
+  </div>
+  <div class="callout avoid-break" style="margin-top:8px">
+    <div class="callout-label bg-amber">Trigger</div>
+    <div class="callout-body" style="background:var(--amb-l)">A rejected candidate, Danielle Torres, files a complaint. She scored in the 97th percentile on technical assessments but was filtered out by ArcHire. The system's decision log shows only: <em>'Cultural alignment score: 41/100.'</em> No further explanation is provided. Arbor Capital's legal team cannot explain what 'cultural alignment' means or how it is computed.</div>
+  </div>
+  <h3>Decision Points in the Branching Scenario</h3>
+  <p class="body-text"><strong>1. Should Arbor Capital be required to disclose that ArcHire, not a human, made the screening decision?</strong></p>
+  <ul class="doc-list"><li>Policy lever: Transparency &amp; disclosure requirements</li><li>Governance gap: Candidates have no right to know an AI rejected them</li></ul>
+  <p class="body-text"><strong>2. Who is accountable for the 'cultural alignment' score — Arbor Capital, the ArcHire vendor, or both?</strong></p>
+  <ul class="doc-list"><li>Policy lever: Liability assignment in AI procurement contracts</li><li>Governance gap: Diffused accountability across AI supply chains</li></ul>
+  <p class="body-text"><strong>3. Should ArcHire be suspended pending a bias audit, even if Arbor Capital has no legal obligation to do so?</strong></p>
+  <ul class="doc-list"><li>Policy lever: Voluntary governance standards vs. mandatory regulation</li><li>Governance gap: Absence of pre-deployment audit requirements</li></ul>
+  <div class="callout avoid-break" style="margin-top:12px">
+    <div class="callout-label bg-green">Note</div>
+    <div class="callout-body" style="background:var(--grn-l)">There is no 'right' answer in this scenario. The goal is for students to articulate which governance principle is most at stake in each decision point, and to connect their choice to a real or proposed policy instrument. Disagreement is a feature, not a problem.</div>
+  </div>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 4 — Core Case Study</span></div>
+</div>
+
+<!-- PAGE 6 — ASSESSMENT -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-green">Section 5 — Assessment &amp; Evaluation</div>
+  <h2>Measuring Learning Across Kirkpatrick Levels</h2>
+
+  <h3>Level 1 — Reaction Pulse (Immediate)</h3>
+  <p class="body-text">At the end of the eLearning module, learners rate the following on a 5-point scale. Benchmark target: average score of 4.0 or above.</p>
+  <ul class="doc-list">
+    <li>This lesson felt relevant to my future career.</li>
+    <li>The scenario made me think differently about AI.</li>
+    <li>I would recommend this lesson to a classmate.</li>
+  </ul>
+
+  <h3>Level 2 — Knowledge Check (eLearning, Auto-Graded)</h3>
+  <div class="kc-box avoid-break">
+    <div class="kc-box-header">Q1 — Maps to LO1, LO2</div>
+    <div class="kc-box-body">ArcHire autonomously schedules interviews and advances candidates. Which characteristic makes this an agentic AI system rather than a traditional decision-support tool?<br><br>A) It uses a large language model &nbsp;&nbsp; <strong>B) It takes sequential actions toward a goal without human approval at each step</strong><br>C) It stores candidate data &nbsp;&nbsp; D) It was built by a third-party vendor &nbsp;&nbsp; <strong>Correct: B</strong></div>
+  </div>
+  <div class="kc-box avoid-break">
+    <div class="kc-box-header">Q2 — Maps to LO3</div>
+    <div class="kc-box-body">Arbor Capital cannot explain how ArcHire's 'cultural alignment' score is calculated. Which governance gap does this represent?<br><br>A) Accountability &nbsp;&nbsp; B) Scalability &nbsp;&nbsp; <strong>C) Auditability</strong> &nbsp;&nbsp; D) Interoperability &nbsp;&nbsp; <strong>Correct: C</strong></div>
+  </div>
+  <div class="kc-box avoid-break">
+    <div class="kc-box-header">Q3 — Maps to LO4</div>
+    <div class="kc-box-body">Which action best demonstrates applying a governance lens to an agentic AI system?<br><br>A) Testing for speed &nbsp;&nbsp; <strong>B) Asking 'who is responsible if this system causes harm and how would we know?'</strong><br>C) Checking vendor reputation &nbsp;&nbsp; D) Verifying HTTPS &nbsp;&nbsp; <strong>Correct: B</strong></div>
+  </div>
+
+  <h3>Level 2–3 — Policy Memo Sprint</h3>
+  <p class="body-text">Pairs complete this structured 5-minute template. Formative — used for discussion, not a grade.</p>
+  <table class="memo-table avoid-break">
+    <tr><td class="memo-label">To:</td><td>A regulator, an executive, or a standards body (student chooses)</td></tr>
+    <tr><td class="memo-label">Re:</td><td>One governance gap identified in the ArcHire scenario</td></tr>
+    <tr><td class="memo-label">The problem:</td><td>Describe the gap in 2–3 sentences. What harm could it cause?</td></tr>
+    <tr><td class="memo-label">Our recommendation:</td><td>Propose one specific policy lever or standard to address it</td></tr>
+    <tr><td class="memo-label">Why it matters:</td><td>Connect to a broader principle: accountability, transparency, or auditability</td></tr>
+  </table>
+
+  <h3>Level 3 — Transfer Evidence (Follow-Up, 2–4 Weeks Later)</h3>
+  <ul class="doc-list">
+    <li>Since this lesson, I raised a governance or policy question about an AI tool in class or at work.</li>
+    <li>I applied a governance lens when reading or discussing a news story about AI.</li>
+    <li>I feel more confident asking 'who is accountable?' when evaluating an AI system.</li>
+  </ul>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 5 — Assessment &amp; Evaluation</span></div>
+</div>
+
+<!-- PAGE 7 — FACILITATOR NOTES -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-navy">Section 6 — Facilitator Notes</div>
+  <h2>Running the Instructor-Led Segment</h2>
+
+  <h3>Governance Lens Protocol — Debrief Discussion</h3>
+  <p class="body-text">Use these four questions to structure the 6-minute group debrief. Write them on screen or a whiteboard:</p>
+  <div class="callout avoid-break"><div class="callout-label bg-navy">Q1</div><div class="callout-body" style="background:var(--teal-l)">Who is accountable if ArcHire harms a candidate — and how would you prove it?</div></div>
+  <div class="callout avoid-break"><div class="callout-label bg-navy">Q2</div><div class="callout-body" style="background:var(--teal-l)">What information would a regulator need to audit this system, and does it exist?</div></div>
+  <div class="callout avoid-break"><div class="callout-label bg-navy">Q3</div><div class="callout-body" style="background:var(--teal-l)">Which decision in the scenario made you most uncomfortable — and why?</div></div>
+  <div class="callout avoid-break"><div class="callout-label bg-navy">Q4</div><div class="callout-body" style="background:var(--teal-l)">What one policy rule, if it existed today, would have prevented this problem?</div></div>
+
+  <h3>Facilitation Tips</h3>
+  <ul class="doc-list">
+    <li>Do not resolve the disagreement. The goal is articulating a governance-grounded position, not consensus.</li>
+    <li>If discussion stalls: ask 'What would a regulator say?' or 'What would the candidate's lawyer argue?'</li>
+    <li>For 15-minute version: skip the Policy Memo Sprint; use only the debrief questions.</li>
+    <li>For 30-minute version: allow each pair to share their memo recommendation (1 min each) before the close.</li>
+  </ul>
+
+  <h3>Connecting to Policy Frameworks</h3>
+  <table class="doc-table avoid-break">
+    <thead><tr><th class="bg-navy" style="width:30%">Framework</th><th class="bg-navy">Relevance to This Lesson</th></tr></thead>
+    <tbody>
+      <tr><td><strong>EU AI Act (2024)</strong></td><td>Classifies AI systems by risk level; high-risk systems (e.g., hiring AI) require transparency, human oversight, and documentation.</td></tr>
+      <tr><td><strong>NIST AI Risk Management Framework</strong></td><td>Provides a voluntary framework for governing AI across trustworthiness dimensions: accountable, transparent, explainable, privacy-enhanced, secure.</td></tr>
+      <tr><td><strong>OECD AI Principles</strong></td><td>International baseline principles including transparency, accountability, and robustness — useful for cross-border policy discussions.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Differentiation Options</h3>
+  <ul class="doc-list">
+    <li><strong>Advanced students:</strong> assign a 1-page policy brief comparing EU AI Act requirements to the ArcHire scenario as homework.</li>
+    <li><strong>Less experienced students:</strong> provide a pre-filled governance checklist before the scenario to scaffold their analysis.</li>
+    <li><strong>Online/async delivery:</strong> replace the instructor-led debrief with a structured discussion board prompt using the same four Governance Lens questions.</li>
+  </ul>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 6 — Facilitator Notes</span></div>
+</div>
+
+<!-- PAGE 8 — DESIGN RATIONALE -->
+<div class="page">
+  <div class="doc-header"><span>Lesson Design Document &nbsp;|&nbsp; Agentic AI: Policy &amp; Governance</span><span class="right">Cybersecurity Curriculum &nbsp;|&nbsp; 2026</span></div>
+  <div class="section-banner bg-gray">Section 7 — Design Rationale &amp; Next Steps</div>
+  <h2>Why This Lesson Is Designed This Way</h2>
+
+  <div class="rationale-box avoid-break"><div class="rat-label">Why Backwards Design</div>Starting from Level 4 (societal outcomes) ensures that every instructional element — the scenario, the objectives, the memo sprint — is anchored to something real. Without this anchor, short lessons often optimize for engagement at the expense of transfer.</div>
+  <div class="rationale-box avoid-break"><div class="rat-label">Why a Hiring Scenario</div>Hiring AI sits at the intersection of law, ethics, and technology — three domains undergraduates can reason about without deep technical knowledge. It is also a domain where real incidents have occurred (Amazon's 2018 resume screening tool, HireVue lawsuits), making it credible and researchable. Students can see themselves as the candidate, the compliance officer, or the regulator — which drives personal engagement.</div>
+  <div class="rationale-box avoid-break"><div class="rat-label">Why Policy Memo Format</div>The memo format is the real-world artifact of governance work. By writing even a 5-sentence version, students experience what policy thinking feels like — not just what it means. This is the bridge between Level 2 learning and Level 3 behavioral transfer.</div>
+  <div class="rationale-box avoid-break"><div class="rat-label">Why No 'Right Answer'</div>Governance is genuinely contested. Reasonable experts disagree about where liability sits in AI supply chains, how much transparency is sufficient, and when regulation should lead versus follow innovation. A lesson that presents one correct answer would be intellectually dishonest and would not prepare students to navigate real ambiguity.</div>
+
+  <h2>Suggested Next Steps for Curriculum Development</h2>
+  <ul class="doc-list">
+    <li>Develop a companion eLearning storyboard for the branching scenario (3 decision branches × 2 paths each)</li>
+    <li>Create a facilitator slide deck with embedded discussion timers and the Governance Lens Protocol</li>
+    <li>Design a Level 3 follow-up survey instrument and data collection process</li>
+    <li>Pilot with one section; collect Level 1 reaction data and iterate before broader rollout</li>
+    <li>Consider a follow-on lesson on technical controls (audit logging, model cards, human-in-the-loop design) to pair with this governance introduction</li>
+  </ul>
+
+  <div style="border-top:2px solid var(--teal);margin-top:28px;padding-top:10px;text-align:center;font-style:italic;font-size:8.5pt;color:var(--mgray);">
+    Prepared using the Kirkpatrick Model &nbsp;|&nbsp; Curriculum Development &nbsp;|&nbsp; 2026
+  </div>
+  <div class="doc-footer"><span>Confidential — Curriculum Development Draft</span><span>Section 7 — Design Rationale</span></div>
+</div>
+
+</body>
+</html>
