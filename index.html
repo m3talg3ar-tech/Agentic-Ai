@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI: Policy & Governance — Course Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:      #0D1117;
+  --paper:    #F5F0E8;
+  --rust:     #C4441C;
+  --teal:     #1A6B6B;
+  --teal-b:   #5aada8;
+  --green:    #1A6B3A;
+  --green-b:  #5aad7a;
+  --amber:    #C47A1C;
+  --amber-b:  #e0a060;
+  --purple:   #6B3FA0;
+  --purple-b: #a07adc;
+  --mist:     #8A9BAE;
+  --border:   rgba(245,240,232,0.1);
+  --mgray:    rgba(245,240,232,0.45);
+}
+
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── BACKGROUND ── */
+.bg-grid {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(245,240,232,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,240,232,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.bg-glow {
+  position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0;
+}
+.glow-1 { width: 500px; height: 500px; top: -150px; right: -100px; background: rgba(196,68,28,0.07); }
+.glow-2 { width: 400px; height: 400px; bottom: -120px; left: -80px;  background: rgba(26,107,107,0.07); }
+.glow-3 { width: 300px; height: 300px; top: 40%; left: 40%; transform: translate(-50%,-50%); background: rgba(107,63,160,0.05); }
+
+/* ── LAYOUT ── */
+.wrapper {
+  position: relative; z-index: 1;
+  max-width: 1080px; margin: 0 auto;
+  padding: 64px 32px 100px;
+}
+
+/* ── HERO ── */
+.hero { text-align: center; margin-bottom: 64px; }
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--rust); opacity: 0.5;
+}
+
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900; line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--paper); margin-bottom: 12px;
+}
+.hero-title em { font-style: italic; color: var(--rust); }
+
+.hero-sub {
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--mgray); max-width: 540px; margin: 0 auto 28px;
+  line-height: 1.75; font-weight: 400;
+}
+
+.hero-meta {
+  display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+}
+.meta-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mist); padding: 6px 14px; border-radius: 30px;
+  border: 1px solid rgba(138,155,174,0.2);
+  background: rgba(138,155,174,0.05);
+}
+
+/* ── SECTION HEADERS ── */
+.section-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; margin-top: 48px;
+}
+.section-line { flex: 1; height: 1px; background: var(--border); }
+.section-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist);
+  white-space: nowrap;
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid; gap: 14px;
+}
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 700px) {
+  .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: 1fr; }
+  .wrapper { padding: 40px 20px 80px; }
+}
+
+/* ── COURSE CARD ── */
+.course-card {
+  display: block; text-decoration: none;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  background: rgba(245,240,232,0.03);
+  padding: 24px 22px;
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+}
+.course-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  transition: opacity 0.25s;
+}
+.course-card:hover {
+  background: rgba(245,240,232,0.07);
+  border-color: rgba(245,240,232,0.22);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+}
+
+/* Color accents */
+.accent-rust   { --accent: var(--rust);     --accent-l: rgba(196,68,28,0.12);   }
+.accent-teal   { --accent: var(--teal-b);   --accent-l: rgba(26,107,107,0.12);  }
+.accent-purple { --accent: var(--purple-b); --accent-l: rgba(107,63,160,0.12);  }
+.accent-amber  { --accent: var(--amber-b);  --accent-l: rgba(196,122,28,0.12);  }
+.accent-green  { --accent: var(--green-b);  --accent-l: rgba(26,107,58,0.12);   }
+.accent-mist   { --accent: var(--mist);     --accent-l: rgba(138,155,174,0.1);  }
+
+.course-card::before { background: var(--accent); opacity: 0.7; }
+.course-card:hover::before { opacity: 1; }
+
+.card-type {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-icon { font-size: 16px; }
+.card-title {
+  font-size: 15px; font-weight: 700; color: var(--paper);
+  line-height: 1.35; margin-bottom: 8px;
+}
+.card-body {
+  font-size: 12.5px; color: rgba(245,240,232,0.55);
+  line-height: 1.65; margin-bottom: 14px;
+}
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px;
+}
+.card-duration {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; color: var(--mist);
+}
+.card-arrow {
+  font-size: 16px; color: var(--accent);
+  transition: transform 0.2s;
+}
+.course-card:hover .card-arrow { transform: translateX(4px); }
+
+/* ── DOC CARD (smaller, horizontal) ── */
+.doc-card {
+  display: flex; align-items: center; gap: 18px;
+  text-decoration: none;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  background: rgba(245,240,232,0.03); padding: 18px 20px;
+  transition: all 0.25s; position: relative; overflow: hidden;
+}
+.doc-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent);
+  transition: width 0.2s;
+}
+.doc-card:hover {
+  background: rgba(245,240,232,0.07);
+  border-color: rgba(245,240,232,0.22);
+  transform: translateX(3px);
+}
+.doc-card:hover::before { width: 5px; }
+.doc-icon { font-size: 22px; flex-shrink: 0; }
+.doc-info { flex: 1; }
+.doc-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+}
+.doc-title { font-size: 14px; font-weight: 700; color: var(--paper); margin-bottom: 3px; }
+.doc-sub   { font-size: 12px; color: rgba(245,240,232,0.5); line-height: 1.5; }
+.doc-arrow { color: var(--accent); font-size: 16px; transition: transform 0.2s; flex-shrink: 0; }
+.doc-card:hover .doc-arrow { transform: translateX(4px); }
+
+/* ── PROGRESS TRACKER (decorative) ── */
+.flow-tracker {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin: 32px 0 8px; flex-wrap: wrap;
+}
+.flow-step {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 0 4px;
+}
+.flow-dot {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid rgba(245,240,232,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mist);
+  background: rgba(245,240,232,0.03);
+  transition: all 0.3s;
+}
+.flow-dot.lit   { border-color: var(--rust); color: var(--rust); background: rgba(196,68,28,0.08); }
+.flow-label { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; color: var(--mist); text-align: center; max-width: 72px; }
+.flow-line  { width: 32px; height: 1px; background: rgba(245,240,232,0.1); margin-bottom: 20px; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center; margin-top: 64px; padding-top: 28px;
+  border-top: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; color: rgba(245,240,232,0.2);
+  line-height: 1.9;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+<div class="bg-glow glow-3"></div>
+
+<div class="wrapper">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-eyebrow">Cybersecurity Curriculum &nbsp;·&nbsp; 2026</div>
+    <div class="hero-title">Agentic AI:<br><em>Policy &amp; Governance</em></div>
+    <div class="hero-sub">A Kirkpatrick-aligned short lesson for undergraduate cybersecurity students. Explore what agentic AI is, why it creates governance gaps, and what policy frameworks exist to address them.</div>
+    <div class="hero-meta">
+      <span class="meta-tag">Undergraduate</span>
+      <span class="meta-tag">eLearning + Instructor-led</span>
+      <span class="meta-tag">15–30 minutes</span>
+      <span class="meta-tag">Kirkpatrick Model</span>
+      <span class="meta-tag">Policy &amp; Governance</span>
+    </div>
+  </div>
+
+  <!-- ── LEARNING PATH ── -->
+  <div class="flow-tracker">
+    <div class="flow-step">
+      <div class="flow-dot lit">1</div>
+      <div class="flow-label">Hook &amp; Concept</div>
+    </div>
+    <div class="flow-line"></div>
+    <div class="flow-step">
+      <div class="flow-dot lit">2</div>
+      <div class="flow-label">Setup &amp; Decision 1</div>
+    </div>
+    <div class="flow-line"></div>
+    <div class="flow-step">
+      <div class="flow-dot lit">3</div>
+      <div class="flow-label">Decisions 2 &amp; 3</div>
+    </div>
+    <div class="flow-line"></div>
+    <div class="flow-step">
+      <div class="flow-dot lit">4</div>
+      <div class="flow-label">Summary &amp; KC</div>
+    </div>
+  </div>
+
+  <!-- ── INTERACTIVE MODULES ── -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">Interactive eLearning Modules</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card-grid cols-2">
+
+    <a class="course-card accent-rust" href="https://m3talg3ar-tech.github.io/Agentic-Ai/module_hook_concept">
+      <div class="card-type"><span class="card-icon">🎯</span>Module 1 &nbsp;·&nbsp; Start Here</div>
+      <div class="card-title">Hook &amp; Concept: Who Governs the Machine?</div>
+      <div class="card-body">A real incident. Three governance questions. Then the definition of agentic AI, how it differs from traditional AI, and the three gaps that existing frameworks don't cover — Transparency, Accountability, and Auditability.</div>
+      <div class="card-footer">
+        <span class="card-duration">9 slides &nbsp;·&nbsp; ~10 min &nbsp;·&nbsp; Includes knowledge check</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="course-card accent-teal" href="https://m3talg3ar-tech.github.io/Agentic-Ai/scenario_s00_s06(1)">
+      <div class="card-type"><span class="card-icon">⚖️</span>Module 2 &nbsp;·&nbsp; Scenario</div>
+      <div class="card-title">The Hiring Agent: Setup &amp; Decision 1 — Transparency</div>
+      <div class="card-body">You are a compliance officer at Arbor Capital. Meet Danielle Torres, read the EEOC complaint, and make your first governance decision: should ArcHire disclose to candidates that an AI is screening them?</div>
+      <div class="card-footer">
+        <span class="card-duration">8 slides &nbsp;·&nbsp; ~6 min &nbsp;·&nbsp; Branching scenario</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="course-card accent-purple" href="https://m3talg3ar-tech.github.io/Agentic-Ai/scenario_s07_s12">
+      <div class="card-type"><span class="card-icon">🔗</span>Module 3 &nbsp;·&nbsp; Scenario Continued</div>
+      <div class="card-title">The Hiring Agent: Decisions 2 &amp; 3 — Accountability &amp; Auditability</div>
+      <div class="card-body">Who bears responsibility when AI causes harm across a supply chain? And should you suspend a system you cannot audit? Two decisions, four paths, one governance record — all feeding into your class debrief.</div>
+      <div class="card-footer">
+        <span class="card-duration">9 slides &nbsp;·&nbsp; ~8 min &nbsp;·&nbsp; Branching scenario</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="course-card accent-green" href="https://m3talg3ar-tech.github.io/Agentic-Ai/scenario_s13_s17">
+      <div class="card-type"><span class="card-icon">🎓</span>Module 4 &nbsp;·&nbsp; Complete Here</div>
+      <div class="card-title">Governance Summary, Knowledge Check &amp; Module Complete</div>
+      <div class="card-body">Review the three governance principles and the policy frameworks that address them. Then test your knowledge with three scenario-based questions. Your full governance record is waiting at the end.</div>
+      <div class="card-footer">
+        <span class="card-duration">5 slides &nbsp;·&nbsp; ~6 min &nbsp;·&nbsp; Graded knowledge check</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── REFERENCE DOCUMENTS ── -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">Curriculum Design Documents</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card-grid cols-2">
+
+    <a class="doc-card accent-amber" href="https://m3talg3ar-tech.github.io/Agentic-Ai/Agentic_AI_Lesson_Design_Document">
+      <span class="doc-icon">📋</span>
+      <div class="doc-info">
+        <div class="doc-label">Curriculum Document</div>
+        <div class="doc-title">Lesson Design Document</div>
+        <div class="doc-sub">Full Kirkpatrick blueprint · 5 learning objectives · Lesson outline · Case study · Assessment instruments · Facilitator notes · Design rationale</div>
+      </div>
+      <span class="doc-arrow">→</span>
+    </a>
+
+    <a class="doc-card accent-mist" href="https://m3talg3ar-tech.github.io/Agentic-Ai/Agentic_AI_eLearning_Storyboard">
+      <span class="doc-icon">🎬</span>
+      <div class="doc-info">
+        <div class="doc-label">Production Document</div>
+        <div class="doc-title">eLearning Storyboard</div>
+        <div class="doc-sub">23 slides across 5 sequences · Full narrator scripts · Branching navigation map · Asset list · Accessibility &amp; SCORM requirements</div>
+      </div>
+      <span class="doc-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- ── WHAT YOU'LL LEARN ── -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-label">What You'll Learn</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card-grid cols-3">
+    <div style="border:1px solid rgba(26,107,107,0.3);border-radius:8px;padding:18px;background:rgba(26,107,107,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--teal-b);margin-bottom:8px">Principle 01</div>
+      <div style="font-size:14px;font-weight:700;color:var(--paper);margin-bottom:6px">Transparency</div>
+      <div style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.65">Affected parties must know when AI is deciding their futures — and have a way to contest it.</div>
+    </div>
+    <div style="border:1px solid rgba(107,63,160,0.3);border-radius:8px;padding:18px;background:rgba(107,63,160,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--purple-b);margin-bottom:8px">Principle 02</div>
+      <div style="font-size:14px;font-weight:700;color:var(--paper);margin-bottom:6px">Accountability</div>
+      <div style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.65">Responsibility cannot be diffused across an AI supply chain. Deployers own a share of every outcome.</div>
+    </div>
+    <div style="border:1px solid rgba(196,68,28,0.3);border-radius:8px;padding:18px;background:rgba(196,68,28,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--rust);margin-bottom:8px">Principle 03</div>
+      <div style="font-size:14px;font-weight:700;color:var(--paper);margin-bottom:6px">Auditability</div>
+      <div style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.65">AI systems must produce records sufficient for independent review. Harm that can't be traced can't be remedied.</div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── */
+  <div class="site-footer">
+    Agentic AI: Policy &amp; Governance &nbsp;·&nbsp; Cybersecurity Curriculum &nbsp;·&nbsp; 2026<br>
+    Built with the Kirkpatrick Model &nbsp;·&nbsp; Undergraduate eLearning &nbsp;·&nbsp; 15–30 Minutes
+  </div>
+
+</div><!-- wrapper -->
+
+</body>
+</html>
