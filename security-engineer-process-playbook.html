@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Engineering Process Playbook — NIST 800-53 Aligned</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B1120;
+  --panel:#101A30;
+  --panel-2:#0D1526;
+  --line:#1E2C4A;
+  --grid:rgba(92,164,255,.05);
+  --ink:#E7EEF9;
+  --muted:#8DA2C4;
+  --accent:#5CC8FF;
+  --accent-dim:rgba(92,200,255,.12);
+  --nist:#FFB454;
+  --nist-dim:rgba(255,180,84,.12);
+  --ok:#4ADE80;
+  --display:'Space Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:36px 36px;
+  color:var(--ink);
+  font-family:var(--display);
+  font-size:15.5px;
+  line-height:1.6;
+  min-height:100vh;
+}
+a{color:var(--accent)}
+/* ---------- layout ---------- */
+.wrap{display:grid;grid-template-columns:280px 1fr;max-width:1280px;margin:0 auto;min-height:100vh}
+header.top{
+  grid-column:1/-1;
+  padding:34px 36px 26px;
+  border-bottom:1px solid var(--line);
+}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+header.top h1{font-size:clamp(24px,3.4vw,36px);font-weight:700;letter-spacing:-.01em;margin:8px 0 6px;line-height:1.15}
+header.top p{color:var(--muted);max-width:760px;font-size:14.5px}
+.overall{
+  margin-top:18px;display:flex;align-items:center;gap:14px;max-width:520px;
+  font-family:var(--mono);font-size:12px;color:var(--muted)
+}
+.meter{flex:1;height:6px;background:var(--panel);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.meter>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--ok));transition:width .35s ease}
+/* ---------- nav ---------- */
+nav{
+  border-right:1px solid var(--line);
+  padding:22px 14px;
+  position:sticky;top:0;align-self:start;
+  max-height:100vh;overflow-y:auto;
+}
+nav .navlabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 12px 10px}
+.navbtn{
+  display:flex;gap:10px;align-items:baseline;width:100%;text-align:left;
+  background:none;border:1px solid transparent;border-radius:8px;
+  color:var(--muted);font-family:var(--display);font-size:13.5px;font-weight:500;
+  padding:9px 12px;cursor:pointer;transition:all .15s ease;line-height:1.35;
+}
+.navbtn .n{font-family:var(--mono);font-size:11px;color:var(--accent);opacity:.7;min-width:20px}
+.navbtn:hover{color:var(--ink);background:var(--panel)}
+.navbtn.active{color:var(--ink);background:var(--panel);border-color:var(--line)}
+.navbtn:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* ---------- main ---------- */
+main{padding:30px 36px 90px;min-width:0}
+.section{display:none}
+.section.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.bullet-quote{
+  border:1px solid var(--line);border-left:3px solid var(--accent);
+  background:var(--panel-2);border-radius:0 10px 10px 0;
+  padding:16px 20px;color:var(--muted);font-size:14px;margin:14px 0 6px;
+}
+.bullet-quote b{color:var(--ink);font-weight:600}
+.sec-head h2{font-size:clamp(20px,2.6vw,27px);font-weight:700;letter-spacing:-.01em}
+.sec-head .eyebrow{display:block;margin-bottom:6px}
+.approach{color:var(--muted);font-size:14.5px;margin:16px 0 26px;max-width:820px}
+.approach strong{color:var(--ink)}
+/* ---------- pipeline (signature) ---------- */
+.pipeline{position:relative;margin-left:6px}
+.pipeline::before{
+  content:"";position:absolute;left:19px;top:22px;bottom:22px;width:2px;
+  background:linear-gradient(var(--accent) 0%,var(--line) 100%);opacity:.5;
+}
+.phase{position:relative;padding-left:56px;margin-bottom:14px}
+.node{
+  position:absolute;left:0;top:6px;width:40px;height:40px;border-radius:50%;
+  background:var(--panel);border:2px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);
+  z-index:1;transition:all .2s ease;
+}
+.phase.done .node{background:var(--accent);color:#06202F;border-color:var(--accent)}
+.phase-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+.phase-toggle{
+  width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;
+  background:none;border:none;color:var(--ink);cursor:pointer;
+  padding:15px 18px;font-family:var(--display);font-size:15.5px;font-weight:600;text-align:left;
+}
+.phase-toggle .chev{font-family:var(--mono);color:var(--muted);transition:transform .2s ease;font-size:12px}
+.phase.open .phase-toggle .chev{transform:rotate(90deg)}
+.phase-body{display:none;padding:0 18px 18px;border-top:1px solid var(--line)}
+.phase.open .phase-body{display:block}
+.phase-body h4{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin:16px 0 8px;
+}
+/* checklist */
+.check{display:flex;gap:11px;align-items:flex-start;padding:6px 0;cursor:pointer;font-size:14.5px;color:var(--ink)}
+.check input{display:none}
+.check .box{
+  flex:none;width:18px;height:18px;margin-top:3px;border-radius:5px;
+  border:1.5px solid var(--muted);display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#06202F;transition:all .15s ease;
+}
+.check input:checked + .box{background:var(--ok);border-color:var(--ok)}
+.check input:checked ~ .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(141,162,196,.5)}
+/* deliverables + controls */
+.deliv{color:var(--muted);font-size:14px;padding:3px 0 3px 2px}
+.deliv::before{content:"▸ ";color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{
+  font-family:var(--mono);font-size:11.5px;font-weight:500;
+  background:var(--nist-dim);border:1px solid rgba(255,180,84,.35);color:var(--nist);
+  padding:4px 9px;border-radius:6px;cursor:help;position:relative;
+}
+.chip[data-tip]:hover::after{
+  content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:5;
+  background:#060B16;border:1px solid var(--line);color:var(--ink);
+  font-family:var(--display);font-size:12.5px;font-weight:400;line-height:1.45;
+  padding:9px 12px;border-radius:8px;width:max-content;max-width:300px;white-space:normal;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+}
+.chip.std{background:var(--accent-dim);border-color:rgba(92,200,255,.35);color:var(--accent)}
+/* success metric + notes */
+.metricbox{
+  margin-top:22px;background:var(--panel-2);border:1px dashed var(--line);border-radius:12px;padding:16px 18px;
+}
+.metricbox h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ok);margin-bottom:6px}
+.metricbox p{color:var(--muted);font-size:14px}
+.notes{margin-top:16px}
+.notes label{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+.notes textarea{
+  width:100%;min-height:84px;resize:vertical;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  color:var(--ink);font-family:var(--display);font-size:14px;padding:12px 14px;
+}
+.notes .hint{font-size:12px;color:var(--muted);margin-top:6px;opacity:.75}
+.sec-progress{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:4px 0 22px}
+.sec-progress .meter{max-width:260px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:34px}
+.pager button{
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--ink);
+  font-family:var(--display);font-size:13.5px;font-weight:600;padding:10px 18px;cursor:pointer;transition:all .15s ease;
+}
+.pager button:hover{border-color:var(--accent);color:var(--accent)}
+.pager button:disabled{opacity:.3;pointer-events:none}
+@media(max-width:880px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:12px}
+  nav .navlabel{display:none}
+  .navbtn{flex:none;white-space:nowrap;font-size:12.5px}
+  header.top,main{padding-left:20px;padding-right:20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Cybersecurity Engineer II · Process Playbook</span>
+    <h1>How I Build It: 10 Engineering Processes</h1>
+    <p>Each responsibility from the job description, broken into the repeatable process I would build and run — with every phase mapped to NIST SP 800-53 Rev. 5 controls (plus SP 800-61r3, SP 800-160, and CSF 2.0 where they fit better). Hover any control chip for its plain-English meaning.</p>
+    <div class="overall"><span id="overallPct">0%</span><div class="meter"><i id="overallBar"></i></div><span>OVERALL</span></div>
+  </header>
+
+  <nav id="nav" aria-label="Playbook sections"><div class="navlabel">Responsibilities</div></nav>
+
+  <main id="main"></main>
+</div>
+
+<script>
+const DATA = [
+{
+  short:"Design & Implement Solutions",
+  title:"Designing & Implementing New Security Solutions",
+  bullet:"Design, engineer, and implement new security solutions that address complex enterprise risks while aligning with architectural standards and business objectives.",
+  approach:"I treat every new solution as a <strong>risk-driven engineering project</strong>: start from a documented risk, design against the enterprise architecture, and land on a hardened, monitored, operationally-owned platform. NIST 800-53's SA (System & Services Acquisition) and PL (Planning) families are my backbone here.",
+  phases:[
+    {name:"Frame the Risk & Business Case",
+     actions:["Pull the driving risk from the risk register and quantify likelihood/impact with the risk team","Define the business objective the solution must protect (not just the threat it blocks)","Write measurable security requirements and success criteria before touching any tech"],
+     deliverables:["Problem statement & risk linkage doc","Security requirements matrix"],
+     controls:[["RA-3","Risk Assessment — the formal risk drives the project, not vendor hype"],["PM-9","Risk Management Strategy — ties solution to enterprise risk appetite"],["SA-2","Allocation of Resources — budget/business-case justification"]]},
+    {name:"Architect Against Standards",
+     actions:["Map the design into the enterprise security architecture (zones, trust boundaries, data flows)","Apply secure-by-design principles: least privilege, defense in depth, fail secure","Produce a data flow diagram and threat model (STRIDE) reviewed with enterprise architects"],
+     deliverables:["Solution architecture diagram + threat model","Architecture review board (ARB) approval"],
+     controls:[["PL-8","Security Architecture — solution must fit the documented enterprise architecture"],["SA-8","Security Engineering Principles — least privilege, minimization, defense in depth"],["SC-7","Boundary Protection — where the solution sits relative to trust boundaries"]]},
+    {name:"Build & Harden",
+     actions:["Deploy in dev/test from an approved, version-controlled baseline (IaC where possible)","Harden to CIS Benchmarks / vendor STIGs; document every deviation with justification","Integrate identity (SSO/MFA), logging to the SIEM, and backup/recovery from day one"],
+     deliverables:["Hardened configuration baseline","Deviation/exception log"],
+     controls:[["CM-2","Baseline Configuration — a known-good, documented starting state"],["CM-6","Configuration Settings — hardened per benchmark, deviations recorded"],["IA-2","Identification & Authentication — MFA/SSO integrated, no local-account sprawl"],["AU-2","Event Logging — logs defined and flowing before go-live"]]},
+    {name:"Validate Before Production",
+     actions:["Run functional security testing plus a vulnerability scan of the built environment","Conduct a control validation review against the original requirements matrix","Get formal sign-off (security assessment) and register residual risk"],
+     deliverables:["Test/assessment report","Residual risk acceptance record"],
+     controls:[["CA-2","Control Assessments — prove controls work before authorization"],["RA-5","Vulnerability Monitoring & Scanning — scan the new build"],["CA-6","Authorization — documented go-live decision by the risk owner"]]},
+    {name:"Transition to Operations",
+     actions:["Deliver runbooks, alert triage guides, and an on-call/escalation model","Train the operations team and run a handover shadow period","Schedule the first post-implementation review at 30/60/90 days"],
+     deliverables:["Operations runbook & support model","30/60/90 review calendar"],
+     controls:[["SA-3","System Development Life Cycle — O&M phase is planned, not an afterthought"],["CA-7","Continuous Monitoring — solution enrolled in ongoing monitoring from day one"]]}
+  ],
+  metric:"Success = the driving risk's residual score drops measurably in the register, and operations can run the platform without engineering involvement within 90 days."
+},
+{
+  short:"Evaluations, PoCs & Vendors",
+  title:"Technical Evaluations, Proof-of-Concepts & Vendor Assessments",
+  bullet:"Lead technical evaluations, proof-of-concepts, and vendor assessments to select security technologies that meet functional, scalability, and risk management requirements.",
+  approach:"My rule: <strong>the scorecard is written before the first vendor demo</strong>. Requirements come from our environment, not the vendor's feature list. 800-53's SR (Supply Chain Risk Management) and SA-4 acquisition controls turn vendor selection from a gut call into a defensible decision.",
+  phases:[
+    {name:"Define Requirements & Scorecard",
+     actions:["Gather functional, scalability, integration, and compliance requirements from stakeholders","Weight criteria (must-have vs. nice-to-have) and set pass/fail thresholds up front","Include operational criteria: support model, licensing, TCO over 3 years"],
+     deliverables:["Weighted evaluation scorecard","RFI/RFP requirements document"],
+     controls:[["SA-4","Acquisition Process — security requirements explicit in procurement"],["PL-7","Concept of Operations — how the tool would actually run in our environment"]]},
+    {name:"Assess Vendor & Supply Chain Risk",
+     actions:["Review vendor SOC 2 / ISO 27001 attestations and pen test summaries","Evaluate supply chain exposure: SBOM availability, update/patch cadence, breach history","Check data handling: where our data lives, encryption, subprocessors, exit/data-return terms"],
+     deliverables:["Vendor risk assessment report","Third-party risk register entry"],
+     controls:[["SR-6","Supplier Assessments & Reviews — formal vendor due diligence"],["SR-3","Supply Chain Controls & Processes — SBOM, provenance, tamper protection"],["SA-9","External System Services — requirements for anything vendor-hosted"]]},
+    {name:"Run a Controlled PoC",
+     actions:["Build an isolated PoC environment with production-like (but sanitized) data and traffic","Script identical test cases for every candidate so results are comparable","Measure scalability and failure behavior, not just happy-path features"],
+     deliverables:["PoC test plan & environment spec","Comparable results per candidate"],
+     controls:[["CA-8","Penetration Testing (adapted) — adversarial testing of candidate tools"],["SC-7","Boundary Protection — PoC isolated from production"],["RA-5","Vulnerability Scanning — scan the candidate itself; security tools have CVEs too"]]},
+    {name:"Score, Decide & Document",
+     actions:["Score against the pre-agreed matrix with all evaluators scoring independently first","Document the decision, the runners-up, and why — future-you will need this","Negotiate contract security terms: SLAs, breach notification, right-to-audit"],
+     deliverables:["Decision memo with scored matrix","Contract security requirements addendum"],
+     controls:[["SA-4(9)","Functions/Ports/Protocols in Use — vendor documents the attack surface"],["SR-5","Acquisition Strategies — contract terms that transfer/reduce supplier risk"],["PM-30","Supply Chain Risk Management Strategy — decision aligns to enterprise SCRM"]]}
+  ],
+  metric:"Success = the selected tool passes production onboarding with no surprise gaps, and the written decision record survives audit and leadership scrutiny without rework."
+},
+{
+  short:"Troubleshooting & Incident Response",
+  title:"Advanced Troubleshooting & Incident Response Leadership",
+  bullet:"Perform advanced troubleshooting and lead incident response activities, including root cause analysis, remediation planning, and post-incident improvements.",
+  approach:"I run incidents on the <strong>NIST SP 800-61r3 lifecycle</strong> (now aligned to CSF 2.0 functions), backed by 800-53's IR family. The goal isn't just to close the incident — it's to make sure the same incident can't happen the same way twice.",
+  phases:[
+    {name:"Preparation (Before Anything Burns)",
+     actions:["Maintain the IR plan, severity matrix, and contact/escalation tree — tested, not shelfware","Pre-stage forensics tooling, evidence storage, and out-of-band comms","Run tabletop exercises at least twice a year with realistic scenarios"],
+     deliverables:["Current IR plan & severity matrix","Tabletop exercise reports"],
+     controls:[["IR-8","Incident Response Plan — documented, approved, distributed"],["IR-3","Incident Response Testing — tabletops and functional exercises"],["IR-2","Incident Response Training — responders know their roles cold"]]},
+    {name:"Detection, Triage & Declaration",
+     actions:["Validate the alert: correlate SIEM/EDR/network telemetry to confirm true positive","Classify severity using the pre-agreed matrix — no severity debates mid-incident","Declare formally, open the incident channel, assign IC and scribe roles"],
+     deliverables:["Incident declaration & severity classification","Initial scoping notes"],
+     controls:[["IR-4","Incident Handling — the core detect→analyze→contain→eradicate→recover flow"],["IR-6","Incident Reporting — internal/external notification clocks start here"],["AU-6","Audit Record Review & Analysis — correlated evidence, not single alerts"],["SI-4","System Monitoring — telemetry that makes detection possible"]]},
+    {name:"Containment & Eradication",
+     actions:["Choose containment strategy consciously: isolate vs. monitor (preserving evidence chain-of-custody)","Eradicate root vector — credentials rotated, persistence removed, vuln patched","Keep timestamped decisions in the incident log for the postmortem and legal"],
+     deliverables:["Containment decision log","Evidence chain-of-custody record"],
+     controls:[["IR-4(1)","Automated Incident Handling — SOAR-driven isolation where safe"],["AU-9","Protection of Audit Information — evidence integrity"],["SC-7","Boundary Protection — segmentation limits blast radius"]]},
+    {name:"Recovery & Validation",
+     actions:["Restore from known-good baselines/backups; rebuild rather than 'clean' when in doubt","Heighten monitoring on recovered assets for a defined watch period","Confirm business function restoration with the affected service owner"],
+     deliverables:["Recovery validation checklist","Post-recovery monitoring plan"],
+     controls:[["CP-10","System Recovery & Reconstitution — restore to a trusted state"],["CM-2","Baseline Configuration — rebuilds start from the known-good baseline"]]},
+    {name:"Root Cause & Post-Incident Improvement",
+     actions:["Run a blameless RCA (5-whys / fishbone) within one week while memory is fresh","Convert findings into tracked remediation items with owners and due dates","Feed lessons into detections, runbooks, training, and the IR plan itself"],
+     deliverables:["RCA report","Tracked corrective action plan (POA&M)"],
+     controls:[["IR-4(4)","Incident Correlation — connect this incident to prior patterns"],["CA-5","Plan of Action & Milestones — remediation is tracked, not verbal"],["IR-8","IR Plan Updates — the plan absorbs every lesson learned"]]}
+  ],
+  metric:"Success = shrinking MTTD/MTTR quarter over quarter, and zero repeat incidents from the same root cause."
+},
+{
+  short:"Automation & Tooling",
+  title:"Security Automation Scripts & Tooling",
+  bullet:"Develop and maintain automation scripts and tooling to improve security platform operations, efficiency, consistency, and response times.",
+  approach:"Automation is production software, so I run it like production software: <strong>version control, code review, least-privilege service accounts, and rollback plans</strong>. Anything that runs with security-tool privileges is itself a high-value target.",
+  phases:[
+    {name:"Identify & Prioritize Candidates",
+     actions:["Mine ticket queues and on-call logs for repetitive, error-prone, or slow manual tasks","Score candidates by frequency × time cost × error risk to build the automation backlog","Confirm each candidate has a stable, documented manual procedure first — automate the process, not the chaos"],
+     deliverables:["Scored automation backlog","Baseline time/effort measurements"],
+     controls:[["CA-7","Continuous Monitoring — automation targets that improve monitoring cadence"],["PM-6","Measures of Performance — baseline metrics prove the win later"]]},
+    {name:"Design With Security Guardrails",
+     actions:["Define blast radius: what the script can touch, what it must never touch, and kill-switch behavior","Use dedicated least-privilege service accounts with vaulted, rotated credentials","Design idempotency and dry-run modes so reruns are safe"],
+     deliverables:["Automation design doc with guardrails","Service account & secrets plan"],
+     controls:[["AC-6","Least Privilege — service accounts get minimum rights, scoped and audited"],["IA-5","Authenticator Management — secrets vaulted and rotated, never hardcoded"],["CM-5","Access Restrictions for Change — who can modify the automation itself"]]},
+    {name:"Develop, Review & Test",
+     actions:["All code in version control with mandatory peer review before merge","Static analysis and dependency scanning in the pipeline (the script's supply chain matters)","Test in staging against realistic data; verify failure modes, not just success paths"],
+     deliverables:["Reviewed, versioned codebase","Test evidence including failure-mode tests"],
+     controls:[["SA-11","Developer Testing & Evaluation — automation is tested like any system"],["SA-15","Development Process & Tools — controlled pipeline, scanned dependencies"],["SI-10","Information Input Validation — scripts validate inputs, especially from alerts"]]},
+    {name:"Deploy, Monitor & Measure",
+     actions:["Roll out gradually: dry-run → supervised → autonomous, with logging at each step","Every automated action writes an audit record: what ran, why, on what, outcome","Report time-saved and consistency metrics against the phase-1 baseline"],
+     deliverables:["Deployment & rollback runbook","Automation metrics dashboard"],
+     controls:[["AU-12","Audit Record Generation — automated actions are fully logged"],["IR-4(1)","Automated Incident Handling — SOAR playbooks with human-approval gates where risk warrants"],["CM-3","Configuration Change Control — automation changes go through change management"]]}
+  ],
+  metric:"Success = measurable reduction in mean handling time for automated tasks, with a zero-incident record for automation-caused outages."
+},
+{
+  short:"Tool Lifecycle & Roadmaps",
+  title:"Security Tool Lifecycle Management & Roadmap Planning",
+  bullet:"Own and drive the lifecycle management and roadmap planning for assigned security tools, including upgrades, integrations, and decommissioning.",
+  approach:"Every tool I own gets a <strong>living lifecycle record</strong>: current state, health, roadmap, and an honest end-of-life plan. Unsupported and forgotten tools are how security programs quietly rot — 800-53 even has a control for exactly that (SA-22).",
+  phases:[
+    {name:"Inventory & Baseline the Estate",
+     actions:["Maintain an authoritative inventory: versions, licenses, owners, integrations, data flows","Track vendor support timelines and end-of-life/end-of-support dates","Document each tool's coverage: what control or risk does it actually serve?"],
+     deliverables:["Tool inventory with EOL dates","Capability-to-control coverage map"],
+     controls:[["CM-8","System Component Inventory — you can't lifecycle what you can't see"],["SA-22","Unsupported System Components — EOL software is flagged and planned for"],["PM-5","System Inventory — enterprise-level view of the estate"]]},
+    {name:"Assess Health & Value Annually",
+     actions:["Score each tool: utilization, alert quality, coverage gaps, operational burden, cost","Compare against overlapping tools — consolidation opportunities surface here","Gather operator feedback: the analysts using it daily know its real value"],
+     deliverables:["Annual tool health scorecard","Consolidation/gap recommendations"],
+     controls:[["CA-7","Continuous Monitoring — is the tool still doing its monitoring job well?"],["PM-6","Measures of Performance — value measured, not assumed"]]},
+    {name:"Plan & Execute Upgrades and Integrations",
+     actions:["Schedule upgrades on a cadence that never lets a tool fall out of vendor support","Test upgrades in staging; document rollback before touching production","Prioritize integrations that reduce swivel-chair work: SIEM, SOAR, ticketing, CMDB"],
+     deliverables:["12–18 month upgrade calendar","Integration architecture doc"],
+     controls:[["CM-3","Configuration Change Control — upgrades ride the change process"],["CM-4","Impact Analyses — what could this upgrade break?"],["SI-2","Flaw Remediation — patching the security stack itself is non-negotiable"]]},
+    {name:"Decommission Deliberately",
+     actions:["Confirm replacement coverage before shutdown — no control gaps during transition","Export/archive data per retention policy; revoke credentials, certs, API keys, firewall rules","Update inventory, CMDB, runbooks, and notify every consuming team"],
+     deliverables:["Decommission checklist & sign-off","Data retention/disposal record"],
+     controls:[["SA-22","Unsupported Components — retirement is the planned end state"],["MP-6","Media Sanitization — tool data disposed of properly"],["AC-2","Account Management — every credential and service account revoked"]]}
+  ],
+  metric:"Success = zero tools running past end-of-support, and a roadmap leadership can read: what's upgrading, what's consolidating, what's retiring, and when."
+},
+{
+  short:"SME & Technical Direction",
+  title:"Serving as a Multi-Domain Subject Matter Expert",
+  bullet:"Serve as a subject matter expert (SME) across multiple security domains and technologies, providing guidance and technical direction to stakeholders and project teams.",
+  approach:"SME work is a process, not a personality trait: <strong>maintain depth deliberately, package guidance so teams can self-serve, and be a consistent decision interface</strong>. My answers reference the control framework so guidance is defensible, not opinion.",
+  phases:[
+    {name:"Maintain Deliberate Depth",
+     actions:["Keep a structured learning plan across assigned domains (certs, labs, vendor roadmaps, threat intel)","Track emerging threats and translate them into 'what this means for us' briefs","Stay hands-on: SMEs who stop touching the tech drift into hand-waving"],
+     deliverables:["Personal domain coverage matrix","Monthly threat/tech brief"],
+     controls:[["AT-3","Role-Based Training — SME depth is a maintained control, not a given"],["PM-16","Threat Awareness Program — intel feeds practical guidance"]]},
+    {name:"Build Self-Service Guidance",
+     actions:["Publish security patterns and 'paved road' reference designs for common needs","Maintain a decision log/FAQ so the same question gets the same answer every time","Write standards in requirement language teams can test against, not vague advice"],
+     deliverables:["Pattern library / paved-road docs","Security standards & FAQ repository"],
+     controls:[["PL-8","Security Architecture — patterns encode the architecture for reuse"],["SA-8","Security Engineering Principles — guidance rooted in principles, not preference"]]},
+    {name:"Engage Projects Early & Consistently",
+     actions:["Embed in project intake so security consultation happens at design, not go-live","Use a lightweight risk-tiering triage: deep engagement for high-risk, patterns for low-risk","Give written, actionable direction with a decision, rationale, and control reference"],
+     deliverables:["Consultation intake & triage model","Written decision records"],
+     controls:[["SA-3","System Development Life Cycle — security engaged across the whole SDLC"],["PL-2","System Security Plans — SME input lands in the documented plan"],["RA-3","Risk Assessment — triage depth matches risk"]]},
+    {name:"Scale Yourself",
+     actions:["Run brown-bags and office hours so knowledge doesn't bottleneck on one calendar","Identify and grow deputy SMEs for each domain — bus-factor of one is a risk","Measure: are repeat questions declining? Are teams shipping secure designs first-pass?"],
+     deliverables:["Knowledge-sharing calendar","Deputy/succession map per domain"],
+     controls:[["AT-2","Awareness Training — raising the org's baseline reduces SME load"],["PM-13","Security & Privacy Workforce — deliberate capability development"]]}
+  ],
+  metric:"Success = teams cite the patterns unprompted, first-pass design approvals rise, and no domain depends on a single person's availability."
+},
+{
+  short:"Compliance, Risk & Audit",
+  title:"Partnering with Compliance, Risk & Audit Teams",
+  bullet:"Partner with compliance, risk, and audit teams to support internal and external audits, security reviews, and control validation activities.",
+  approach:"My philosophy: <strong>be audit-ready every day, not audit-scrambling every year</strong>. That means controls mapped to evidence sources in advance, automated evidence collection where possible, and treating findings as free consulting.",
+  phases:[
+    {name:"Map Controls to Evidence — In Advance",
+     actions:["Maintain a control-to-evidence matrix: for each 800-53 control I own, where does proof live?","Automate evidence collection (config exports, access reviews, scan reports) on a schedule","Keep system security plan (SSP) sections current for owned systems"],
+     deliverables:["Control-to-evidence matrix","Automated evidence repository"],
+     controls:[["CA-2","Control Assessments — assessment-ready posture is the default"],["PL-2","System Security Plans — documentation matches reality"],["AU-11","Audit Record Retention — evidence retained per policy"]]},
+    {name:"Support Audit Fieldwork",
+     actions:["Serve as technical liaison: translate auditor requests into precise system queries","Provide evidence through the agreed channel with integrity preserved (no side-channel edits)","Walk auditors through control operation live — demos beat screenshots"],
+     deliverables:["Fulfilled evidence request log","Walkthrough/demo session notes"],
+     controls:[["CA-2(1)","Independent Assessors — cooperating with, not managing, the assessor"],["AU-9","Protection of Audit Information — evidence integrity through the process"]]},
+    {name:"Validate Controls Continuously",
+     actions:["Run internal control self-testing between audits — find failures before auditors do","Feed control health into continuous monitoring dashboards for risk teams","Flag control drift (config changes that silently break a control) via change management hooks"],
+     deliverables:["Self-assessment test results","Control health dashboard"],
+     controls:[["CA-7","Continuous Monitoring — ongoing validation, not annual snapshots"],["CM-3","Change Control — changes assessed for control impact before approval"],["RA-5","Vulnerability Scanning — technical validation on a cadence"]]},
+    {name:"Remediate Findings & Close the Loop",
+     actions:["Convert every finding into a POA&M entry with owner, milestone dates, and root cause","Fix the class of problem, not just the cited instance","Verify remediation with re-testing and report closure formally to audit/risk"],
+     deliverables:["POA&M with tracked milestones","Remediation verification evidence"],
+     controls:[["CA-5","Plan of Action & Milestones — the canonical finding tracker"],["SI-2","Flaw Remediation — technical fixes verified, not just claimed"],["PM-4","POA&M Process — enterprise-level tracking discipline"]]}
+  ],
+  metric:"Success = audit evidence requests fulfilled in days not weeks, shrinking repeat-finding count, and no control failures discovered first by an external auditor."
+},
+{
+  short:"Project Technical Execution",
+  title:"Leading Technical Execution of Security Projects",
+  bullet:"Lead the technical execution of security projects, including solution design, implementation oversight, testing, and transition to operations.",
+  approach:"I run security projects on a <strong>stage-gate model</strong>: no phase starts until the previous phase's exit criteria are met and documented. It's slower on paper and faster in reality, because nothing gets rebuilt twice.",
+  phases:[
+    {name:"Initiate: Scope, Success Criteria, RACI",
+     actions:["Define scope, out-of-scope, and measurable success criteria with the sponsor","Build the RACI: who designs, approves, implements, operates","Identify dependencies and constraints (change freezes, integrations, resource windows)"],
+     deliverables:["Project charter with exit criteria per gate","RACI matrix"],
+     controls:[["SA-3","System Development Life Cycle — the project follows a defined lifecycle"],["PM-9","Risk Management Strategy — project risk tied to enterprise risk"]]},
+    {name:"Design Gate",
+     actions:["Produce solution design: architecture, data flows, threat model, control mapping","Review with enterprise architects, ops, and affected app teams — dissent now is cheap","Freeze the design baseline; changes after this point go through change control"],
+     deliverables:["Approved design package","Design gate sign-off record"],
+     controls:[["PL-8","Security Architecture — design reviewed against the enterprise picture"],["SA-8","Engineering Principles — secure-by-design verified at the gate"],["CM-2","Baseline Configuration — the design baseline is versioned"]]},
+    {name:"Implement With Oversight",
+     actions:["Track build progress against the design; review deviations immediately, not at the end","Hold implementers (internal or vendor) to the hardening and logging requirements","Keep a decision log — every deviation, why, and who approved it"],
+     deliverables:["Implementation tracking log","Deviation & decision register"],
+     controls:[["CM-3","Change Control — mid-build changes are governed"],["SA-4","Acquisition Process — vendor implementers bound to security requirements"],["CM-5","Access Restrictions for Change — who can touch the build"]]},
+    {name:"Test Gate",
+     actions:["Execute the test plan: functional, security control validation, performance/failover","Run vulnerability scans and (for high-risk systems) penetration testing","No production go-live until every severity-high finding is fixed or formally risk-accepted"],
+     deliverables:["Test results package","Go/no-go decision record"],
+     controls:[["SA-11","Developer Testing & Evaluation — testing evidence at the gate"],["CA-8","Penetration Testing — adversarial validation for high-risk systems"],["CA-6","Authorization — a named risk owner makes the go-live call"]]},
+    {name:"Transition & Close",
+     actions:["Deliver runbooks, train operators, establish support/escalation paths","Run a hypercare period with engineering on standby, then formal handover","Hold a project retrospective; feed lessons into the next project's templates"],
+     deliverables:["Operational acceptance sign-off","Retrospective & lessons-learned report"],
+     controls:[["CA-7","Continuous Monitoring — the system enters monitored steady-state"],["IR-8","IR Plan — new system reflected in incident response procedures"]]}
+  ],
+  metric:"Success = every gate passed with documented evidence, on-time delivery, and zero critical defects discovered in the first 90 days of operations."
+},
+{
+  short:"Cross-Team Security Integration",
+  title:"Integrating Security with Architecture, Infrastructure, App & Cloud Teams",
+  bullet:"Collaborate closely with enterprise architects, infrastructure, application, and cloud engineering teams to ensure security is integrated into designs and delivery processes.",
+  approach:"The goal is <strong>security as a property of the delivery process, not a gate at the end</strong>. I build paved roads — pre-approved patterns, pipeline guardrails, and IaC modules — so the secure way is the easy way. NIST SP 800-160 (systems security engineering) and 800-53's SA/PL families frame this.",
+  phases:[
+    {name:"Embed in Design Forums",
+     actions:["Hold a standing seat in architecture review boards and design review meetings","Contribute security requirements at concept stage — before designs harden","Co-own reference architectures with enterprise architects rather than reviewing theirs"],
+     deliverables:["Security input in ARB records","Co-owned reference architectures"],
+     controls:[["PL-8","Security Architecture — one architecture, jointly owned"],["SA-8","Engineering Principles — principles applied at concept, not retrofit"],["SA-17","Developer Architecture & Design — security specs in the design itself"]]},
+    {name:"Build Paved Roads & Guardrails",
+     actions:["Publish pre-approved IaC modules (hardened images, network patterns, IAM roles)","Embed security scanning in CI/CD: SAST, dependency, secrets, and IaC scanning with sane thresholds","Define cloud guardrails as policy-as-code (SCPs, Azure Policy, OPA) — prevention over detection"],
+     deliverables:["Hardened IaC module library","Pipeline security gate standards"],
+     controls:[["CM-2","Baseline Configuration — hardened modules are the baseline"],["SA-15","Development Processes & Tools — security built into the pipeline"],["CM-7","Least Functionality — guardrails enforce minimal attack surface"],["AC-6","Least Privilege — pre-built IAM roles scoped tight by default"]]},
+    {name:"Shared Threat Modeling & Risk Triage",
+     actions:["Run collaborative threat modeling sessions with app/cloud teams on significant changes","Teach teams to self-serve lightweight threat models for routine work","Tier engagement by risk so security depth lands where it matters"],
+     deliverables:["Threat model library","Risk-tiered engagement model"],
+     controls:[["RA-3","Risk Assessment — risk analysis embedded in delivery"],["SA-11(2)","Threat Modeling & Vulnerability Analyses — formalized in development"]]},
+    {name:"Measure & Tune the Partnership",
+     actions:["Track: % of projects with security engaged at design stage, pipeline gate pass rates, escaped defects","Review friction points quarterly with partner teams — guardrails that block work get fixed","Celebrate teams shipping secure-by-default; make the metric visible to leadership"],
+     deliverables:["DevSecOps metrics dashboard","Quarterly partnership review notes"],
+     controls:[["PM-6","Measures of Performance — integration is measured, not assumed"],["CA-7","Continuous Monitoring — pipeline and guardrail health tracked continuously"]]}
+  ],
+  metric:"Success = security engaged at design stage on >90% of significant projects, and declining security defects found post-deployment versus in-pipeline."
+},
+{
+  short:"Mentoring & Coaching",
+  title:"Mentoring Junior Engineers & Promoting Secure Engineering Practices",
+  bullet:"Mentor and coach junior engineers by sharing expertise, reviewing designs, and promoting secure engineering best practices.",
+  approach:"Mentoring done well is a <strong>force multiplier with a structure</strong>: assessed starting points, deliberate stretch work, teaching-oriented reviews, and visible growth milestones. 800-53's AT family and PM-13 treat workforce capability as a control — because it is one.",
+  phases:[
+    {name:"Assess & Set a Growth Path",
+     actions:["Map each mentee's current skills against a role competency matrix (e.g., NICE Framework work roles)","Set 2–3 concrete growth goals per quarter, chosen with them, not for them","Match learning style: labs, shadowing, reading, certifications — whatever actually sticks"],
+     deliverables:["Individual competency map & growth plan","Quarterly goals"],
+     controls:[["AT-3","Role-Based Training — development targeted to the role's needs"],["PM-13","Security & Privacy Workforce — capability building as program discipline"]]},
+    {name:"Teach Through Real Work",
+     actions:["Assign stretch tasks slightly beyond comfort, with a safety net — real systems, guarded blast radius","Pair on incidents and design work; narrate the 'why' behind each decision out loud","Rotate mentees through domains so they see how the pieces connect"],
+     deliverables:["Stretch assignment log","Shadowing/pairing schedule"],
+     controls:[["AT-2","Awareness & Training — practical, continuous, contextual"],["IR-2","IR Training — juniors earn incident readiness through supervised reps"]]},
+    {name:"Review Designs as Teaching Moments",
+     actions:["Review designs/code with written, principle-based feedback — cite the standard, not 'because I said so'","Ask questions before giving answers: 'what happens if this input is hostile?'","Let mentees present their own designs at review boards; back them up, don't speak for them"],
+     deliverables:["Review feedback records","Mentee-led design review sessions"],
+     controls:[["SA-11","Developer Testing & Evaluation — review rigor modeled and taught"],["SA-8","Engineering Principles — feedback anchored in named principles"]]},
+    {name:"Track Growth & Hand Off Ownership",
+     actions:["Review progress against goals quarterly; adjust the plan honestly","Transfer real ownership as competence proves out — a tool, a domain, an on-call rotation","Build their visibility: brown-bag talks, documented wins, cross-team introductions"],
+     deliverables:["Quarterly growth reviews","Ownership transition records"],
+     controls:[["PM-13","Workforce Development — measurable capability growth"],["AT-4","Training Records — progress documented, not vibes-based"]]}
+  ],
+  metric:"Success = mentees independently owning systems within 12 months, passing design reviews first-round, and eventually mentoring others themselves."
+}
+];
+
+/* ---------- render ---------- */
+const nav = document.getElementById('nav');
+const main = document.getElementById('main');
+const state = { checks:{}, current:0 };
+let totalChecks = 0;
+
+DATA.forEach((d,i)=>{
+  const btn = document.createElement('button');
+  btn.className='navbtn';
+  btn.innerHTML = `<span class="n">${String(i+1).padStart(2,'0')}</span><span>${d.short}</span>`;
+  btn.addEventListener('click',()=>show(i));
+  nav.appendChild(btn);
+
+  const sec = document.createElement('section');
+  sec.className='section';
+  sec.setAttribute('aria-label',d.title);
+  let phasesHtml = d.phases.map((p,pi)=>{
+    const actions = p.actions.map((a,ai)=>{
+      const id = `c-${i}-${pi}-${ai}`; totalChecks++;
+      return `<label class="check"><input type="checkbox" id="${id}" data-sec="${i}"><span class="box">✓</span><span class="txt">${a}</span></label>`;
+    }).join('');
+    const delivs = p.deliverables.map(x=>`<div class="deliv">${x}</div>`).join('');
+    const chips = p.controls.map(c=>`<span class="chip" data-tip="${c[1].replace(/"/g,'&quot;')}">${c[0]}</span>`).join('');
+    return `<div class="phase" data-phase>
+      <div class="node">${pi+1}</div>
+      <div class="phase-card">
+        <button class="phase-toggle" aria-expanded="false"><span>${p.name}</span><span class="chev">▶</span></button>
+        <div class="phase-body">
+          <h4>Key actions</h4>${actions}
+          <h4>Deliverables</h4>${delivs}
+          <h4>NIST 800-53 controls</h4><div class="chips">${chips}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  sec.innerHTML = `
+    <div class="sec-head">
+      <span class="eyebrow">Responsibility ${String(i+1).padStart(2,'0')} / ${String(DATA.length).padStart(2,'0')}</span>
+      <h2>${d.title}</h2>
+    </div>
+    <div class="bullet-quote"><b>From the job description:</b> ${d.bullet}</div>
+    <p class="approach">${d.approach}</p>
+    <div class="sec-progress"><span>PROCESS</span><div class="meter"><i data-secbar="${i}"></i></div><span data-secpct="${i}">0%</span></div>
+    <div class="pipeline">${phasesHtml}</div>
+    <div class="metricbox"><h4>How I'd measure success</h4><p>${d.metric}</p></div>
+    <div class="notes">
+      <label for="notes-${i}">My talking points / environment-specific notes</label>
+      <textarea id="notes-${i}" placeholder="e.g., a story from my experience that proves I've run this process…"></textarea>
+      <div class="hint">Notes live in this session only — copy them out before closing the page.</div>
+    </div>
+    <div class="pager">
+      <button data-prev ${i===0?'disabled':''}>← ${i>0?DATA[i-1].short:''}</button>
+      <button data-next ${i===DATA.length-1?'disabled':''}>${i<DATA.length-1?DATA[i+1].short:''} →</button>
+    </div>`;
+  main.appendChild(sec);
+
+  sec.querySelector('[data-prev]').addEventListener('click',()=>show(i-1));
+  sec.querySelector('[data-next]').addEventListener('click',()=>show(i+1));
+});
+
+/* phase accordions */
+main.querySelectorAll('.phase-toggle').forEach(t=>{
+  t.addEventListener('click',()=>{
+    const ph = t.closest('.phase');
+    const open = ph.classList.toggle('open');
+    t.setAttribute('aria-expanded',open);
+  });
+});
+
+/* checkboxes → progress */
+main.addEventListener('change',e=>{
+  if(e.target.matches('input[type=checkbox]')){
+    updateProgress(parseInt(e.target.dataset.sec,10));
+    const ph = e.target.closest('.phase');
+    const boxes=[...ph.querySelectorAll('input[type=checkbox]')];
+    ph.classList.toggle('done', boxes.every(b=>b.checked));
+  }
+});
+
+function updateProgress(sec){
+  const secs = main.querySelectorAll('.section');
+  // section
+  const boxes=[...secs[sec].querySelectorAll('input[type=checkbox]')];
+  const done = boxes.filter(b=>b.checked).length;
+  const pct = Math.round(done/boxes.length*100);
+  main.querySelector(`[data-secbar="${sec}"]`).style.width=pct+'%';
+  main.querySelector(`[data-secpct="${sec}"]`).textContent=pct+'%';
+  // overall
+  const all=[...main.querySelectorAll('input[type=checkbox]')];
+  const opct = Math.round(all.filter(b=>b.checked).length/all.length*100);
+  document.getElementById('overallBar').style.width=opct+'%';
+  document.getElementById('overallPct').textContent=opct+'%';
+}
+
+function show(i){
+  state.current=i;
+  main.querySelectorAll('.section').forEach((s,si)=>s.classList.toggle('active',si===i));
+  nav.querySelectorAll('.navbtn').forEach((b,bi)=>b.classList.toggle('active',bi===i));
+  window.scrollTo({top:0});
+  // open the first phase of the section for orientation
+  const first = main.querySelectorAll('.section')[i].querySelector('.phase');
+  if(first && !first.dataset.opened){
+    first.classList.add('open');
+    first.querySelector('.phase-toggle').setAttribute('aria-expanded','true');
+    first.dataset.opened='1';
+  }
+}
+show(0);
+</script>
+</body>
+</html>
