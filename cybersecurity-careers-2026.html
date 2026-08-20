@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cybersecurity Workforce 2026 — Roles, Skills, Adjacent Paths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1A26; --ink-2:#132836; --ink-3:#1D3243;
+  --paper:#EDF1F3; --surface:#FFFFFF; --zebra:#F5F8F9; --shade:#E2E8EC;
+  --text:#10222E; --dim:#4E6272; --faint:#7B8F9D;
+  --rule:#C9D4DA; --rule-soft:#DCE4E8;
+  --amber:#B26F0C; --amber-hi:#F0A63C; --amber-wash:#FBEFD9;
+  --h1:#4C87A3; --h2:#1F8E90; --h3:#C98514; --h4:#BE4326;
+  --focus:#1F8E90;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --disp:'Archivo','IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--amber);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* ---------- marking bar ---------- */
+.marking{position:sticky;top:0;z-index:60;background:var(--ink);color:#9FB6C4;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+  padding:7px 22px;border-bottom:1px solid #2A4354}
+.marking .tlp{color:var(--ink);background:var(--amber-hi);padding:2px 7px;font-weight:600;letter-spacing:.1em}
+.marking .sep{color:#3E5A6C}
+.marking .push{margin-left:auto}
+
+/* ---------- masthead ---------- */
+.masthead{background:var(--ink);color:#DCE7EE;padding:44px 22px 0;position:relative;overflow:hidden}
+.masthead::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 1px,transparent 1px 68px)}
+.mast-inner{max-width:1360px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-hi);margin:0 0 14px}
+.mast-title{font-family:var(--disp);font-variation-settings:'wdth' 118,'wght' 800;
+  font-size:clamp(38px,7.4vw,84px);line-height:.92;letter-spacing:-.02em;text-transform:uppercase;
+  margin:0;color:#F2F7FA}
+.mast-title .thin{font-variation-settings:'wdth' 118,'wght' 300;color:#8FAABB;display:block}
+.mast-sub{max-width:62ch;color:#A9C0CE;font-size:15.5px;margin:20px 0 0}
+.mast-sub strong{color:#E4EEF3;font-weight:600}
+
+.figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
+  gap:1px;background:#2A4354;border:1px solid #2A4354;margin:34px 0 0}
+.fig{background:var(--ink-2);padding:16px 18px 18px}
+.fig-n{font-family:var(--disp);font-variation-settings:'wdth' 112,'wght' 700;
+  font-size:30px;line-height:1;color:var(--amber-hi);letter-spacing:-.01em}
+.fig-l{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#7E9AAB;margin-top:9px;line-height:1.45}
+.fig-s{font-family:var(--mono);font-size:9.5px;color:#5C7688;margin-top:6px;letter-spacing:.06em}
+
+/* ---------- tabs ---------- */
+.tabs{background:var(--ink);padding:30px 22px 0;position:sticky;top:35px;z-index:50}
+.tabs-inner{max-width:1360px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs-inner::-webkit-scrollbar{display:none}
+.tab{appearance:none;border:1px solid #2A4354;border-bottom:none;background:var(--ink-2);
+  color:#93AEBE;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 17px;cursor:pointer;white-space:nowrap;transition:background .14s,color .14s}
+.tab:hover{background:#1B3243;color:#CFE0EA}
+.tab[aria-selected="true"]{background:var(--paper);color:var(--text);font-weight:600;border-color:var(--paper)}
+.tab .num{color:var(--amber-hi);margin-right:7px}
+.tab[aria-selected="true"] .num{color:var(--amber)}
+
+/* ---------- layout ---------- */
+main{max-width:1360px;margin:0 auto;padding:0 22px 90px}
+.view{display:none;padding-top:26px}
+.view.on{display:block}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+.view-head h2{font-family:var(--disp);font-variation-settings:'wdth' 112,'wght' 700;
+  text-transform:uppercase;letter-spacing:-.005em;font-size:24px;margin:0;line-height:1.05}
+.view-head p{margin:6px 0 0;color:var(--dim);font-size:13.5px;max-width:74ch}
+.count{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+
+/* ---------- controls ---------- */
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.search{flex:1 1 250px;min-width:190px;position:relative}
+.search input{width:100%;padding:9px 12px 9px 32px;border:1px solid var(--rule);background:var(--surface);
+  font-family:var(--sans);font-size:14px;color:var(--text);border-radius:0}
+.search input::placeholder{color:var(--faint)}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--faint)}
+.chipset{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.chipset > .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-right:3px}
+.chip{appearance:none;border:1px solid var(--rule);background:var(--surface);color:var(--dim);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  padding:7px 11px;cursor:pointer;transition:.14s}
+.chip:hover{border-color:var(--ink);color:var(--text)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--amber-hi);font-weight:500}
+.tool{appearance:none;border:1px solid var(--rule);background:var(--surface);color:var(--dim);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:7px 11px;cursor:pointer}
+.tool:hover{border-color:var(--ink);color:var(--text)}
+
+/* ---------- table ---------- */
+.tablewrap{border:1px solid var(--rule);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:840px}
+thead th{position:sticky;top:103px;z-index:20;background:var(--shade);text-align:left;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+  padding:0;border-bottom:1px solid var(--rule);white-space:nowrap}
+thead th button{appearance:none;background:none;border:none;width:100%;text-align:left;cursor:pointer;
+  font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;padding:11px 12px;display:flex;gap:6px;align-items:center}
+thead th button:hover{color:var(--text)}
+thead th .arw{opacity:0;font-size:9px;color:var(--amber)}
+thead th[aria-sort="ascending"] .arw,thead th[aria-sort="descending"] .arw{opacity:1}
+thead th[aria-sort="ascending"] button,thead th[aria-sort="descending"] button{color:var(--text);font-weight:600}
+thead th.nosort{padding:11px 12px}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tbody tr.data:nth-child(4n+1) td{background:var(--zebra)}
+tbody tr.data:hover td{background:var(--amber-wash)}
+tbody tr.data{cursor:pointer}
+.rk{font-family:var(--mono);font-size:11px;color:var(--faint);width:34px}
+.nm{font-weight:600;font-size:14.5px;line-height:1.3}
+.nm .alt{display:block;font-weight:400;font-size:12px;color:var(--dim);margin-top:2px}
+.mono{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.num{font-family:var(--mono);font-size:13px;text-align:right;white-space:nowrap}
+td.num{text-align:right}
+
+/* salary bar */
+.bandcell{min-width:186px}
+.bandcell .rd{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.02em;margin-bottom:5px;white-space:nowrap}
+.bandcell .rd b{color:var(--text);font-weight:500}
+.bar{position:relative;height:13px;
+  background:linear-gradient(90deg,var(--rule-soft) 0 1px,transparent 1px) 0 0/22.222% 100%;
+  border-bottom:1px solid var(--rule-soft);border-left:1px solid var(--rule-soft)}
+.bar .rng{position:absolute;top:2px;height:9px;background:var(--h1);opacity:.92}
+.bar .tick{position:absolute;top:0;width:2px;height:13px;background:var(--ink)}
+.scalenote{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint);padding:9px 12px;border-top:1px solid var(--rule-soft);background:var(--zebra)}
+
+/* pills */
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border:1px solid;white-space:nowrap}
+.g4{color:#fff;background:var(--h4);border-color:var(--h4)}
+.g3{color:#40290A;background:var(--h3);border-color:var(--h3)}
+.g2{color:#fff;background:var(--h2);border-color:var(--h2)}
+.g1{color:#fff;background:var(--h1);border-color:var(--h1)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  padding:3px 7px;border:1px solid var(--rule);color:var(--dim);background:var(--surface);margin:0 4px 4px 0}
+.tag.k{border-color:var(--amber);color:var(--amber);background:var(--amber-wash)}
+.dir{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.dir.in{color:var(--h2)} .dir.lat{color:var(--h1)} .dir.out{color:var(--amber)}
+
+/* detail row */
+tr.detail td{background:var(--ink);color:#C6D8E3;padding:0;border-bottom:2px solid var(--ink)}
+.dt{padding:22px 24px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:26px}
+.dt h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-hi);margin:0 0 8px;font-weight:500}
+.dt p{margin:0 0 15px;font-size:14px;line-height:1.6;color:#CBDCE6}
+.dt p:last-child{margin-bottom:0}
+.dt .tag{background:transparent;border-color:#2E4A5C;color:#9FB9C8}
+.dt .tag.k{border-color:var(--amber-hi);color:var(--amber-hi);background:rgba(240,166,60,.08)}
+.dt .src{font-family:var(--mono);font-size:10.5px;color:#7C97A8;line-height:1.7}
+.dt .src b{color:#A9C4D2;font-weight:500}
+.caret{font-family:var(--mono);color:var(--faint);font-size:11px;width:22px;text-align:center}
+tr.data[aria-expanded="true"] .caret{color:var(--amber);transform:rotate(90deg);display:inline-block}
+
+/* callouts */
+.note{border-left:3px solid var(--amber);background:var(--amber-wash);padding:13px 16px;margin:18px 0;font-size:13.5px;color:#4A3410}
+.note b{color:#2E2008}
+.empty{padding:44px 20px;text-align:center;color:var(--faint);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+
+/* sources view */
+.srcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.srccard{background:var(--surface);padding:17px 18px}
+.srccard h3{font-family:var(--disp);font-variation-settings:'wdth' 108,'wght' 700;font-size:15px;margin:0 0 3px;line-height:1.25}
+.srccard .meta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:9px}
+.srccard p{margin:0;font-size:13px;color:var(--dim);line-height:1.55}
+.srccard a{font-family:var(--mono);font-size:11px;display:inline-block;margin-top:9px;word-break:break-all}
+.prose{max-width:78ch}
+.prose h3{font-family:var(--disp);font-variation-settings:'wdth' 110,'wght' 700;font-size:17px;text-transform:uppercase;letter-spacing:0;margin:30px 0 9px}
+.prose p{font-size:14.5px;line-height:1.65;color:#243846}
+.prose ul{font-size:14.5px;line-height:1.65;color:#243846;padding-left:19px}
+.prose li{margin-bottom:7px}
+
+footer{background:var(--ink);color:#7C97A8;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+  padding:26px 22px;text-transform:uppercase;line-height:1.9}
+footer .in{max-width:1360px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+@media (max-width:920px){
+  .dt{grid-template-columns:1fr;gap:18px}
+  .tablewrap{overflow-x:auto}
+  thead th{position:static}
+  .tabs{position:static}
+  .marking{position:static}
+  .mast-sub{font-size:14.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  .marking,.tabs,.controls,footer{display:none}
+  .view{display:block!important;page-break-before:always}
+  body{background:#fff}
+  .masthead{background:#fff;color:#000}
+  .mast-title,.fig-n{color:#000}
+  tr.detail{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="marking">
+  <span class="tlp">TLP:CLEAR</span>
+  <span>Workforce intelligence product</span>
+  <span>Compiled 20 Aug 2026</span>
+  <span class="push">All figures US market · base salary unless noted</span>
+</div>
+
+<header class="masthead">
+  <div class="mast-inner">
+    <p class="eyebrow">Career &amp; Skills Dossier — Edition 2026</p>
+    <h1 class="mast-title">Cybersecurity<span class="thin">Workforce 2026</span></h1>
+    <p class="mast-sub">Ten roles worth building toward, the twenty skills and credentials employers actually ask for, and the adjacent jobs that feed into each one. <strong>Every figure is sourced.</strong> Sort any column, filter by track, search across all of it.</p>
+    <div class="figures">
+      <div class="fig"><div class="fig-n">514,359</div><div class="fig-l">US cyber job postings</div><div class="fig-s">CyberSeek · 12 mo to Apr 2025 · +12% YoY</div></div>
+      <div class="fig"><div class="fig-n">74%</div><div class="fig-l">Supply-to-demand ratio</div><div class="fig-s">26% of US cyber roles sit vacant</div></div>
+      <div class="fig"><div class="fig-n">29%</div><div class="fig-l">Projected growth 2024–34</div><div class="fig-s">BLS · ~7× the all-occupation average</div></div>
+      <div class="fig"><div class="fig-n">$124,910</div><div class="fig-l">Median wage, infosec analysts</div><div class="fig-s">BLS · May 2024 · P90 $186,420</div></div>
+      <div class="fig"><div class="fig-n">59%</div><div class="fig-l">Teams with critical skills gaps</div><div class="fig-s">ISC2 2025 · up from 44% in 2024</div></div>
+      <div class="fig"><div class="fig-n">41%</div><div class="fig-l">Name AI as their top skill need</div><div class="fig-s">ISC2 2025 · cloud security 2nd at 36%</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-view="roles"><span class="num">01</span>Top 10 roles</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="skills"><span class="num">02</span>Top 20 skills &amp; certs</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="adjacent"><span class="num">03</span>Adjacent roles</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="method"><span class="num">04</span>Sources &amp; method</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ======================= ROLES ======================= -->
+<section class="view on" id="view-roles">
+  <div class="view-head">
+    <div>
+      <h2>Top 10 cybersecurity careers, 2026</h2>
+      <p>Ranked on a blend of pay, posting volume and growth trajectory. Salary bars share one axis ($0–$450K) so you can compare bands by scanning down the column. Click any row for detail and sources.</p>
+    </div>
+    <div class="count" id="rolesCount"></div>
+  </div>
+
+  <div class="controls">
+    <div class="search">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+      <input type="search" id="rolesSearch" placeholder="Search roles, skills, certifications…" aria-label="Search roles">
+    </div>
+    <div class="chipset" id="rolesTrack"><span class="lbl">Track</span></div>
+    <div class="chipset" id="rolesLevel"><span class="lbl">Level</span></div>
+    <button class="tool" data-csv="roles">Export CSV</button>
+    <button class="tool" data-reset="roles">Reset</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="rolesTable">
+      <thead><tr>
+        <th class="nosort"></th>
+        <th data-key="rank" data-type="n" aria-sort="ascending"><button>Rank <span class="arw">▲</span></button></th>
+        <th data-key="role" data-type="s"><button>Role <span class="arw">▲</span></button></th>
+        <th data-key="track" data-type="s"><button>Track <span class="arw">▲</span></button></th>
+        <th data-key="low" data-type="n"><button>Salary band (US $000s) <span class="arw">▲</span></button></th>
+        <th data-key="typical" data-type="n"><button>Typical <span class="arw">▲</span></button></th>
+        <th data-key="growthScore" data-type="n"><button>Growth <span class="arw">▲</span></button></th>
+        <th data-key="demandScore" data-type="n"><button>Demand <span class="arw">▲</span></button></th>
+        <th data-key="levelScore" data-type="n"><button>Entry point <span class="arw">▲</span></button></th>
+      </tr></thead>
+      <tbody id="rolesBody"></tbody>
+    </table>
+    <div class="scalenote">All bars share one $0–$450K axis · gridlines every $100K · the dark tick marks the typical figure</div>
+  </div>
+
+  <div class="note"><b>Read the bands carefully.</b> Sources disagree more than any single article admits — penetration tester alone runs from a $106,261 PayScale average to a $155,000 Glassdoor median, because "pentester" covers both scanner-runners and operators who chain a phishing click into domain admin. Treat the bar as a range to negotiate inside, not a promise.</div>
+</section>
+
+<!-- ======================= SKILLS ======================= -->
+<section class="view" id="view-skills">
+  <div class="view-head">
+    <div>
+      <h2>Top 20 requested skills &amp; certifications</h2>
+      <p>Ranked by evidence of employer demand, not opinion. Posting shares come from 5,411 active cybersecurity engineer listings analysed June 2026; certification counts come from CyberSeek's scan of US job listings. Filter by type to separate skills from credentials.</p>
+    </div>
+    <div class="count" id="skillsCount"></div>
+  </div>
+
+  <div class="controls">
+    <div class="search">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+      <input type="search" id="skillsSearch" placeholder="Search skills, certs, roles…" aria-label="Search skills">
+    </div>
+    <div class="chipset" id="skillsType"><span class="lbl">Type</span></div>
+    <div class="chipset" id="skillsDom"><span class="lbl">Domain</span></div>
+    <button class="tool" data-csv="skills">Export CSV</button>
+    <button class="tool" data-reset="skills">Reset</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="skillsTable">
+      <thead><tr>
+        <th class="nosort"></th>
+        <th data-key="rank" data-type="n" aria-sort="ascending"><button>Rank <span class="arw">▲</span></button></th>
+        <th data-key="name" data-type="s"><button>Skill or credential <span class="arw">▲</span></button></th>
+        <th data-key="type" data-type="s"><button>Type <span class="arw">▲</span></button></th>
+        <th data-key="domain" data-type="s"><button>Domain <span class="arw">▲</span></button></th>
+        <th data-key="share" data-type="n"><button>Demand evidence <span class="arw">▲</span></button></th>
+        <th data-key="payDelta" data-type="n"><button>Pay signal <span class="arw">▲</span></button></th>
+        <th data-key="entry" data-type="s"><button>Learn it when <span class="arw">▲</span></button></th>
+      </tr></thead>
+      <tbody id="skillsBody"></tbody>
+    </table>
+  </div>
+
+  <div class="note"><b>The headline pattern:</b> no single skill clears 50% of postings — cybersecurity hiring is more fragmented than any other major tech title. Automation tops the list at 44.5%. And the pay signal splits cleanly: skills that <i>build</i> infrastructure (Kubernetes, Terraform, IaC, CI/CD) sit $13K–$18K above the $132,000 engineer baseline, while skills that <i>watch</i> it (Splunk, Windows, Active Directory, vulnerability scanning) sit $19K–$32K below it.</div>
+</section>
+
+<!-- ======================= ADJACENT ======================= -->
+<section class="view" id="view-adjacent">
+  <div class="view-head">
+    <div>
+      <h2>Cyber-adjacent roles</h2>
+      <p>Jobs that feed into, sit beside, or partner with each of the top 10. Filter by <span class="dir in">feeder</span> (a way in), <span class="dir lat">lateral</span> (a sideways move at similar seniority), or <span class="dir out">partner</span> (works alongside security, hires from it, or is where security people land next).</p>
+    </div>
+    <div class="count" id="adjCount"></div>
+  </div>
+
+  <div class="controls">
+    <div class="search">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+      <input type="search" id="adjSearch" placeholder="Search adjacent roles…" aria-label="Search adjacent roles">
+    </div>
+    <div class="chipset" id="adjMaps"><span class="lbl">Maps to</span></div>
+    <div class="chipset" id="adjDir"><span class="lbl">Direction</span></div>
+    <button class="tool" data-csv="adj">Export CSV</button>
+    <button class="tool" data-reset="adj">Reset</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="adjTable">
+      <thead><tr>
+        <th class="nosort"></th>
+        <th data-key="role" data-type="s" aria-sort="ascending"><button>Adjacent role <span class="arw">▲</span></button></th>
+        <th data-key="mapsTo" data-type="s"><button>Maps to <span class="arw">▲</span></button></th>
+        <th data-key="dir" data-type="s"><button>Direction <span class="arw">▲</span></button></th>
+        <th data-key="low" data-type="n"><button>Typical US pay <span class="arw">▲</span></button></th>
+        <th data-key="bridge" data-type="s"><button>What transfers <span class="arw">▲</span></button></th>
+      </tr></thead>
+      <tbody id="adjBody"></tbody>
+    </table>
+  </div>
+
+  <div class="note"><b>Why this table matters more than it looks.</b> Only 2.1% of cybersecurity engineer postings are explicitly entry-level — the tightest entry pipeline of any major tech role measured. Almost nobody gets in through a "cybersecurity" door. They get in through one of these.</div>
+</section>
+
+<!-- ======================= METHOD ======================= -->
+<section class="view" id="view-method">
+  <div class="view-head">
+    <div>
+      <h2>Sources &amp; method</h2>
+      <p>What each figure rests on, how the rankings were built, and where the data is weakest.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h3>How the top 10 was ranked</h3>
+    <p>No single authority publishes a ranked list of cybersecurity roles, so this one is composed. Each role scores on three axes — <b>pay</b> (midpoint of the credible band across at least two independent sources), <b>demand</b> (posting share and volume evidence), and <b>growth</b> (year-over-year salary movement plus stated employer skill gaps). Roles were then ordered by the combined signal, with a deliberate tilt toward trajectory over current pay, because a career decision made in 2026 pays out across the 2030s.</p>
+
+    <h3>Five things worth knowing before you read the numbers</h3>
+    <ul>
+      <li><b>BLS tracks one occupation, not twenty.</b> "Information security analyst" absorbs SOC analysts, GRC specialists, cloud identity engineers and pentesters into a single median of $124,910. The 29% growth figure is real and useful; the median is an average of wildly different jobs. (The "33% growth" you'll still see quoted is the older 2023–33 projection — the current one is 29% for 2024–34.)</li>
+      <li><b>The entry rung is being pulled up.</b> Tier 1 SOC triage is the most automated part of security. Organisations that ran 15-seat SOCs in 2021 run 6-seat SOCs in 2026, and 52% of practitioners expect AI to reduce demand for Tier 1 analysts and routine vulnerability scanning. Only 2% think it threatens the profession itself — the shape is role elevation, not role elimination.</li>
+      <li><b>AI is the top skill need, but not yet the top job title.</b> ISC2 puts AI at 41% as the most pressing skill gap, ahead of cloud security at 36%. Yet only 10% of US cyber listings explicitly name AI skills, and 5.6% name LLMs. The premium is real ($32,475 median gap between postings that require new-wave AI skills and those that don't) but the volume is still small. Skate to where the puck is going, without quitting your day job to get there.</li>
+      <li><b>Certifications open doors; they don't set the ceiling.</b> Over 75% of 2026 cyber postings list at least one certification as required or preferred, and CISSP appears in roughly 82,000 US listings. But in AI security specifically, published research, CTF results and open-source contributions outrank credentials — a cert-heavy CV with no shipped work is treated as a warning sign in that niche.</li>
+      <li><b>Location premiums are eroding; clearance premiums are not.</b> Remote hiring has flattened metro differentials in most specialities. An active Secret clearance still adds roughly $10K–$18K, and TS/SCI eligibility $25K–$45K, because the pool is finite and the holding cost is real. Seven of the eleven largest cybersecurity engineer employers are defence, government or critical-infrastructure firms.</li>
+    </ul>
+
+    <h3>Where this data is weakest</h3>
+    <p>Self-reported aggregators (Glassdoor, Levels.fyi, PayScale) skew toward people who work at companies worth bragging about, which inflates the top of every band. Recruiter guides (Robert Half, KORE1) reflect what gets offered rather than what gets accepted. Posting-scrape datasets only capture roles with disclosed salaries, which over-represents states with wage-transparency laws. Where sources conflicted, the range in this dossier was widened rather than averaged — a wide honest band beats a narrow confident wrong number. Two figures carry explicit small-sample warnings in their role detail.</p>
+  </div>
+
+  <h3 style="font-family:var(--disp);font-variation-settings:'wdth' 110,'wght' 700;font-size:17px;text-transform:uppercase;margin:34px 0 14px">Primary sources</h3>
+  <div class="srcgrid" id="srcGrid"></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="in">
+    <span>TLP:CLEAR · Cybersecurity Workforce Dossier 2026</span>
+    <span>Compiled 20 Aug 2026 · Verify figures before acting on them</span>
+  </div>
+</footer>
+
+<script>
+const K = n => '$' + Math.round(n/1000) + 'K';
+const AXIS_MAX = 450000;
+
+/* ============================== ROLES ============================== */
+const ROLES = [
+{rank:1, role:"AI / ML Security Engineer", alt:"AI red teamer · LLM application security · agent safety engineer",
+ track:"Emerging", low:130000, typical:188000, high:290000,
+ growth:"Surging", growthScore:4, demand:"High value, low volume", demandScore:3, level:"Senior", levelScore:3,
+ why:"The fastest-moving speciality in security, and the only one where the discipline is younger than most people's careers — OWASP's LLM Top 10 was first published in 2023. ISC2's 2025 study puts AI at the top of the skills-gap table (41%), ahead of cloud security (36%), and 70% of practitioners say they're pursuing AI qualifications. Postings that require new-wave AI skills carry a median base of $160,000 against $127,525 for those that don't — a $32,475 gap inside the same job title. Glassdoor's average for the title is $187,975 with a 90th percentile of $290,375; specialist recruiters report staff and principal total compensation running far higher at frontier labs.",
+ watch:"83% of AI/ML security demand sits at senior level and above, so this is a pivot rather than an entry point. The hiring signal that matters here is published bypasses, CTF placings and open-source contributions to tooling like garak or PyRIT — not certificates. Sub-specialities are already pricing differently: agentic AI safety carries a 20–30% premium over LLM-only application security work.",
+ certs:["OWASP LLM Top 10 (knowledge)","MITRE ATLAS","ISACA AAISM","CAISP","CISSP (context)"],
+ skills:["LLM architecture","Prompt injection defence","RAG &amp; agent security","Adversarial ML","Model red teaming","Python","Guardrail design","AI risk mapping"],
+ src:["Glassdoor AI Security Engineer (2026)","ISC2 Cybersecurity Workforce Study 2025","InterviewStack posting analysis (Jun 2026)","infosec.qa 2026 hiring guide","WEF Global Cybersecurity Outlook 2026"]},
+
+{rank:2, role:"Cloud Security Engineer / Architect", alt:"Multi-cloud security · CSPM · cloud infrastructure security",
+ track:"Cloud", low:105000, typical:158000, high:215000,
+ growth:"Surging", growthScore:4, demand:"Very high", demandScore:4, level:"Mid–Senior", levelScore:2,
+ why:"The highest-volume premium speciality in security. AWS appears in 37.6% of cybersecurity engineer postings, Azure in 30.8%, Google Cloud in 21.9% — and the co-occurrence data shows employers overwhelmingly want two of them, not one (a posting naming Azure is 2.52× more likely than baseline to also name GCP). Cloud security is ISC2's second-largest skills gap at 36%, and 77% of security leaders report high concern about it. Recruiters place base salaries at $105,000–$215,000 from associate to senior, with staff and principal roles at $215,000–$300,000 and beyond at large technology employers.",
+ watch:"The title gets stamped on two genuinely different jobs — \"keep our AWS accounts from embarrassing us\" and \"own identity, detection and compliance evidence across three clouds and a Kubernetes fleet.\" The spread between two people holding it is routinely $60,000 or more. Read the requisition, not the title. Cloud security architect specifically runs $170,000–$220,000.",
+ certs:["CCSP","AWS Certified Security – Specialty","Microsoft AZ-500","Google Professional Cloud Security Engineer","CISSP"],
+ skills:["CSPM (Wiz, Prisma, Prowler)","Terraform","Kubernetes security","CIEM &amp; cloud IAM","Multi-cloud architecture","Infrastructure as Code","Python"],
+ src:["KORE1 Cloud Security Engineer Salary Guide 2026","Glassdoor (2026)","InterviewStack posting analysis (Jun 2026)","ISC2 Workforce Study 2025","Cybersecurity Insiders 2026"]},
+
+{rank:3, role:"Security Architect", alt:"Enterprise security architect · zero trust architect",
+ track:"Architecture", low:138250, typical:157000, high:176000,
+ growth:"Strong", growthScore:3, demand:"High", demandScore:3, level:"Senior", levelScore:3,
+ why:"Robert Half's 2026 guide puts the national band at $138,250–$176,000 — one of the highest floors of any individual-contributor security role, because the job effectively has no junior version. In Washington DC the same role runs $183,873–$234,080, reflecting the federal and defence concentration. Employers typically want a degree in IT or computer science plus five to ten years across information security and IT risk management.",
+ watch:"This is a management-level role in everything but headcount: change management, stakeholder negotiation and written communication carry as much weight as technical depth. The architects who keep climbing are the ones who can defend a design decision to a board and to an engineer in the same week. Zero trust design and post-quantum crypto agility are the two design problems most likely to define the next five years of the job.",
+ certs:["CISSP","CISM","CEH","SABSA","TOGAF"],
+ skills:["Zero trust design","Threat modelling","Security standards &amp; regulation","IAM architecture","Cloud reference architecture","Crypto agility","Change management"],
+ src:["Robert Half 2026 Salary Guide","Robert Half Washington DC (2026)","ISC2 Workforce Study 2025"]},
+
+{rank:4, role:"Cybersecurity Engineer", alt:"Security engineer · information security engineer",
+ track:"Engineering", low:118500, typical:144000, high:190750,
+ growth:"Strong", growthScore:3, demand:"Highest volume", demandScore:4, level:"Mid", levelScore:2,
+ why:"The workhorse role and the largest single bucket of advanced-level cyber postings. Robert Half projects a $144,000 national midpoint for 2026 with a +4.0% year-over-year rise — the fastest-growing security title in their guide, and above the +1.6% average across all technology roles. The full band runs $118,500–$190,750. Posting-scrape data puts the median disclosed base at $132,000 across 1,382 listings, with recruiters reporting a national median nearer $148,000.",
+ watch:"The role now straddles two disciplines: 87.6% of postings need security-domain knowledge and 74.8% need tools-and-infrastructure fluency. Candidates with only one of those layers cover less than three-quarters of the market. CISSP or OSCP adds roughly $15,000–$30,000 on top of band. Only 2.1% of postings are explicitly entry-level, so most people arrive here from networking, DevOps, software engineering or IT operations.",
+ certs:["CISSP","CompTIA Security+","OSCP","Cloud security specialty","GIAC (GCIH, GCIA)"],
+ skills:["Security automation","Python","AWS / Azure","Monitoring &amp; telemetry","Incident response","CI/CD","SIEM","IAM"],
+ src:["Robert Half 2026 Salary Guide","Robert Half technology salary trends (2026)","KORE1 Cybersecurity Engineer Guide 2026","InterviewStack posting analysis (Jun 2026)","CyberSeek"]},
+
+{rank:5, role:"DevSecOps / Application Security Engineer", alt:"Product security · pipeline security · secure SDLC",
+ track:"Engineering", low:115000, typical:148000, high:185000,
+ growth:"Surging", growthScore:4, demand:"High", demandScore:3, level:"Mid", levelScore:2,
+ why:"Base salaries run $115,000–$185,000, with senior and staff total compensation reaching $200,000–$340,000 once equity and bonus stack on top; Glassdoor reports average total pay of $184,736 as of July 2026. Application security engineers specifically average around $138,117 base. The senior band moved up roughly 8% in 2024 and another 6% in 2025 — driven substantially by the SEC's four-business-day material incident disclosure rule, which made the person who owns the security pipeline a regulatory necessity rather than a nice-to-have.",
+ watch:"The WEF's 2026 outlook names DevSecOps engineers among the roles where talent shortage is most acute. The leverage comes from sitting at the intersection of two disciplines that few people hold together — infrastructure automation and application security. Scripting fluency in Python or Go is not optional at the top of the band. Negotiate on-call compensation explicitly; $500–$1,500 per week is common and its absence signals immature security operations.",
+ certs:["CSSLP","GWEB","ECDE","AWS / Azure security specialty","CKS"],
+ skills:["CI/CD security","SAST / DAST / SCA","Terraform","Kubernetes","OWASP","Python or Go","SBOM &amp; supply chain","Threat modelling"],
+ src:["KORE1 DevSecOps Salary Guide 2026","Glassdoor (Jul 2026)","WEF Global Cybersecurity Outlook 2026","Research.com AppSec (2026)"]},
+
+{rank:6, role:"Identity &amp; Access Management Engineer", alt:"IAM · IGA · PAM · identity architect",
+ track:"Identity", low:110000, typical:150000, high:200000,
+ growth:"Strong", growthScore:3, demand:"High", demandScore:3, level:"Mid", levelScore:2,
+ why:"Identity is where the salary premium quietly hides. Okta skills carry a $18,000 premium over the cybersecurity engineer baseline — tied with Kubernetes for the highest of any measured skill — and IAM appears in 20.3% of postings. Mid-level IAM engineers earn roughly $110,000–$150,000, seniors $150,000–$200,000, identity architects $180,000–$240,000 and above, and heads of identity $200,000–$300,000+.",
+ watch:"IAM analyst is a genuinely less-crowded entry door than SOC analyst at comparable pay, built from the same networking, Linux and scripting foundations. Within the discipline, privileged access management, cloud infrastructure entitlement management and identity threat detection pay at the top of the band because the work is high-risk and the talent pool is small.",
+ certs:["Okta Certified Professional / Consultant","Microsoft SC-300","CISSP","SailPoint / CyberArk vendor certs","CIMP"],
+ skills:["SSO, SAML, OIDC","MFA &amp; passwordless","SCIM provisioning","PAM","CIEM","ITDR","Entra ID / Okta / Ping","Joiner-mover-leaver automation"],
+ src:["Start with Identity IAM Salary Guide 2026","InterviewStack posting analysis (Jun 2026)","KORE1 IAM guide (2026)"]},
+
+{rank:7, role:"CISO / Head of Security", alt:"VP security · security director · deputy CISO",
+ track:"Leadership", low:220000, typical:300000, high:420000,
+ growth:"Strong", growthScore:3, demand:"Low volume, high stakes", demandScore:2, level:"Executive", levelScore:4,
+ why:"The ceiling of the profession. Salary.com puts the US average at $385,165 as of April 2026, with Glassdoor's typical range spanning $253,273–$417,111; base compensation generally runs $220,000–$420,000 and total compensation at large enterprises regularly clears $400,000–$600,000 with equity and bonus. The tier immediately below — systems security manager — sits at $141,500–$204,750 in Robert Half's 2026 guide, which is a useful reality check on the distance between the two.",
+ watch:"Compensation estimates for this role vary by more than a factor of three between sources, because some sample mid-size directors and others sample large-enterprise executives with equity-heavy packages. The role also split in two directions in 2026 — a technical track and a business/regulatory track — and the SEC disclosure rule made the second one materially more legally exposed. Analysis of UK CISO job descriptions from 2022–25 found CISSP and CISM dominant, alongside a rising weight on communication and business-process fluency.",
+ certs:["CISSP","CISM","CRISC","CCISO","MBA (common, not required)"],
+ skills:["Board communication","Regulatory disclosure","Risk quantification","Budget &amp; vendor management","Programme building","Incident command","Talent retention"],
+ src:["Salary.com (Apr 2026)","Glassdoor (2026)","Robert Half 2026 Salary Guide","University of Portsmouth CISO JD study (2022–25)"]},
+
+{rank:8, role:"Penetration Tester / Red Team Operator", alt:"Ethical hacker · offensive security · adversary emulation",
+ track:"Offensive", low:95000, typical:130000, high:180000,
+ growth:"Growing", growthScore:2, demand:"Steady", demandScore:2, level:"Mid", levelScore:2,
+ why:"Recruiters place the 2026 US median base near $130,000, with most offers landing between $95,000 and $180,000 and senior red team operators who can prove real exploitation clearing $200,000 in total pay. Penetration testing appears in 14% of cybersecurity engineer postings and carries a modest +$4,500 premium over baseline. Offensive skills remain highly valued, particularly where a practical certification demonstrates hands-on capability rather than multiple-choice recall.",
+ watch:"This title has the widest credibility gap in security. PayScale reports an average of $106,261, ZipRecruiter $119,895, Glassdoor a $155,000 median — the sources aren't wrong, they're measuring different jobs under one label. What the market pays for is proof you have chained a phishing click into domain admin on a live network, not that you have pointed a scanner at an IP range and reformatted the PDF. Build a portfolio accordingly. Clearance is one of the few non-technical levers that reliably adds to the number.",
+ certs:["OSCP","OSEP","CRTO","GPEN","CEH (screening value)"],
+ skills:["Exploitation chains","Active Directory attack paths","Cloud &amp; container pentest","Web &amp; API testing","Social engineering","Report writing","Python"],
+ src:["KORE1 Penetration Tester Salary Guide 2026","Glassdoor (Jul 2026)","ZipRecruiter (Aug 2026)","PayScale (2026)","InterviewStack posting analysis (Jun 2026)"]},
+
+{rank:9, role:"Detection Engineer, SOC Analyst &amp; Incident Responder", alt:"Security operations · threat hunting · DFIR",
+ track:"Operations", low:65000, typical:105000, high:150000,
+ growth:"Splitting", growthScore:2, demand:"Highest posting volume", demandScore:4, level:"Entry–Senior", levelScore:1,
+ why:"Still the highest-volume entry point into the profession, and still where the largest number of security people work. Incident response appears in 31.4% of cybersecurity engineer postings — the most common security-specific skill of any measured — and SIEM in 25%. Tier 1 runs $65,000–$100,000, Tier 2 $65,000–$105,000, Tier 3 and threat hunting $85,000–$130,000. Incident response specialists earn $90,000–$140,000 and IR leads around $142,000; threat intelligence analysts command $95,000–$135,000 at mid-career.",
+ watch:"This is the role most reshaped by automation, and the split matters enormously for anyone entering. Tier 1 triage is being absorbed by AI-powered SIEM and SOAR; 52% of practitioners expect AI to reduce demand at that rung. Tier 2 and Tier 3 — deeper investigation, threat hunting, detection engineering, incident response — are more valuable than ever. Aim a step above the traditional starting point. On the forensics side: federal examiners start at $50,000–$70,000 (GS-7 to GS-9), forensic practice directors reach $130,000–$200,000, and senior staff engineers with a forensics focus at technology companies reach $200,000–$300,000 including stock.",
+ certs:["CompTIA Security+","CySA+","ISACA CCOA","GIAC GCIH / GCIA / GCFA","Microsoft SC-200"],
+ skills:["SIEM &amp; SOAR","Detection as code (Sigma, KQL, SPL)","Threat hunting","Python","Log &amp; network analysis","AI output validation","Forensic imaging","MITRE ATT&amp;CK"],
+ src:["Unihackers Cybersecurity Salary Guide 2026","InterviewStack posting analysis (Jun 2026)","Forensic Notes DFIR salaries (2026)","CyberSeek","Analytics Insight AI hiring (2026)"]},
+
+{rank:10, role:"GRC, Risk &amp; Compliance Manager", alt:"Security risk · IT audit · third-party risk · privacy",
+ track:"Governance", low:85000, typical:125000, high:175000,
+ growth:"Strong", growthScore:3, demand:"Strong &amp; regulation-driven", demandScore:3, level:"Entry–Senior", levelScore:1,
+ why:"The least glamorous entry on this list and one of the most durable. Mid-level GRC analysts earn $80,000–$125,000; GRC and compliance leads sit around $135,000; Robert Half puts technology IT auditors at $108,500–$152,250 and systems security managers at $141,500–$204,750. Demand is driven by regulation rather than threat volume, which makes it counter-cyclical to security budget cuts — SEC four-day disclosure, DORA, NIS2, PCI DSS 4.0, CMMC and the EU AI Act are all landing inside the same few years.",
+ watch:"Critically for career changers: GRC, audit support and vulnerability management are markedly less compressed by AI than pure analyst work, and companies hiring for SOC 2 readiness, HIPAA compliance and CMMC preparation are actively taking junior people. If you are coming from audit, legal, risk or compliance in another industry, this is the shortest bridge into security that exists. One caution on the pay data: Glassdoor's $129,276 average for the title rests on a very small sample.",
+ certs:["CISA","CISM","CRISC","CISSP","ISO 27001 Lead Auditor","CIPP/US or CIPP/E","CMMC-CCP"],
+ skills:["NIST CSF 2.0 &amp; RMF","ISO 27001","SOC 2","PCI DSS 4.0","DORA / NIS2","EU AI Act readiness","Third-party risk","Evidence automation"],
+ src:["Robert Half 2026 Salary Guide","Glassdoor (2026, small sample)","ZipRecruiter (Jun 2026)","SimeonOnSecurity entry-level analysis (2026)"]}
+];
+
+/* ============================== SKILLS ============================== */
+const SKILLS = [
+{rank:1,name:"Security automation &amp; orchestration",type:"Skill",domain:"Engineering",share:44.5,shareLbl:"44.5% of postings",payDelta:0,payLbl:"At baseline",entry:"Immediately",
+ note:"The single most-requested capability in cybersecurity engineer postings and the highest anything reaches — no skill clears 50%. Overlaps heavily with Python (they co-occur at 1.49× the expected rate, effectively one signal). This is the skill that converts an analyst into an engineer.",
+ roles:"All ten. Especially SecOps, DevSecOps, cloud.",src:"InterviewStack posting analysis, 5,411 listings, Jun 2026"},
+
+{rank:2,name:"Python",type:"Skill",domain:"Engineering",share:41,shareLbl:"41% of postings",payDelta:0,payLbl:"At baseline",entry:"Immediately",
+ note:"The role's coding language, used for automation, detection scripting and API integration. Coding languages as a family appear in 48.8% of postings, and Python dominates that family by a wide margin. Not full software-engineering depth — that matters more in application security and tooling roles.",
+ roles:"All ten. Non-negotiable above Tier 1.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:3,name:"AWS security",type:"Skill",domain:"Cloud",share:37.6,shareLbl:"37.6% of postings",payDelta:13000,payLbl:"+$13,000",entry:"Early",
+ note:"The most-requested single cloud platform, and the anchor of the multi-cloud expectation. AWS pairs with Terraform at 2.09× lift and with Kubernetes at 1.95×, which tells you employers want provisioning and workload security, not console clicking.",
+ roles:"Cloud security, cybersecurity engineer, DevSecOps.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:4,name:"CISSP",type:"Certification",domain:"Governance",share:34,shareLbl:"~82,500 US listings",payDelta:22000,payLbl:"+$15K–$35K",entry:"After 5 yrs experience",
+ note:"The most-requested certification in US cybersecurity job postings, and a de facto filter for senior and management roles — particularly in government, defence and regulated industries. Requires five years of paid experience across two or more domains, so it is a mid-career credential, not an entry one. Recruiters report it adds $15,000–$30,000 on top of band.",
+ roles:"Architect, engineer, manager, CISO track.",src:"CyberSeek / Lightcast; KORE1 2026; Skillsoft IT Skills &amp; Salary"},
+
+{rank:5,name:"Security monitoring &amp; telemetry",type:"Skill",domain:"Operations",share:35.7,shareLbl:"35.7% of postings",payDelta:0,payLbl:"At baseline",entry:"Immediately",
+ note:"Distinct from SIEM product knowledge: this is the ability to decide what to instrument, what to log, what to alert on and what to ignore. It survives every tooling change, which is why it appears more often than any individual platform.",
+ roles:"SecOps, cloud, engineering.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:6,name:"Incident response",type:"Skill",domain:"Operations",share:31.4,shareLbl:"31.4% of postings",payDelta:3000,payLbl:"+$3,000",entry:"Early",
+ note:"The most-requested security-specific skill of any measured. Pairs with SIEM at 1.75× lift — the classic security operations combination. The SEC's four-business-day material incident disclosure requirement has made documented, rehearsed IR a board-level concern rather than a runbook.",
+ roles:"SecOps, DFIR, engineer, CISO.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:7,name:"Azure security",type:"Skill",domain:"Cloud",share:30.8,shareLbl:"30.8% of postings",payDelta:0,payLbl:"Near baseline",entry:"Early",
+ note:"Second cloud by posting share. A posting naming Azure is 2.52× more likely than baseline to also name Google Cloud, and 2.10× more likely to name AWS — single-cloud mastery is a floor for this role, not a differentiator.",
+ roles:"Cloud security, IAM, engineer.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:8,name:"CompTIA Security+",type:"Certification",domain:"Foundations",share:29,shareLbl:"~70,000 US listings",payDelta:9000,payLbl:"+~11%",entry:"Day one",
+ note:"The second most-requested certification and the highest-ROI credential in the field: a roughly $400 exam that converts \"no security job\" into a first security job. Mandatory for many federal and contractor positions under DoD 8140. It will not move a mid-career salary, but it is the most reliable screening pass in the industry.",
+ roles:"SOC analyst, GRC, junior engineer, federal roles.",src:"CyberSeek / Lightcast; CompTIA; DoD 8140"},
+
+{rank:9,name:"CI/CD pipeline security",type:"Skill",domain:"Engineering",share:25.7,shareLbl:"25.7% of postings",payDelta:13000,payLbl:"+$13,000",entry:"Mid",
+ note:"Securing the delivery pipeline rather than the deployed artifact. Sits at the centre of the DevSecOps premium and pairs with AWS at 1.70× lift. This is where shift-left stops being a slogan and becomes a job description.",
+ roles:"DevSecOps, AppSec, cloud, engineer.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:10,name:"SIEM &amp; detection engineering",type:"Skill",domain:"Operations",share:25,shareLbl:"25% of postings",payDelta:-2000,payLbl:"−$2,000",entry:"Early",
+ note:"Requested in a quarter of postings but pays marginally below baseline, and the specific platform matters: Splunk-tagged postings pay $112,500 against the $132,000 baseline. The value is migrating from operating the platform to writing the detection logic — detection-as-code in Sigma, KQL or SPL, version-controlled and tested like software.",
+ roles:"SecOps, detection engineer, threat hunter.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:11,name:"Google Cloud security",type:"Skill",domain:"Cloud",share:21.9,shareLbl:"21.9% of postings",payDelta:16700,payLbl:"+$16,700",entry:"Mid",
+ note:"The best return per unit of scarcity in the cloud trio: lowest posting share of the three, highest pay premium. Almost always requested as a second or third cloud alongside AWS or Azure rather than standalone.",
+ roles:"Cloud security, engineer, architect.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:12,name:"Identity &amp; access management",type:"Skill",domain:"Identity",share:20.3,shareLbl:"20.3% of postings",payDelta:18000,payLbl:"+$18,000 (Okta)",entry:"Early",
+ note:"Vendor-specific identity skills carry the joint-highest premium of any measured skill — Okta at +$18,000, tied with Kubernetes. Identity is the control plane for cloud, so the discipline compounds with everything else on this list. PAM, CIEM and ITDR sit at the top of the band.",
+ roles:"IAM engineer, cloud, architect, GRC.",src:"InterviewStack posting analysis, Jun 2026; Start with Identity 2026"},
+
+{rank:13,name:"Kubernetes &amp; container security",type:"Skill",domain:"Cloud",share:17.9,shareLbl:"17.9% of postings",payDelta:18000,payLbl:"+$18,000",entry:"Mid",
+ note:"The joint-highest paying skill in cybersecurity engineer postings at a $150,000 median. If you are choosing between deepening Splunk expertise and deepening Kubernetes expertise, the salary signal is unambiguous — a $37,500 median gap between the two.",
+ roles:"Cloud security, DevSecOps, engineer.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:14,name:"AI &amp; LLM security",type:"Skill",domain:"Emerging",share:10,shareLbl:"10% of listings name AI",payDelta:16000,payLbl:"+$16,000 to +$32,475",entry:"Now, gradually",
+ note:"The clearest gap between stated need and stated requirement in the dataset. ISC2 ranks AI the number-one skill need at 41%, ahead of cloud security at 36%, and 70% of practitioners are pursuing AI qualifications — yet CyberSeek finds only 10% of US listings explicitly require AI skills and just 5.6% name LLMs. Postings that do require new-wave AI skills pay a median base of $160,000 against $127,525 for those that don't.",
+ roles:"AI security, engineer, SecOps, GRC.",src:"ISC2 Workforce Study 2025; CyberSeek; InterviewStack Jun 2026; WEF 2026"},
+
+{rank:15,name:"Linux",type:"Skill",domain:"Foundations",share:16.8,shareLbl:"16.8% of postings",payDelta:0,payLbl:"At baseline",entry:"Day one",
+ note:"Under-requested relative to how essential it is — it appears in fewer postings than its importance suggests because employers assume it. Along with networking fundamentals (TCP/IP, DNS) and scripting, it is the substrate every other skill on this list is built on.",
+ roles:"All ten.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:16,name:"Terraform &amp; Infrastructure as Code",type:"Skill",domain:"Cloud",share:15.5,shareLbl:"15.5% of postings",payDelta:16400,payLbl:"+$15,000 to +$16,400",entry:"Mid",
+ note:"Terraform specifically pays $147,000; Infrastructure as Code as a category pays $148,400. Pairs with AWS at 2.09× lift. The premium reflects a genuine shift: employers now pay more for engineers who can build the infrastructure they are meant to protect than for those who only monitor it.",
+ roles:"Cloud security, DevSecOps, engineer.",src:"InterviewStack posting analysis, Jun 2026"},
+
+{rank:17,name:"CISM",type:"Certification",domain:"Governance",share:13,shareLbl:"Top-5 by posting volume",payDelta:25000,payLbl:"Highest cert premium",entry:"Mid–senior",
+ note:"Consistently among the certifications with the largest salary premiums, because it certifies management capability rather than technical skill — it qualifies holders for security manager, IT director and CISO-track roles that carry a leadership premium. ISACA research put the global median for holders at $148,622.",
+ roles:"CISO track, security manager, GRC, architect.",src:"Foote Partners 2Q 2026 IT Skills Demand &amp; Pay Trends; ISACA"},
+
+{rank:18,name:"DevSecOps practice",type:"Skill",domain:"Engineering",share:14.7,shareLbl:"14.7% of postings",payDelta:0,payLbl:"At baseline",entry:"Mid",
+ note:"Sits at baseline as a named skill, but the component skills it implies — Kubernetes, Terraform, CI/CD, IaC — are the four highest-paying in the dataset. Ask for the components on your CV, not just the umbrella term. The WEF names DevSecOps among the roles with the most acute talent shortage.",
+ roles:"DevSecOps, AppSec, cloud, engineer.",src:"InterviewStack posting analysis, Jun 2026; WEF Global Cybersecurity Outlook 2026"},
+
+{rank:19,name:"CISA",type:"Certification",domain:"Governance",share:12,shareLbl:"Top-5 by posting volume",payDelta:18000,payLbl:"Strong in audit tracks",entry:"Mid",
+ note:"The strongest credential for audit, compliance and risk management roles, and consistently in CyberSeek's top five most-requested. Robert Half also lists it among the certifications technology leaders most want in 2026. If your route into security is through audit or finance rather than IT, this is the one.",
+ roles:"GRC, IT audit, third-party risk, compliance.",src:"CyberSeek / Lightcast; Robert Half 2026 Salary Guide"},
+
+{rank:20,name:"Penetration testing (with OSCP)",type:"Skill + cert",domain:"Offensive",share:14,shareLbl:"14% of postings",payDelta:4500,payLbl:"+$4,500",entry:"Mid",
+ note:"Penetration testing appears in 14% of postings with a modest premium. What carries weight is the practical credential rather than the multiple-choice one: OSCP is treated as evidence of hands-on capability, while CEH functions largely as a screening keyword. CEH and OSCP together are standard across red team and offensive security job families.",
+ roles:"Pentester, red team, AppSec, engineer.",src:"InterviewStack posting analysis, Jun 2026; OnlineCybersecurity cert demand 2026"}
+];
+
+const WATCHLIST = "Also rising, just outside the top 20: CCSP and AWS Certified Security – Specialty (named explicitly in cloud security requisitions); Microsoft SC-200 and AZ-500; GIAC's practitioner track (GCIH, GCIA, GCFA, GSOC), each carrying a $10,000–$20,000 premium; CRISC for risk; CIPP for privacy; CKS for Kubernetes; ISACA's CCOA, launched 2025, as a bridge between Security+ and advanced credentials; and post-quantum crypto agility, which has no mature credential yet but a hard regulatory deadline behind it.";
+
+/* ============================== ADJACENT ============================== */
+const ADJ = [
+{role:"Machine Learning Engineer",mapsTo:"AI / ML Security",maps:["AI / ML Security"],dir:"Feeder",low:150000,high:250000,payLbl:"$150K–$250K",bridge:"Model internals &amp; training pipelines",
+ note:"The single strongest entry into AI security, and the traffic is almost entirely one-way. Of 273 security job descriptions analysed, 19% asked for AI skills — but of 139 AI engineering job descriptions, only 0.7% asked for security skills. That asymmetry means an ML engineer moving toward security faces near-zero competition from the other direction.",src:"Dexity Intel security-AI career analysis, Apr 2026"},
+{role:"AI Governance / Responsible AI Lead",mapsTo:"AI / ML Security · GRC",maps:["AI / ML Security","GRC"],dir:"Partner",low:151800,high:221000,payLbl:"$151,800 median",bridge:"Regulatory framing of model risk",
+ note:"IAPP's 2025–26 survey reported AI governance salaries for the first time: a $151,800 median for those working in AI governance alone, rising above $169,700 for people covering both privacy and AI governance. In the technology sector, technical AI governance roles reached a $221,000 median and legal/compliance AI governance roles $205,000. EU AI Act readiness is the current demand driver.",src:"IAPP Salary and Jobs Report 2025–26"},
+{role:"Cloud Engineer / Architect",mapsTo:"Cloud Security",maps:["Cloud Security"],dir:"Feeder",low:120000,high:190000,payLbl:"$120K–$190K",bridge:"You already own the environment",
+ note:"The most natural pivot in the whole field: you already run the accounts security is trying to protect. Add CSPM tooling, a security specialty certification and threat-modelling vocabulary and the transition is measured in months, not years.",src:"KORE1 2026; Robert Half 2026"},
+{role:"Site Reliability Engineer",mapsTo:"Cloud Security · DevSecOps",maps:["Cloud Security","DevSecOps / AppSec"],dir:"Lateral",low:130000,high:200000,payLbl:"$130K–$200K",bridge:"Blast-radius thinking, on-call maturity",
+ note:"SRE and security engineering share a mental model — assume failure, limit blast radius, instrument everything, rehearse the response. The incident command muscle transfers almost intact from outage response to breach response.",src:"Robert Half 2026; market composite"},
+{role:"Platform Engineer",mapsTo:"DevSecOps · Cloud Security",maps:["DevSecOps / AppSec","Cloud Security"],dir:"Feeder",low:125000,high:185000,payLbl:"$125K–$185K",bridge:"Terraform, Kubernetes, CI/CD ownership",
+ note:"Holds three of the four highest-paying skills in security postings already — Kubernetes, Terraform and CI/CD. The gap to close is threat modelling and the vocabulary of controls and evidence, not tooling.",src:"InterviewStack Jun 2026; market composite"},
+{role:"DevOps Engineer",mapsTo:"DevSecOps",maps:["DevSecOps / AppSec"],dir:"Feeder",low:114000,high:146000,payLbl:"~$145,750 midpoint",bridge:"Pipeline ownership",
+ note:"Robert Half projects a $145,750 midpoint for 2026 with +3.0% growth. Moving into DevSecOps typically lifts pay 20–40%, and the pipeline knowledge is the hard part — the security layer is learnable on top of it.",src:"Robert Half 2026 Salary Guide; Practical DevSecOps 2026"},
+{role:"Software Developer",mapsTo:"AppSec · DevSecOps · Pentest",maps:["DevSecOps / AppSec","Pentest / Red Team"],dir:"Feeder",low:131450,high:210000,payLbl:"$131,450 median (BLS)",bridge:"You know how it breaks because you built it",
+ note:"BLS median $131,450 in May 2024. Developers moving into security usually land in application security, DevSecOps or security engineering. The initial move may feel like a pay step backwards ($105K–$125K is common), but programming skill differentiates you sharply from peers who arrived via IT operations, and the gap typically closes in 18–24 months.",src:"BLS OOH (May 2024); market composite"},
+{role:"Computer Network Architect",mapsTo:"Security Architect",maps:["Security Architect"],dir:"Feeder",low:130390,high:180000,payLbl:"$130,390 median (BLS)",bridge:"Segmentation is half of zero trust",
+ note:"BLS median $130,390, projected 12% growth 2024–34 — much faster than average. Network architecture is the closest non-security analogue to security architecture, and zero trust design is fundamentally a segmentation and identity problem.",src:"BLS OOH (May 2024)"},
+{role:"Network Engineer",mapsTo:"Cybersecurity Engineer",maps:["Cybersecurity Engineer"],dir:"Feeder",low:90000,high:140000,payLbl:"$90K–$140K",bridge:"Protocol fluency, packet-level instinct",
+ note:"One of CyberSeek's named feeder roles. Networking fundamentals — TCP/IP, DNS, routing, segmentation — are the substrate under detection, cloud and offensive work alike, and they are the hardest thing to fake in an interview.",src:"CyberSeek career pathway; market composite"},
+{role:"Systems Administrator",mapsTo:"Cybersecurity Engineer · SecOps",maps:["Cybersecurity Engineer","SecOps / DFIR"],dir:"Feeder",low:96800,high:130000,payLbl:"$96,800 median (BLS)",bridge:"Hardening, patching, access control",
+ note:"BLS median $96,800, but projected to decline 4% through 2034 — one of the few IT occupations shrinking. That decline is precisely why it functions as a feeder: the skills transfer cleanly into security, and the destination is growing at 29% while the origin contracts.",src:"BLS OOH (May 2024)"},
+{role:"IT Support Specialist",mapsTo:"SOC Analyst · GRC",maps:["SecOps / DFIR","GRC"],dir:"Feeder",low:61550,high:85000,payLbl:"$61,550 median (BLS)",bridge:"Triage habits, ticket discipline, user empathy",
+ note:"BLS median $61,550. The classic on-ramp, and still viable — but with Tier 1 SOC compressing, the realistic target has moved to GRC support, vulnerability management or IAM administration rather than alert triage.",src:"BLS OOH (May 2024); CyberSeek"},
+{role:"Directory / Identity Administrator",mapsTo:"IAM Engineer",maps:["IAM"],dir:"Feeder",low:75000,high:110000,payLbl:"$75K–$110K",bridge:"Joiner-mover-leaver mechanics",
+ note:"IAM analyst and administrator roles ($75,000–$110,000) are a less-crowded entry door than SOC analyst at comparable pay, and lead directly into a band that tops out at $240,000+ for identity architects.",src:"Start with Identity IAM Salary Guide 2026"},
+{role:"IT Auditor",mapsTo:"GRC · CISO track",maps:["GRC","CISO"],dir:"Feeder",low:108500,high:152250,payLbl:"$108,500–$152,250",bridge:"Evidence, control testing, independence",
+ note:"Robert Half's 2026 technology band. Audit is the shortest bridge into security for anyone from a finance, accounting or compliance background — the control-testing mindset is exactly what SOC 2, ISO 27001 and CMMC work requires. CISA is the credential that formalises it.",src:"Robert Half 2026 Salary Guide"},
+{role:"Privacy Analyst / Data Protection Officer",mapsTo:"GRC · AI Governance",maps:["GRC","AI / ML Security"],dir:"Partner",low:120000,high:205000,payLbl:"$123K–$205K",bridge:"Regulatory reading, data mapping",
+ note:"IAPP puts the median for privacy-only practitioners at $123,000, rising to above $169,700 for those who also cover AI governance. Privacy and security GRC increasingly sit in the same team and read the same regulations.",src:"IAPP Salary and Jobs Report 2025–26"},
+{role:"OT / ICS Security Engineer",mapsTo:"Cybersecurity Engineer",maps:["Cybersecurity Engineer"],dir:"Lateral",low:138000,high:220000,payLbl:"+$20K–$35K premium",bridge:"Plant floor knowledge is unfakeable",
+ note:"Carries a $20,000–$35,000 premium over the standard cybersecurity engineer band because the skill set is hard to backfill and the qualified pool is small. Healthcare and industrial environments are persistently undersupplied — legacy systems plus NERC-CIP and HIPAA obligations plus limited AI penetration equals steady demand.",src:"KORE1 Cybersecurity Engineer Guide 2026; SimeonOnSecurity 2026"},
+{role:"Threat Intelligence Analyst",mapsTo:"SecOps · AI Security",maps:["SecOps / DFIR","AI / ML Security"],dir:"Lateral",low:95000,high:135000,payLbl:"$95K–$135K",bridge:"Analytic tradecraft, source evaluation",
+ note:"The WEF's 2026 outlook names threat intelligence analysts among the roles where talent shortage is most acute. Draws unusually well from non-technical backgrounds — journalism, intelligence, area studies, languages — because the core skill is structured analysis under uncertainty.",src:"WEF Global Cybersecurity Outlook 2026; Unihackers 2026"},
+{role:"Detection Engineer",mapsTo:"SecOps",maps:["SecOps / DFIR"],dir:"Lateral",low:110000,high:165000,payLbl:"$110K–$165K",bridge:"Detection-as-code, tuning judgement",
+ note:"The role Tier 2 and Tier 3 analysts are moving into as triage automates. The work shifts from writing static rules to teaching the system what matters, then supervising what it decides — which is a materially harder and better-paid job.",src:"Microsoft agentic SOC research (Apr 2026); Dropzone 2026"},
+{role:"Data Engineer",mapsTo:"SecOps · Detection",maps:["SecOps / DFIR"],dir:"Feeder",low:120000,high:180000,payLbl:"$120K–$180K",bridge:"Pipelines are pipelines",
+ note:"Security telemetry is a data engineering problem wearing a different hat: ingestion, normalisation, retention, cost. Data engineers moving into detection and security data platform roles skip the hardest part of the learning curve.",src:"Market composite; InterviewStack Jun 2026"},
+{role:"Fraud &amp; Financial Crime Analyst",mapsTo:"SecOps · GRC",maps:["SecOps / DFIR","GRC"],dir:"Partner",low:80000,high:135000,payLbl:"$80K–$135K",bridge:"Adversary reasoning under noise",
+ note:"CyberSeek names financial and risk analysis as one of five core feeder families. The WEF's 2026 outlook flags cyber-enabled fraud as reaching epidemic proportions, which is pushing the two disciplines together inside banks and payments firms.",src:"CyberSeek career pathway; WEF Global Cybersecurity Outlook 2026"},
+{role:"Security Sales Engineer",mapsTo:"All ten",maps:["Cybersecurity Engineer","Cloud Security","CISO"],dir:"Partner",low:150000,high:280000,payLbl:"$150K–$280K OTE",bridge:"Deep product knowledge plus narrative",
+ note:"The most under-considered exit from hands-on security, and often the best-paid one at equivalent seniority once commission is counted. Requires genuine technical depth — customers detect a script instantly — but no on-call rotation.",src:"Market composite"},
+{role:"Technical Program Manager (Security)",mapsTo:"CISO track · Architecture",maps:["CISO","Security Architect"],dir:"Partner",low:140000,high:210000,payLbl:"$140K–$210K",bridge:"Delivery across unwilling teams",
+ note:"Large security programmes — zero trust rollouts, post-quantum migration, CMMC readiness — fail on coordination far more often than on technology. TPMs with security fluency are scarce and increasingly a route into director-level security leadership.",src:"Market composite"},
+{role:"Cryptography / PQC Migration Engineer",mapsTo:"Architecture · Engineering",maps:["Security Architect","Cybersecurity Engineer"],dir:"Lateral",low:150000,high:230000,payLbl:"$150K–$230K",bridge:"Crypto inventory and agility",
+ note:"A hard deadline is creating a hiring wave. Executive Order 14412, signed 22 June 2026, requires federal civilian agencies to complete post-quantum migration for key establishment by 31 December 2030 and digital signatures by 2031, and directs the FAR Council to extend the requirement to contractors. New National Security System acquisitions must meet CNSA 2.0 from 1 January 2027. Migrations run 2–3 years with a mature crypto inventory, 4–6 years without one — so the work is starting now.",src:"EO 14412 (Jun 2026); NIST NCCoE; CNSA 2.0; Encryption Consulting 2026"},
+{role:"Cybercrime Investigator",mapsTo:"DFIR",maps:["SecOps / DFIR"],dir:"Partner",low:70000,high:150000,payLbl:"$70K–$150K",bridge:"Chain of custody, testimony",
+ note:"Federal digital forensic examiners at the FBI, Secret Service, IRS-CI and Postal Inspection Service start at $50,000–$70,000 (GS-7 to GS-9) with 15–35% locality adjustment, reaching $110,000–$150,000 at GS-14/15. Private-sector expert witnesses with strong reputations bill far higher but carry variable income.",src:"Forensic Notes DFIR salaries 2026"},
+{role:"Security Awareness &amp; Training Manager",mapsTo:"GRC · CISO track",maps:["GRC","CISO"],dir:"Partner",low:85000,high:120000,payLbl:"~$95,000 median",bridge:"Behaviour change, not content delivery",
+ note:"Steady rather than surging, but a legitimate route for people from communications, L&amp;D or education backgrounds. AI-generated phishing has raised the stakes: the training that worked against typo-ridden lures does not work against fluent, personalised ones.",src:"SalaryGood 2026; WEF Global Cybersecurity Outlook 2026"}
+];
+
+/* ============================== SOURCES ============================== */
+const SOURCES = [
+{t:"US Bureau of Labor Statistics — Occupational Outlook Handbook",m:"Federal · May 2024 wage data, 2024–34 projections",d:"The only authoritative federal source. Information security analysts: $124,910 median, 182,800 jobs, 29% projected growth, +52,100 positions, ~16,000 openings per year. Also the source for every adjacent-role median in this dossier.",u:"https://www.bls.gov/ooh/computer-and-information-technology/information-security-analysts.htm"},
+{t:"CyberSeek (NIST / NICE · CompTIA · Lightcast)",m:"Job-posting scrape · 12 months to Apr 2025",d:"514,359 US cybersecurity job postings, up ~57,000 (+12%) year on year. Supply-to-demand ratio of 74%, meaning 26% of roles sat vacant. Global workforce mid-point estimate 4.97 million. 10% of listings explicitly require AI skills.",u:"https://www.cyberseek.org/"},
+{t:"ISC2 Cybersecurity Workforce Study 2025",m:"Survey · 16,029 practitioners · Dec 2025",d:"59% report critical or significant skills gaps, up sharply from 44% the prior year. AI is the top skill need at 41%, cloud security second at 36%. 88% have already seen skills gaps produce real consequences. Notably, ISC2 declined to publish a fresh global workforce-gap number, arguing skills shortfalls now bind harder than headcount.",u:"https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study"},
+{t:"Robert Half 2026 Salary Guide",m:"Recruiter placement data · 2026 projections",d:"Projected starting salaries by role and market. Cybersecurity engineer $118,500–$190,750 (+4.0%, the fastest-rising security title); security architect $138,250–$176,000; cybersecurity analyst $102,250–$147,750; data security analyst $121,750–$172,500; systems security manager $141,500–$204,750; IT auditor $108,500–$152,250. 84% of hiring managers will pay more for in-demand skills.",u:"https://www.roberthalf.com/us/en/insights/salary-guide/technology"},
+{t:"InterviewStack posting analysis",m:"5,411 active postings · Jun 2026",d:"The source for every posting-share percentage in the skills table. Median US disclosed base $132,000 (n=1,382). No individual skill clears 50%. Only 2.1% of postings are explicitly entry-level. 43.5% onsite, 33.3% hybrid, 22.9% remote.",u:"https://interviewstack.io/blog/cybersecurity-engineer-skills-companies-want-2026"},
+{t:"WEF Global Cybersecurity Outlook 2026",m:"Executive survey · Jan 2026",d:"94% agree AI is the most significant driver of cybersecurity change; 87% name AI-related vulnerabilities the fastest-rising threat. 19% of organisations now report resilience exceeding requirements, up from 9%. Talent shortage most acute for threat intelligence analysts and DevSecOps engineers. Small organisations 2.5× more likely to report insufficient resilience.",u:"https://www.weforum.org/publications/global-cybersecurity-outlook-2026/"},
+{t:"KORE1 salary guides (2026)",m:"Recruiter placement data · 2026",d:"Role-level bands from an agency that places these seats. Cloud security $105K–$215K base; DevSecOps $115K–$185K base with senior/staff TC $200K–$340K; pentester median base ~$130K. Also the source for clearance premiums: Secret adds $10K–$18K, TS/SCI $25K–$45K. OT security carries a $20K–$35K premium.",u:"https://www.kore1.com/cybersecurity-salary-guide/"},
+{t:"IAPP Salary and Jobs Report 2025–26",m:"Survey · Oct 2025",d:"The first IAPP report to include AI governance compensation. $151,800 median for AI governance alone, $123,000 for privacy alone, above $169,700 for both. Technology-sector technical AI governance roles reached a $221,000 median.",u:"https://iapp.org/resources/article/salary-survey-summary"},
+{t:"Foote Partners IT Skills Demand and Pay Trends, 2Q 2026",m:"660+ certifications analysed · 2026",d:"CISM and CISSP consistently rank among the certifications with the largest salary premiums. The source behind the certification pay-signal column.",u:"https://www.onlinecybersecurity.org/articles/demand-cybersecurity-certifications/"},
+{t:"NIST NCCoE / Executive Order 14412",m:"Federal · Jun 2026",d:"EO 14412, signed 22 June 2026, sets binding federal post-quantum deadlines: key establishment by 31 Dec 2030, digital signatures by 31 Dec 2031, with FAR Council direction to extend to contractors. CNSA 2.0 requires all new National Security System acquisitions to be compliant from 1 Jan 2027.",u:"https://pages.nist.gov/nccoe-migration-post-quantum-cryptography/"},
+{t:"Glassdoor / ZipRecruiter / PayScale",m:"Self-reported · 2026",d:"Used for cross-checking, never as a sole source. All three skew toward employers worth bragging about and toward respondents motivated to report. Where they diverged from recruiter data, the band in this dossier was widened rather than averaged.",u:"https://www.glassdoor.com/"},
+{t:"Forensic Notes DFIR salary analysis",m:"Sector breakdown · Feb 2026",d:"The clearest public breakdown of digital forensics pay by sector: federal GS scales, state and local law enforcement, consulting, and technology in-house — which vary by more than 5× for the same technical work.",u:"https://www.forensicnotes.com/dfir-salaries/"}
+];
+
+/* ============================== ENGINE ============================== */
+function esc(s){return String(s).replace(/&(?!amp;|lt;|gt;|#)/g,'&amp;')}
+function bar(low,high,typical){
+  const l=low/AXIS_MAX*100, w=(high-low)/AXIS_MAX*100, t=typical/AXIS_MAX*100;
+  return `<div class="bandcell">
+    <div class="rd"><b>${K(low)}</b> – <b>${K(high)}</b></div>
+    <div class="bar" title="${K(low)} to ${K(high)}; typical ${K(typical)}">
+      <div class="rng" style="left:${l}%;width:${w}%"></div>
+      <div class="tick" style="left:${t}%" title="typical ${K(typical)}"></div>
+    </div></div>`;
+}
+const GP=s=>`<span class="pill g${s}">`;
+
+/* ---- table builder ---- */
+function makeTable(cfg){
+  const state={sortKey:cfg.defaultSort,dir:1,q:'',filters:{}};
+  cfg.filters.forEach(f=>state.filters[f.key]=new Set());
+  const body=document.getElementById(cfg.body);
+  const head=document.querySelector('#'+cfg.table+' thead');
+
+  /* filter chips */
+  cfg.filters.forEach(f=>{
+    const host=document.getElementById(f.host);
+    const vals=[...new Set(cfg.data.flatMap(r=>Array.isArray(r[f.key])?r[f.key]:[r[f.key]]))]
+      .filter(Boolean).sort((a,b)=>String(a).localeCompare(String(b)));
+    vals.forEach(v=>{
+      const b=document.createElement('button');
+      b.className='chip'; b.setAttribute('aria-pressed','false');
+      b.innerHTML=String(v).replace(/&amp;/g,'&');
+      b.onclick=()=>{
+        const on=b.getAttribute('aria-pressed')==='true';
+        b.setAttribute('aria-pressed',String(!on));
+        on?state.filters[f.key].delete(v):state.filters[f.key].add(v);
+        render();
+      };
+      host.appendChild(b);
+    });
+  });
+
+  /* sorting */
+  head.querySelectorAll('th[data-key]').forEach(th=>{
+    th.querySelector('button').onclick=()=>{
+      const k=th.dataset.key;
+      if(state.sortKey===k){state.dir*=-1}else{state.sortKey=k;state.dir=1}
+      head.querySelectorAll('th[data-key]').forEach(o=>o.removeAttribute('aria-sort'));
+      th.setAttribute('aria-sort',state.dir===1?'ascending':'descending');
+      th.querySelector('.arw').textContent=state.dir===1?'▲':'▼';
+      render();
+    };
+  });
+
+  /* search */
+  document.getElementById(cfg.search).addEventListener('input',e=>{
+    state.q=e.target.value.toLowerCase().trim(); render();
+  });
+
+  function current(){
+    let rows=cfg.data.filter(r=>{
+      for(const f of cfg.filters){
+        const set=state.filters[f.key]; if(!set.size) continue;
+        const v=r[f.key];
+        const hit=Array.isArray(v)?v.some(x=>set.has(x)):set.has(v);
+        if(!hit) return false;
+      }
+      if(!state.q) return true;
+      return cfg.searchable(r).toLowerCase().replace(/&amp;/g,'&').includes(state.q);
+    });
+    const k=state.sortKey, th=document.querySelector(`#${cfg.table} th[data-key="${k}"]`);
+    const type=th?th.dataset.type:'s';
+    rows.sort((a,b)=>{
+      let x=a[k],y=b[k];
+      if(type==='n'){x=+x||0;y=+y||0;return (x-y)*state.dir}
+      x=String(x).replace(/&amp;/g,'&');y=String(y).replace(/&amp;/g,'&');
+      return x.localeCompare(y)*state.dir;
+    });
+    return rows;
+  }
+
+  function render(){
+    const rows=current();
+    document.getElementById(cfg.count).textContent=`${rows.length} of ${cfg.data.length} shown`;
+    if(!rows.length){body.innerHTML=`<tr><td colspan="12"><div class="empty">No matches — try clearing a filter</div></td></tr>`;return}
+    body.innerHTML=rows.map((r,i)=>cfg.row(r,i)).join('');
+    body.querySelectorAll('tr.data').forEach(tr=>{
+      tr.onclick=()=>{
+        const d=tr.nextElementSibling, open=tr.getAttribute('aria-expanded')==='true';
+        tr.setAttribute('aria-expanded',String(!open));
+        d.style.display=open?'none':'table-row';
+      };
+      tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tr.click()}};
+      tr.tabIndex=0;
+    });
+  }
+  cfg.reset=()=>{
+    state.q='';state.sortKey=cfg.defaultSort;state.dir=1;
+    cfg.filters.forEach(f=>state.filters[f.key].clear());
+    document.getElementById(cfg.search).value='';
+    document.querySelectorAll(`#${cfg.filters[0].host} .chip, #${cfg.filters[1].host} .chip`).forEach(c=>c.setAttribute('aria-pressed','false'));
+    head.querySelectorAll('th[data-key]').forEach(o=>o.removeAttribute('aria-sort'));
+    const dth=head.querySelector(`th[data-key="${cfg.defaultSort}"]`);
+    if(dth){dth.setAttribute('aria-sort','ascending');dth.querySelector('.arw').textContent='▲'}
+    render();
+  };
+  cfg.rowsNow=current;
+  render();
+  return cfg;
+}
+
+/* ---- roles ---- */
+const rolesCfg=makeTable({
+  table:'rolesTable',body:'rolesBody',search:'rolesSearch',count:'rolesCount',
+  data:ROLES,defaultSort:'rank',
+  filters:[{key:'track',host:'rolesTrack'},{key:'level',host:'rolesLevel'}],
+  searchable:r=>[r.role,r.alt,r.track,r.level,r.why,r.watch,r.certs.join(' '),r.skills.join(' ')].join(' '),
+  row:r=>`<tr class="data" aria-expanded="false"><td class="caret">▸</td>
+    <td class="rk">${String(r.rank).padStart(2,'0')}</td>
+    <td><div class="nm">${r.role}<span class="alt">${r.alt}</span></div></td>
+    <td class="mono">${r.track}</td>
+    <td>${bar(r.low,r.high,r.typical)}</td>
+    <td class="num">${K(r.typical)}</td>
+    <td>${GP(r.growthScore)}${r.growth}</span></td>
+    <td class="mono">${r.demand}</td>
+    <td class="mono">${r.level}</td></tr>
+   <tr class="detail" style="display:none"><td colspan="9"><div class="dt">
+     <div><h4>Why it ranks here</h4><p>${r.why}</p>
+       <h4>What to watch</h4><p>${r.watch}</p></div>
+     <div><h4>Certifications most requested</h4><div style="margin-bottom:16px">${r.certs.map(c=>`<span class="tag k">${c}</span>`).join('')}</div>
+       <h4>Core skills</h4><div style="margin-bottom:16px">${r.skills.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+       <h4>Sources</h4><div class="src">${r.src.map(s=>'<b>·</b> '+s).join('<br>')}</div></div>
+   </div></td></tr>`
+});
+
+/* ---- skills ---- */
+const skillsCfg=makeTable({
+  table:'skillsTable',body:'skillsBody',search:'skillsSearch',count:'skillsCount',
+  data:SKILLS,defaultSort:'rank',
+  filters:[{key:'type',host:'skillsType'},{key:'domain',host:'skillsDom'}],
+  searchable:s=>[s.name,s.type,s.domain,s.note,s.roles,s.shareLbl].join(' '),
+  row:s=>`<tr class="data" aria-expanded="false"><td class="caret">▸</td>
+    <td class="rk">${String(s.rank).padStart(2,'0')}</td>
+    <td><div class="nm">${s.name}</div></td>
+    <td class="mono">${s.type}</td>
+    <td class="mono">${s.domain}</td>
+    <td class="mono">${s.shareLbl}</td>
+    <td class="mono" style="color:${s.payDelta>0?'#1F8E90':s.payDelta<0?'#BE4326':'#4E6272'}">${s.payLbl}</td>
+    <td class="mono">${s.entry}</td></tr>
+   <tr class="detail" style="display:none"><td colspan="8"><div class="dt">
+     <div><h4>What the evidence says</h4><p>${s.note}</p></div>
+     <div><h4>Where it matters most</h4><p style="font-size:13.5px">${s.roles}</p>
+       <h4>Source</h4><div class="src">${s.src}</div></div>
+   </div></td></tr>`
+});
+
+/* ---- adjacent ---- */
+const adjCfg=makeTable({
+  table:'adjTable',body:'adjBody',search:'adjSearch',count:'adjCount',
+  data:ADJ,defaultSort:'role',
+  filters:[{key:'maps',host:'adjMaps'},{key:'dir',host:'adjDir'}],
+  searchable:a=>[a.role,a.mapsTo,a.maps.join(' '),a.dir,a.bridge,a.note,a.payLbl].join(' '),
+  row:a=>`<tr class="data" aria-expanded="false"><td class="caret">▸</td>
+    <td><div class="nm">${a.role}</div></td>
+    <td class="mono">${a.mapsTo}</td>
+    <td><span class="dir ${a.dir==='Feeder'?'in':a.dir==='Lateral'?'lat':'out'}">${a.dir}</span></td>
+    <td class="mono">${a.payLbl}</td>
+    <td style="font-size:13.5px;color:var(--dim)">${a.bridge}</td></tr>
+   <tr class="detail" style="display:none"><td colspan="6"><div class="dt">
+     <div><h4>The connection</h4><p>${a.note}</p></div>
+     <div><h4>Source</h4><div class="src">${a.src}</div></div>
+   </div></td></tr>`
+});
+
+/* watchlist note under skills */
+document.querySelector('#view-skills .note').insertAdjacentHTML('afterend',
+  `<div class="note" style="border-left-color:var(--h2);background:#E6F4F4;color:#123F40"><b>Just outside the twenty.</b> ${WATCHLIST}</div>`);
+
+/* sources */
+document.getElementById('srcGrid').innerHTML=SOURCES.map(s=>
+  `<div class="srccard"><h3>${s.t}</h3><div class="meta">${s.m}</div><p>${s.d}</p><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a></div>`).join('');
+
+/* tabs */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+    document.getElementById('view-'+t.dataset.view).classList.add('on');
+    window.scrollTo({top:document.querySelector('.tabs').offsetTop-40,behavior:'smooth'});
+  };
+});
+
+/* tools */
+const CFG={roles:rolesCfg,skills:skillsCfg,adj:adjCfg};
+document.querySelectorAll('[data-reset]').forEach(b=>b.onclick=()=>CFG[b.dataset.reset].reset());
+document.querySelectorAll('[data-csv]').forEach(b=>b.onclick=()=>{
+  const c=CFG[b.dataset.csv], rows=c.rowsNow();
+  const keys=Object.keys(rows[0]).filter(k=>typeof rows[0][k]!=='object'||Array.isArray(rows[0][k]));
+  const clean=v=>'"'+String(Array.isArray(v)?v.join('; '):v).replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/"/g,'""')+'"';
+  const csv=[keys.join(','),...rows.map(r=>keys.map(k=>clean(r[k])).join(','))].join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=`cyber-2026-${b.dataset.csv}.csv`; a.click();
+});
+</script>
+</body>
+</html>
